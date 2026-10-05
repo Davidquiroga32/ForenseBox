@@ -6,8 +6,8 @@
     <title>@yield('title', 'ForenseBox — Aprendizaje en Ciberseguridad y Forensia Digital')</title>
 
     {{-- FAVICON --}}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
 
     <meta name="description" content="@yield('description', 'Plataforma de aprendizaje en ciberseguridad, forensia digital y análisis de evidencia.')">
 

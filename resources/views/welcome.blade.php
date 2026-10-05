@@ -38,21 +38,32 @@
 
 .slide {
     position: absolute; inset: 0;
-    background-size: cover;
-    background-position: center;
+    background-color: var(--lab-deep);
     opacity: 0;
     transition: opacity 1s ease;
     display: flex; align-items: center;
+    overflow: hidden;
 }
 .slide.active { opacity: 1; z-index: 1; }
+
+/* Imagen de fondo con zoom sutil (Ken Burns) */
+.slide-img {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center;
+    transform: scale(1);
+    transition: transform 8s ease;
+}
+.slide.active .slide-img { transform: scale(1.07); }
 
 /* Fondo tipo grid de laboratorio */
 .slide-grid {
     position: absolute; inset: 0;
     background-image:
-        linear-gradient(rgba(142,123,255,.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(142,123,255,.06) 1px, transparent 1px);
+        linear-gradient(rgba(142,123,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.05) 1px, transparent 1px);
     background-size: 56px 56px;
+    opacity: .45;
     mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 40%, transparent 100%);
 }
 .slide-glow {
@@ -67,8 +78,8 @@
 .slide-overlay {
     position: absolute; inset: 0;
     background:
-        linear-gradient(90deg, rgba(10,18,27,.9) 0%, rgba(10,18,27,.55) 50%, rgba(10,18,27,.15) 100%),
-        linear-gradient(0deg, rgba(10,18,27,.6) 0%, transparent 40%);
+        linear-gradient(90deg, rgba(10,18,27,.94) 0%, rgba(10,18,27,.8) 42%, rgba(10,18,27,.38) 75%, rgba(10,18,27,.18) 100%),
+        linear-gradient(0deg, rgba(10,18,27,.72) 0%, rgba(10,18,27,.15) 35%, rgba(10,18,27,.06) 60%, rgba(10,18,27,.42) 100%);
 }
 
 .slide-inner {
@@ -496,6 +507,7 @@
 
     {{-- Slide 1 --}}
     <div class="slide active">
+        <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80');"></div>
         <div class="slide-grid"></div>
         <div class="slide-glow"></div>
         <div class="slide-glow amber"></div>
@@ -513,6 +525,7 @@
 
     {{-- Slide 2 --}}
     <div class="slide">
+        <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80');"></div>
         <div class="slide-grid"></div>
         <div class="slide-glow"></div>
         <div class="slide-glow amber"></div>
@@ -530,6 +543,7 @@
 
     {{-- Slide 3 --}}
     <div class="slide">
+        <div class="slide-img" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1600&q=80');"></div>
         <div class="slide-grid"></div>
         <div class="slide-glow"></div>
         <div class="slide-glow amber"></div>
