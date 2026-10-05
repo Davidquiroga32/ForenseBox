@@ -60,26 +60,26 @@
 .slide-grid {
     position: absolute; inset: 0;
     background-image:
-        linear-gradient(rgba(142,123,255,.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(142,123,255,.05) 1px, transparent 1px);
+        linear-gradient(rgba(142,123,255,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.04) 1px, transparent 1px);
     background-size: 56px 56px;
-    opacity: .45;
+    opacity: .3;
     mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 40%, transparent 100%);
 }
 .slide-glow {
     position: absolute; width: 620px; height: 620px; border-radius: 50%;
-    background: radial-gradient(rgba(142,123,255,.22), transparent 70%);
+    background: radial-gradient(rgba(142,123,255,.1), transparent 70%);
     top: -180px; right: -120px; pointer-events: none;
 }
 .slide-glow.amber {
-    background: radial-gradient(rgba(242,179,61,.14), transparent 70%);
+    background: radial-gradient(rgba(242,179,61,.07), transparent 70%);
     bottom: -220px; left: -140px; top: auto; right: auto;
 }
 .slide-overlay {
     position: absolute; inset: 0;
     background:
-        linear-gradient(90deg, rgba(10,18,27,.94) 0%, rgba(10,18,27,.8) 42%, rgba(10,18,27,.38) 75%, rgba(10,18,27,.18) 100%),
-        linear-gradient(0deg, rgba(10,18,27,.72) 0%, rgba(10,18,27,.15) 35%, rgba(10,18,27,.06) 60%, rgba(10,18,27,.42) 100%);
+        linear-gradient(90deg, rgba(10,18,27,.85) 0%, rgba(10,18,27,.58) 40%, rgba(10,18,27,.25) 70%, rgba(10,18,27,.08) 100%),
+        linear-gradient(0deg, rgba(10,18,27,.55) 0%, rgba(10,18,27,.08) 40%, rgba(10,18,27,.05) 100%);
 }
 
 .slide-inner {
