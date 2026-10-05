@@ -4,29 +4,46 @@ namespace App\Services;
 
 use Aws\S3\S3Client;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class B2Service
 {
-    protected S3Client $client;
+    protected ?S3Client $client;
     protected string $bucket;
     protected string $publicUrl;
+    protected bool $configurado;
 
     public function __construct()
     {
-        $this->bucket    = config('b2.bucket');
-        $this->publicUrl = rtrim(config('b2.public_url'), '/');
+        $this->bucket      = config('b2.bucket');
+        $this->publicUrl   = rtrim(config('b2.public_url'), '/');
+        $this->configurado = !empty($this->bucket)
+            && !empty(config('b2.key_id'))
+            && !empty(config('b2.app_key'));
 
-        $this->client = new S3Client([
-            'version'     => 'latest',
-            'region'      => 'us-east-005',
-            'endpoint'    => config('b2.endpoint'),
-            'credentials' => [
-                'key'    => config('b2.key_id'),
-                'secret' => config('b2.app_key'),
-            ],
-            'use_path_style_endpoint' => true,
-        ]);
+        if ($this->configurado) {
+            $this->client = new S3Client([
+                'version'     => 'latest',
+                'region'      => 'us-east-005',
+                'endpoint'    => config('b2.endpoint'),
+                'credentials' => [
+                    'key'    => config('b2.key_id'),
+                    'secret' => config('b2.app_key'),
+                ],
+                'use_path_style_endpoint' => true,
+            ]);
+        } else {
+            $this->client = null;
+        }
+    }
+
+    /**
+     * Indica si Backblaze B2 está configurado.
+     */
+    public function configurado(): bool
+    {
+        return $this->configurado;
     }
 
     /**
@@ -39,6 +56,16 @@ class B2Service
      */
     public function subir(UploadedFile $file, string $carpeta, string $tipo = 'image'): array
     {
+        // Fallback: sin B2 configurado, guardar en almacenamiento local
+        if (!$this->configurado) {
+            $path = $file->store($carpeta, 'public');
+
+            return [
+                'url'       => Storage::disk('public')->url($path),
+                'public_id' => $path,
+            ];
+        }
+
         $extension = $file->getClientOriginalExtension();
         $nombre    = Str::uuid() . '.' . $extension;
         $key       = 'comunalaprende/' . trim($carpeta, '/') . '/' . $nombre;
@@ -107,6 +134,13 @@ class B2Service
     public function eliminar(?string $publicId, string $tipo = 'image'): void
     {
         if (empty($publicId)) return;
+
+        // Fallback: eliminar del almacenamiento local
+        if (!$this->configurado) {
+            $path = preg_replace('#^/?storage/#', '', $publicId);
+            Storage::disk('public')->delete($path);
+            return;
+        }
 
         try {
             $this->client->deleteObject([
