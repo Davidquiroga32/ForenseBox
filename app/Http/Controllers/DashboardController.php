@@ -42,20 +42,12 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'name'                     => 'required|string|max:150',
-            'celular'                  => 'nullable|string|max:20',
-            'departamento'             => 'nullable|string|max:100',
-            'municipio'                => 'nullable|string|max:150',
-            'pertenece_oac'            => 'nullable|boolean',
-            'organismo_accion_comunal' => 'nullable|string|max:255|required_if:pertenece_oac,1',
-            'condicion'                => 'required|in:afiliado,particular',
-            'avatar'                   => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'name'   => 'required|string|max:150',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ], [
-            'name.required'                        => 'El nombre es obligatorio.',
-            'condicion.required'                   => 'Selecciona una condición.',
-            'organismo_accion_comunal.required_if' => 'Ingresa el nombre del organismo.',
-            'avatar.image'                         => 'El archivo debe ser una imagen.',
-            'avatar.max'                           => 'La imagen no debe superar 2MB.',
+            'name.required'    => 'El nombre es obligatorio.',
+            'avatar.image'     => 'El archivo debe ser una imagen.',
+            'avatar.max'       => 'La imagen no debe superar 2MB.',
         ]);
 
         if ($request->hasFile('avatar')) {
@@ -68,15 +60,7 @@ class DashboardController extends Controller
             $user->avatar = $res['url'];
         }
 
-        $user->name                     = $request->name;
-        $user->celular                  = $request->celular;
-        $user->departamento             = $request->departamento;
-        $user->municipio                = $request->municipio;
-        $user->pertenece_oac            = $request->boolean('pertenece_oac');
-        $user->organismo_accion_comunal = $request->boolean('pertenece_oac')
-            ? $request->organismo_accion_comunal
-            : null;
-        $user->condicion = $request->condicion;
+        $user->name = $request->name;
         $user->save();
 
         return redirect()->route('dashboard.perfil')

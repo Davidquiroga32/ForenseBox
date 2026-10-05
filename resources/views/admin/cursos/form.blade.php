@@ -4,50 +4,52 @@
 <style>
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .form-full  { grid-column: 1 / -1; }
-    .adm-form-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 1.5rem; margin-bottom: 1.25rem; }
-    .adm-form-section { font-family: 'Poppins',sans-serif; font-size: .82rem; font-weight: 700; color: #0f3460; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #f0f4f8; display: flex; align-items: center; gap: .4rem; }
+    .adm-form-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .adm-form-section { font-family: var(--font-mono); font-size: .7rem; font-weight: 500; color: var(--tag); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; gap: .4rem; }
 
     .fg { margin-bottom: .1rem; }
-    .fg label { display: block; font-size: .83rem; font-weight: 600; color: #334155; margin-bottom: .35rem; }
-    .fg label .req { color: #e94560; }
+    .fg label { display: block; font-size: .83rem; font-weight: 600; color: var(--paper); margin-bottom: .35rem; }
+    .fg label .req { color: var(--alert); }
     .fi {
         width: 100%; padding: .65rem .9rem;
-        border: 1.5px solid #d1d9e0; border-radius: 8px;
-        font-size: .88rem; color: #334155; background: #fff;
+        border: 1.5px solid var(--line); border-radius: 8px;
+        font-size: .88rem; color: var(--paper); background: var(--lab);
         transition: border-color .16s, box-shadow .16s; outline: none; font-family: inherit;
     }
-    .fi:focus { border-color: #0f3460; box-shadow: 0 0 0 3px rgba(15,52,96,.1); }
-    .fi.error { border-color: #e94560; }
+    .fi:focus { border-color: var(--uv); box-shadow: 0 0 0 3px rgba(142,123,255,.14); }
+    .fi.error { border-color: var(--alert); }
     textarea.fi { resize: vertical; min-height: 90px; }
-    .fe { font-size: .78rem; color: #e94560; margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
+    select.fi option { background: var(--panel); color: var(--paper); }
+    .fe { font-size: .78rem; color: var(--alert); margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
 
     .toggle-row { display: flex; align-items: center; gap: .75rem; }
     .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
     .toggle-slider {
-        position: absolute; inset: 0; background: #d1d9e0; border-radius: 999px; cursor: pointer; transition: background .2s;
+        position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background .2s;
     }
-    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .2s; }
-    .toggle-switch input:checked + .toggle-slider { background: #0f3460; }
-    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: var(--muted); border-radius: 50%; transition: transform .2s; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--uv); }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); background: #fff; }
 
     .icon-preview { display: flex; align-items: center; gap: .75rem; margin-top: .5rem; }
-    .icon-preview-box { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #fff; background: linear-gradient(135deg,#0A4D8C,#3B88D4); }
+    .icon-preview-box { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: #fff; background: linear-gradient(135deg, var(--uv), #6a58e0); }
 
     .btn-save {
         display: inline-flex; align-items: center; gap: .5rem;
-        padding: .7rem 1.5rem; background: #0f3460; color: #fff;
-        border: none; border-radius: 8px; font-size: .9rem; font-weight: 700;
+        padding: .7rem 1.5rem; background: var(--tag); color: #1A1203;
+        border: none; border-radius: 8px; font-size: .9rem; font-weight: 600;
         cursor: pointer; transition: background .16s;
+        box-shadow: 0 3px 12px rgba(242,179,61,.2);
     }
-    .btn-save:hover { background: #1a1a2e; }
+    .btn-save:hover { background: #ffc75c; }
     .btn-cancel {
         display: inline-flex; align-items: center; gap: .5rem;
-        padding: .7rem 1.25rem; background: #f0f4f8; color: #64748b;
-        border-radius: 8px; font-size: .9rem; font-weight: 600;
+        padding: .7rem 1.25rem; background: var(--panel); color: var(--muted);
+        border: 1.5px solid var(--line); border-radius: 8px; font-size: .9rem; font-weight: 600;
         text-decoration: none; transition: background .16s;
     }
-    .btn-cancel:hover { background: #e2e8f0; color: #334155; }
+    .btn-cancel:hover { background: var(--panel-2); color: var(--paper); }
 
     @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
 </style>
@@ -100,18 +102,18 @@
         <div class="fg">
             <label>Tipo de curso <span class="req">*</span></label>
             <div style="display:flex;gap:.75rem;margin-top:.35rem;">
-                <label style="flex:1;display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border:1.5px solid #d1d9e0;border-radius:8px;cursor:pointer;" id="tipo-free-label">
+                <label style="flex:1;display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;" id="tipo-free-label">
                     <input type="radio" name="tipo" value="free" id="tipo-free"
                         {{ old('tipo', $curso->tipo ?? 'free') == 'free' ? 'checked' : '' }}
                         onchange="togglePrecio(false)" style="display:none;">
-                    <i class="fas fa-gift" style="color:#16a34a;"></i>
+                    <i class="fas fa-gift" style="color:var(--resolved);"></i>
                     <span style="font-weight:600;font-size:.88rem;">Gratuito</span>
                 </label>
-                <label style="flex:1;display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border:1.5px solid #d1d9e0;border-radius:8px;cursor:pointer;" id="tipo-paid-label">
+                <label style="flex:1;display:flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border:1.5px solid var(--line);border-radius:8px;cursor:pointer;" id="tipo-paid-label">
                     <input type="radio" name="tipo" value="paid" id="tipo-paid"
                         {{ old('tipo', $curso->tipo ?? '') == 'paid' ? 'checked' : '' }}
                         onchange="togglePrecio(true)" style="display:none;">
-                    <i class="fas fa-tag" style="color:#d97706;"></i>
+                    <i class="fas fa-tag" style="color:var(--tag);"></i>
                     <span style="font-weight:600;font-size:.88rem;">De Pago</span>
                 </label>
             </div>
@@ -138,16 +140,16 @@
                 <div class="icon-preview-box" id="iconPreviewBox">
                     <i class="fas {{ old('icono_fa', $curso->icono_fa ?? 'fa-graduation-cap') }}" id="iconPreviewIcon"></i>
                 </div>
-                <small style="color:#94a3b8;font-size:.78rem;">Busca íconos en <a href="https://fontawesome.com/icons" target="_blank" style="color:#0f3460;">fontawesome.com/icons</a></small>
+                <small style="color:var(--muted);font-size:.78rem;">Busca íconos en <a href="https://fontawesome.com/icons" target="_blank" style="color:var(--uv);">fontawesome.com/icons</a></small>
             </div>
         </div>
 
         <div class="fg">
             <label for="color_gradiente">Colores del gradiente</label>
             <input type="text" id="color_gradiente" name="color_gradiente" class="fi"
-                value="{{ old('color_gradiente', $curso->color_gradiente ?? '#0A4D8C,#3B88D4') }}"
-                placeholder="#0A4D8C,#3B88D4">
-            <small style="color:#94a3b8;font-size:.78rem;">Dos colores hex separados por coma</small>
+                value="{{ old('color_gradiente', $curso->color_gradiente ?? '#15253a,#27404E') }}"
+                placeholder="#15253a,#27404E">
+            <small style="color:var(--muted);font-size:.78rem;">Dos colores hex separados por coma</small>
         </div>
 
         <div class="fg">
@@ -173,8 +175,8 @@
                 <span class="toggle-slider"></span>
             </label>
             <div>
-                <div style="font-weight:600;font-size:.88rem;color:#334155;">Curso Activo</div>
-                <div style="font-size:.75rem;color:#94a3b8;">Visible para los estudiantes</div>
+                <div style="font-weight:600;font-size:.88rem;color:var(--paper);">Curso Activo</div>
+                <div style="font-size:.75rem;color:var(--muted);">Visible para los estudiantes</div>
             </div>
         </div>
         <div class="toggle-row">
@@ -184,8 +186,8 @@
                 <span class="toggle-slider"></span>
             </label>
             <div>
-                <div style="font-weight:600;font-size:.88rem;color:#334155;">Destacado</div>
-                <div style="font-size:.75rem;color:#94a3b8;">Se muestra primero en el catálogo</div>
+                <div style="font-weight:600;font-size:.88rem;color:var(--paper);">Destacado</div>
+                <div style="font-size:.75rem;color:var(--muted);">Se muestra primero en el catálogo</div>
             </div>
         </div>
     </div>
@@ -205,10 +207,10 @@ function togglePrecio(show) {
     document.getElementById('precio-field').style.display = show ? 'block' : 'none';
     const freeLabel = document.getElementById('tipo-free-label');
     const paidLabel = document.getElementById('tipo-paid-label');
-    freeLabel.style.borderColor = show ? '#d1d9e0' : '#0f3460';
-    freeLabel.style.background  = show ? '#fff' : '#f0f4f8';
-    paidLabel.style.borderColor = show ? '#0f3460' : '#d1d9e0';
-    paidLabel.style.background  = show ? '#f0f4f8' : '#fff';
+    freeLabel.style.borderColor = show ? 'var(--line)' : 'var(--uv)';
+    freeLabel.style.background  = show ? 'var(--lab)' : 'var(--uv-soft)';
+    paidLabel.style.borderColor = show ? 'var(--uv)' : 'var(--line)';
+    paidLabel.style.background  = show ? 'var(--uv-soft)' : 'var(--lab)';
 }
 
 function updateIconPreview() {

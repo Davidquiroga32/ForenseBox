@@ -4,34 +4,34 @@
 
 @section('content')
 <style>
-    .adm-back { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: #0f3460; font-weight: 600; text-decoration: none; margin-bottom: 1.1rem; }
+    .adm-back { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: var(--uv); font-weight: 600; text-decoration: none; margin-bottom: 1.1rem; }
     .adm-back:hover { text-decoration: underline; }
     .adm-form-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 1.5rem; margin-bottom: 1.25rem; }
-    .adm-form-section { font-family: 'Poppins',sans-serif; font-size: .82rem; font-weight: 700; color: #0f3460; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #f0f4f8; display: flex; align-items: center; gap: .4rem; }
+    .adm-form-section { font-family: var(--font-mono); font-size: .82rem; font-weight: 700; color: var(--uv); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--panel-2); display: flex; align-items: center; gap: .4rem; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .form-full { grid-column: 1/-1; }
     .fg { margin-bottom: .1rem; }
-    .fg label { display: block; font-size: .83rem; font-weight: 600; color: #334155; margin-bottom: .35rem; }
-    .fg label .req { color: #e94560; }
-    .fi { width: 100%; padding: .65rem .9rem; border: 1.5px solid #d1d9e0; border-radius: 8px; font-size: .88rem; color: #334155; background: #fff; transition: border-color .16s, box-shadow .16s; outline: none; font-family: inherit; }
-    .fi:focus { border-color: #0f3460; box-shadow: 0 0 0 3px rgba(15,52,96,.1); }
+    .fg label { display: block; font-size: .83rem; font-weight: 600; color: var(--paper); margin-bottom: .35rem; }
+    .fg label .req { color: var(--alert); }
+    .fi { width: 100%; padding: .65rem .9rem; border: 1.5px solid var(--line); border-radius: 8px; font-size: .88rem; color: var(--paper); background: var(--lab); transition: border-color .16s, box-shadow .16s; outline: none; font-family: inherit; }
+    .fi:focus { border-color: var(--uv); box-shadow: 0 0 0 3px rgba(15,52,96,.1); }
     textarea.fi { resize: vertical; min-height: 200px; }
-    .fe { font-size: .78rem; color: #e94560; margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
+    .fe { font-size: .78rem; color: var(--alert); margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
     .toggle-row { display: flex; align-items: center; gap: .75rem; }
     .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: #d1d9e0; border-radius: 999px; cursor: pointer; transition: background .2s; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background .2s; }
     .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .2s; }
-    .toggle-switch input:checked + .toggle-slider { background: #0f3460; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--uv); }
     .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
-    .btn-save { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.5rem; background: #0f3460; color: #fff; border: none; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .16s; }
-    .btn-save:hover { background: #1a1a2e; }
-    .btn-cancel { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.25rem; background: #f0f4f8; color: #64748b; border-radius: 8px; font-size: .9rem; font-weight: 600; text-decoration: none; transition: background .16s; }
-    .btn-cancel:hover { background: #e2e8f0; color: #334155; }
+    .btn-save { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.5rem; background: var(--uv); color: #fff; border: none; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .16s; }
+    .btn-save:hover { background: #6a58e0; }
+    .btn-cancel { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.25rem; background: var(--panel-2); color: var(--muted); border-radius: 8px; font-size: .9rem; font-weight: 600; text-decoration: none; transition: background .16s; }
+    .btn-cancel:hover { background: var(--panel-2); color: var(--paper); }
     .tipo-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .35rem; }
-    .tipo-tab { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem; border: 1.5px solid #d1d9e0; border-radius: 8px; cursor: pointer; font-size: .82rem; font-weight: 600; color: #64748b; transition: all .16s; user-select: none; }
+    .tipo-tab { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem; border: 1.5px solid var(--line); border-radius: 8px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--muted); transition: all .16s; user-select: none; }
     .tipo-tab input { display: none; }
-    .tipo-tab:has(input:checked) { border-color: #0f3460; background: #f0f4f8; color: #0f3460; }
+    .tipo-tab:has(input:checked) { border-color: var(--uv); background: var(--panel-2); color: var(--uv); }
     @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
 </style>
 
@@ -79,8 +79,8 @@
                         <span class="toggle-slider"></span>
                     </label>
                     <div>
-                        <div style="font-weight:600;font-size:.88rem;color:#334155;">Lección Activa</div>
-                        <div style="font-size:.75rem;color:#94a3b8;">Visible para estudiantes</div>
+                        <div style="font-weight:600;font-size:.88rem;color:var(--paper);">Lección Activa</div>
+                        <div style="font-size:.75rem;color:var(--muted);">Visible para estudiantes</div>
                     </div>
                 </div>
             </div>
@@ -101,11 +101,11 @@
         <div id="campo-video" style="display:none;">
             <div style="display:flex;gap:.5rem;margin-bottom:1rem;">
                 <button type="button" id="tab-url" onclick="videoTab('url')"
-                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #0f3460;background:#0f3460;color:#fff;">
+                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--uv);background:var(--uv);color:#fff;">
                     <i class="fas fa-link"></i> URL de YouTube / Vimeo
                 </button>
                 <button type="button" id="tab-upload" onclick="videoTab('upload')"
-                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;">
+                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);">
                     <i class="fas fa-upload"></i> Subir video propio
                 </button>
             </div>
@@ -119,7 +119,7 @@
                 <label for="video_archivo">Archivo de video (MP4, MOV, WEBM &mdash; m&aacute;x. 500 MB)</label>
                 <input type="file" id="video_archivo" name="video_archivo" class="fi"
                     accept="video/mp4,video/quicktime,video/avi,video/webm">
-                <div style="font-size:.75rem;color:#94a3b8;margin-top:.35rem;">
+                <div style="font-size:.75rem;color:var(--muted);margin-top:.35rem;">
                     <i class="fas fa-info-circle"></i> El video se guardar&aacute; en el servidor y podr&aacute; reproducirse directamente.
                 </div>
                 @error('video_archivo')<div class="fe"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>@enderror
@@ -136,8 +136,8 @@
 
         {{-- Quiz / Tarea --}}
         <div id="campo-quiz" style="display:none;">
-            <div style="background:#f8fafc;border-radius:8px;padding:1rem;font-size:.86rem;color:#64748b;text-align:center;">
-                <i class="fas fa-tools" style="font-size:1.5rem;display:block;margin-bottom:.5rem;color:#94a3b8;"></i>
+            <div style="background:var(--lab-deep);border-radius:8px;padding:1rem;font-size:.86rem;color:var(--muted);text-align:center;">
+                <i class="fas fa-tools" style="font-size:1.5rem;display:block;margin-bottom:.5rem;color:var(--muted);"></i>
                 La funcionalidad de quiz y tareas se puede implementar en la siguiente fase.
                 Por ahora puedes agregar las instrucciones en el campo de texto.
             </div>
@@ -185,7 +185,7 @@ tinymce.init({
             xhr.send(formData);
         });
     },
-    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif; font-size: 15px; color: #334155; line-height: 1.7; max-width: 100%; } img { max-width: 100%; height: auto; border-radius: 6px; }',
+    content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif; font-size: 15px; color: var(--paper); line-height: 1.7; max-width: 100%; } img { max-width: 100%; height: auto; border-radius: 6px; }',
     setup: function(editor) {
         editor.on('change', function() { editor.save(); });
     }
@@ -193,18 +193,18 @@ tinymce.init({
 function videoTab(tab) {
     document.getElementById('video-panel-url').style.display    = tab === 'url'    ? 'block' : 'none';
     document.getElementById('video-panel-upload').style.display = tab === 'upload' ? 'block' : 'none';
-    document.getElementById('tab-url').style.background    = tab === 'url'    ? '#0f3460' : '#f8fafc';
-    document.getElementById('tab-url').style.color         = tab === 'url'    ? '#fff'    : '#64748b';
-    document.getElementById('tab-url').style.borderColor   = tab === 'url'    ? '#0f3460' : '#d1d9e0';
-    document.getElementById('tab-upload').style.background = tab === 'upload' ? '#0f3460' : '#f8fafc';
-    document.getElementById('tab-upload').style.color      = tab === 'upload' ? '#fff'    : '#64748b';
-    document.getElementById('tab-upload').style.borderColor= tab === 'upload' ? '#0f3460' : '#d1d9e0';
+    document.getElementById('tab-url').style.background    = tab === 'url'    ? 'var(--uv)' : 'var(--lab-deep)';
+    document.getElementById('tab-url').style.color         = tab === 'url'    ? '#fff'    : 'var(--muted)';
+    document.getElementById('tab-url').style.borderColor   = tab === 'url'    ? 'var(--uv)' : 'var(--line)';
+    document.getElementById('tab-upload').style.background = tab === 'upload' ? 'var(--uv)' : 'var(--lab-deep)';
+    document.getElementById('tab-upload').style.color      = tab === 'upload' ? '#fff'    : 'var(--muted)';
+    document.getElementById('tab-upload').style.borderColor= tab === 'upload' ? 'var(--uv)' : 'var(--line)';
 }
 function videoTab(tab) {
     document.getElementById('video-panel-url').style.display    = tab === 'url'    ? 'block' : 'none';
     document.getElementById('video-panel-upload').style.display = tab === 'upload' ? 'block' : 'none';
-    document.getElementById('tab-url').style.cssText    = tab==='url'    ? 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #0f3460;background:#0f3460;color:#fff;' : 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;';
-    document.getElementById('tab-upload').style.cssText = tab==='upload' ? 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #0f3460;background:#0f3460;color:#fff;' : 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;';
+    document.getElementById('tab-url').style.cssText    = tab==='url'    ? 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--uv);background:var(--uv);color:#fff;' : 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);';
+    document.getElementById('tab-upload').style.cssText = tab==='upload' ? 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--uv);background:var(--uv);color:#fff;' : 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);';
 }
 function tipoChange(tipo) {
     document.getElementById('campo-texto').style.display   = tipo === 'texto' ? 'block' : 'none';

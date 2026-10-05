@@ -3,116 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title', 'Admin') — Comunal Aprende</title>
+    <title>@yield('title', 'Admin') — ForenseBox</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --lab-deep: #0A121B; --lab: #0E1A24; --panel: #15252F; --panel-2: #1B2E3A;
+            --line: #27404E; --line-soft: #1E333F; --paper: #E8EEF0; --muted: #9FB0B8;
+            --tag: #F2B33D; --uv: #8E7BFF; --resolved: #3FBF9B; --alert: #F0606A;
+            --font-sans: 'Chivo', sans-serif; --font-mono: 'JetBrains Mono', monospace;
+        }
         *, *::before, *::after { box-sizing: border-box; }
-        body { margin: 0; background: #f0f4f8; font-family: 'Inter', sans-serif; }
+        body { margin: 0; background: var(--lab); font-family: var(--font-sans); color: var(--paper); }
         .adm-wrap { display: flex; min-height: 100vh; }
 
         /* ── Sidebar admin ── */
         .adm-sidebar {
             width: 255px; flex-shrink: 0;
-            background: linear-gradient(175deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(180deg, #0A121B 0%, #0E1A24 55%, #12202c 100%);
+            border-right: 1px solid var(--line-soft);
             display: flex; flex-direction: column;
             position: fixed; top: 0; left: 0; height: 100vh;
             z-index: 200; transition: transform .28s ease;
-            box-shadow: 3px 0 18px rgba(0,0,0,.3);
         }
         .adm-logo {
             display: flex; align-items: center; gap: .7rem;
-            padding: 1.3rem 1.4rem;
-            border-bottom: 1px solid rgba(255,255,255,.08);
+            padding: 1.2rem 1.4rem;
+            border-bottom: 1px solid var(--line-soft);
             text-decoration: none;
         }
         .adm-logo-icon {
             width: 36px; height: 36px;
-            background: #e94560; border-radius: 9px;
+            background: var(--tag); border-radius: 9px;
             display: flex; align-items: center; justify-content: center;
-            color: #fff; font-weight: 700; font-size: .85rem; flex-shrink: 0;
+            color: #1A1203; font-weight: 800; font-size: .85rem; flex-shrink: 0;
         }
         .adm-logo-text { line-height: 1.2; }
-        .adm-logo-name { font-family: 'Poppins',sans-serif; font-weight: 700; font-size: .88rem; color: #fff; display: block; }
-        .adm-logo-sub  { font-size: .68rem; color: rgba(255,255,255,.45); font-weight: 500; }
+        .adm-logo-name { font-family: var(--font-sans); font-weight: 800; font-size: .9rem; color: var(--paper); display: block; }
+        .adm-logo-name b { color: var(--tag); }
+        .adm-logo-sub  { font-family: var(--font-mono); font-size: .62rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .12em; }
 
         .adm-admin-badge {
             margin: .75rem 1.4rem;
-            background: rgba(233,69,96,.15);
-            border: 1px solid rgba(233,69,96,.3);
+            background: var(--tag-soft);
+            border: 1px solid var(--tag-border);
             border-radius: 8px;
             padding: .5rem .875rem;
             display: flex; align-items: center; gap: .5rem;
         }
-        .adm-admin-badge i { color: #e94560; font-size: .85rem; }
-        .adm-admin-badge span { font-size: .8rem; font-weight: 600; color: rgba(255,255,255,.8); }
+        .adm-admin-badge i { color: var(--tag); font-size: .85rem; }
+        .adm-admin-badge span { font-size: .8rem; font-weight: 600; color: var(--paper); }
 
         .adm-nav { flex: 1; padding: .4rem 0; overflow-y: auto; }
         .adm-nav-sep {
             padding: .55rem 1.4rem .2rem;
-            font-size: .65rem; font-weight: 700;
-            text-transform: uppercase; letter-spacing: .1em;
-            color: rgba(255,255,255,.3);
+            font-family: var(--font-mono); font-size: .6rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: .14em;
+            color: var(--muted);
         }
         .adm-nav-link {
             display: flex; align-items: center; gap: .7rem;
             padding: .65rem 1.4rem;
-            color: rgba(255,255,255,.65); font-size: .86rem; font-weight: 500;
+            color: var(--muted); font-size: .86rem; font-weight: 600;
             text-decoration: none; border-left: 3px solid transparent; transition: all .16s;
         }
         .adm-nav-link i { width: 17px; text-align: center; font-size: .92rem; }
-        .adm-nav-link:hover  { background: rgba(255,255,255,.07); color: #fff; border-left-color: rgba(233,69,96,.5); }
-        .adm-nav-link.active { background: rgba(233,69,96,.12); color: #fff; border-left-color: #e94560; }
+        .adm-nav-link:hover  { background: rgba(142,123,255,.08); color: var(--paper); border-left-color: var(--uv); }
+        .adm-nav-link.active { background: rgba(142,123,255,.12); color: #c9bfff; border-left-color: var(--uv); }
 
-        .adm-side-foot { padding: .9rem 1.4rem; border-top: 1px solid rgba(255,255,255,.08); }
-        .adm-side-foot a {
-            display: flex; align-items: center; gap: .6rem;
-            font-size: .84rem; color: rgba(255,255,255,.5);
-            text-decoration: none; padding: .4rem 0; transition: color .15s;
-        }
-        .adm-side-foot a:hover { color: rgba(255,255,255,.8); }
+        .adm-side-foot { padding: .9rem 1.4rem; border-top: 1px solid var(--line-soft); }
         .adm-logout {
             width: 100%; display: flex; align-items: center; gap: .7rem;
             padding: .6rem .85rem; background: none; border: none;
-            border-radius: 8px; color: rgba(255,255,255,.5);
-            font-size: .86rem; font-weight: 500; cursor: pointer; text-align: left; transition: all .16s;
-            margin-top: .4rem;
+            border-radius: 8px; color: var(--muted);
+            font-size: .86rem; font-weight: 600; cursor: pointer; text-align: left; transition: all .16s;
         }
-        .adm-logout:hover { background: rgba(220,53,69,.2); color: #ff8492; }
+        .adm-logout:hover { background: var(--alert-soft); color: var(--alert); }
 
         /* ── Main ── */
         .adm-main { margin-left: 255px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
         .adm-topbar {
-            background: #fff; padding: .85rem 1.75rem;
+            background: var(--panel); padding: .85rem 1.75rem;
             display: flex; align-items: center; justify-content: space-between;
-            box-shadow: 0 1px 4px rgba(0,0,0,.08);
+            border-bottom: 1px solid var(--line-soft);
             position: sticky; top: 0; z-index: 100;
         }
         .adm-topbar-left { display: flex; align-items: center; gap: .9rem; }
-        .adm-topbar-title { font-family: 'Poppins',sans-serif; font-size: 1.1rem; font-weight: 700; color: #1a1a2e; margin: 0; }
-        .adm-hamburger { display: none; background: none; border: none; font-size: 1.3rem; color: #0f3460; cursor: pointer; }
+        .adm-topbar-title { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 800; color: var(--paper); margin: 0; }
+        .adm-hamburger { display: none; background: none; border: none; font-size: 1.3rem; color: var(--uv); cursor: pointer; }
         .adm-topbar-right { display: flex; align-items: center; gap: .75rem; }
         .adm-topbar-badge {
             display: flex; align-items: center; gap: .4rem;
-            background: rgba(233,69,96,.1); color: #e94560;
-            font-size: .78rem; font-weight: 700;
+            background: var(--tag-soft); color: var(--tag);
+            font-family: var(--font-mono); font-size: .68rem; font-weight: 500;
             padding: .3rem .75rem; border-radius: 999px;
         }
-        .adm-topbar-user { font-size: .86rem; color: #64748b; }
+        .adm-topbar-user { font-size: .86rem; color: var(--muted); }
 
         .adm-flash { padding: 1.25rem 1.75rem 0; }
-        .adm-alert { padding: .75rem 1rem; border-radius: 9px; display: flex; align-items: center; gap: .6rem; font-size: .86rem; font-weight: 500; margin-bottom: .6rem; }
-        .adm-alert.ok  { background: rgba(40,167,69,.1);  border-left: 4px solid #28a745; color: #166534; }
-        .adm-alert.err { background: rgba(220,53,69,.1);  border-left: 4px solid #dc3545; color: #7f1d1d; }
+        .adm-alert { padding: .75rem 1rem; border-radius: 9px; display: flex; align-items: center; gap: .6rem; font-size: .86rem; font-weight: 600; margin-bottom: .6rem; }
+        .adm-alert.ok  { background: var(--resolved-soft); border-left: 4px solid var(--resolved); color: var(--resolved); }
+        .adm-alert.err { background: var(--alert-soft);  border-left: 4px solid var(--alert); color: var(--alert); }
 
         .adm-content { padding: 1.6rem 1.75rem 3rem; }
 
-        .adm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 199; }
+        .adm-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 199; }
         @media (max-width: 1024px) {
             .adm-sidebar { transform: translateX(-100%); }
             .adm-sidebar.open { transform: translateX(0); }
@@ -131,7 +131,7 @@
         <a href="{{ route('admin.dashboard') }}" class="adm-logo">
             <div class="adm-logo-icon"><i class="fas fa-shield-alt"></i></div>
             <div class="adm-logo-text">
-                <span class="adm-logo-name">Comunal Aprende</span>
+                <span class="adm-logo-name">Forense<b>Box</b></span>
                 <span class="adm-logo-sub">Panel Administrativo</span>
             </div>
         </a>

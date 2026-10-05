@@ -6,40 +6,40 @@
 <style>
     .adm-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 1.5rem; }
     .adm-stat {
-        background: #fff; border-radius: 12px; padding: 1.25rem;
+        background: var(--panel); border: 1px solid var(--line);
+        border-radius: 12px; padding: 1.25rem;
         display: flex; align-items: center; gap: .9rem;
-        box-shadow: 0 2px 8px rgba(0,0,0,.06);
         transition: transform .2s, box-shadow .2s;
     }
-    .adm-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.1); }
+    .adm-stat:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,.35); }
     .adm-stat-icon { width: 50px; height: 50px; border-radius: 11px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-    .ic-red    { background: rgba(233,69,96,.1);  color: #e94560; }
-    .ic-blue   { background: rgba(10,77,140,.1);  color: #0A4D8C; }
-    .ic-green  { background: rgba(40,167,69,.1);  color: #28a745; }
-    .ic-gold   { background: rgba(217,119,6,.1);  color: #d97706; }
-    .adm-stat-num   { font-family: 'Poppins',sans-serif; font-size: 1.7rem; font-weight: 700; color: #1a1a2e; line-height: 1; margin-bottom: .15rem; }
-    .adm-stat-label { font-size: .8rem; color: #64748b; font-weight: 500; }
+    .ic-red    { background: var(--alert-soft);  color: var(--alert); }
+    .ic-blue   { background: var(--uv-soft);     color: var(--uv); }
+    .ic-green  { background: var(--resolved-soft); color: var(--resolved); }
+    .ic-gold   { background: var(--tag-soft);    color: var(--tag); }
+    .adm-stat-num   { font-family: var(--font-mono); font-size: 1.6rem; font-weight: 700; color: var(--paper); line-height: 1; margin-bottom: .15rem; }
+    .adm-stat-label { font-size: .8rem; color: var(--muted); font-weight: 600; }
 
     .adm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-    .adm-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden; }
-    .adm-card-head { padding: 1rem 1.25rem; border-bottom: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; }
-    .adm-card-title { font-family: 'Poppins',sans-serif; font-size: .95rem; font-weight: 700; color: #1a1a2e; margin: 0; display: flex; align-items: center; gap: .45rem; }
+    .adm-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+    .adm-card-head { padding: 1rem 1.25rem; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; }
+    .adm-card-title { font-family: var(--font-sans); font-size: .95rem; font-weight: 800; color: var(--paper); margin: 0; display: flex; align-items: center; gap: .45rem; }
+    .adm-card-title i { color: var(--tag); }
     .adm-card-body  { padding: 1.1rem; }
 
-    .adm-row { display: flex; align-items: center; gap: .9rem; padding: .75rem 0; border-bottom: 1px solid #f8fafc; }
+    .adm-row { display: flex; align-items: center; gap: .9rem; padding: .75rem 0; border-bottom: 1px solid var(--line-soft); }
     .adm-row:last-child { border-bottom: none; padding-bottom: 0; }
-    .adm-row-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
+    .adm-row-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; flex-shrink: 0; background: linear-gradient(135deg, var(--uv), #6a58e0); }
     .adm-row-info { flex: 1; min-width: 0; }
-    .adm-row-name  { font-weight: 600; font-size: .86rem; color: #1a1a2e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .adm-row-sub   { font-size: .75rem; color: #94a3b8; margin-top: .1rem; }
-    .adm-row-badge { font-size: .72rem; font-weight: 700; padding: .2rem .6rem; border-radius: 999px; white-space: nowrap; }
-    .badge-free { background: rgba(40,167,69,.1); color: #16a34a; }
-    .badge-paid { background: rgba(217,119,6,.1); color: #d97706; }
-    .badge-on   { background: rgba(40,167,69,.1); color: #16a34a; }
-    .badge-off  { background: rgba(220,53,69,.1); color: #dc3545; }
+    .adm-row-name  { font-weight: 600; font-size: .86rem; color: var(--paper); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .adm-row-sub   { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
+    .adm-row-badge { font-family: var(--font-mono); font-size: .68rem; font-weight: 500; padding: .2rem .6rem; border-radius: 999px; white-space: nowrap; }
+    .badge-free { background: var(--resolved-soft); color: var(--resolved); }
+    .badge-paid { background: var(--tag-soft); color: var(--tag); }
+    .badge-on   { background: var(--resolved-soft); color: var(--resolved); }
 
-    .adm-link { font-size: .82rem; color: #0f3460; font-weight: 600; text-decoration: none; }
-    .adm-link:hover { text-decoration: underline; }
+    .adm-link { font-size: .82rem; color: var(--uv); font-weight: 600; text-decoration: none; }
+    .adm-link:hover { color: #b3a8ff; }
 
     @media (max-width: 900px) { .adm-stats { grid-template-columns: 1fr 1fr; } .adm-grid { grid-template-columns: 1fr; } }
 </style>
@@ -67,14 +67,14 @@
     {{-- Cursos recientes --}}
     <div class="adm-card">
         <div class="adm-card-head">
-            <h3 class="adm-card-title"><i class="fas fa-graduation-cap" style="color:#0f3460;"></i> Cursos Recientes</h3>
+            <h3 class="adm-card-title"><i class="fas fa-graduation-cap"></i> Cursos Recientes</h3>
             <a href="{{ route('admin.cursos.index') }}" class="adm-link">Ver todos <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="adm-card-body">
             @forelse($cursosRecientes as $curso)
                 <div class="adm-row">
-                    <div class="adm-row-icon" style="background: linear-gradient(135deg,#0A4D8C,#3B88D4);">
-                        <i class="fas {{ $curso->icono_fa ?? 'fa-graduation-cap' }}"></i>
+                    <div class="adm-row-icon">
+                        <i class="fas {{ $curso->icono_fa ?? 'fa-fingerprint' }}"></i>
                     </div>
                     <div class="adm-row-info">
                         <div class="adm-row-name">{{ $curso->titulo }}</div>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
             @empty
-                <p style="color:#94a3b8;font-size:.88rem;text-align:center;padding:1rem 0;">No hay cursos aún.</p>
+                <p style="color:var(--muted);font-size:.88rem;text-align:center;padding:1rem 0;">No hay cursos aún.</p>
             @endforelse
         </div>
     </div>
@@ -95,25 +95,23 @@
     {{-- Estudiantes recientes --}}
     <div class="adm-card">
         <div class="adm-card-head">
-            <h3 class="adm-card-title"><i class="fas fa-users" style="color:#e94560;"></i> Estudiantes Recientes</h3>
+            <h3 class="adm-card-title"><i class="fas fa-users"></i> Estudiantes Recientes</h3>
             <a href="{{ route('admin.estudiantes') }}" class="adm-link">Ver todos <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="adm-card-body">
             @forelse($estudiantesRecientes as $est)
                 <div class="adm-row">
-                    <div class="adm-row-icon" style="background: linear-gradient(135deg,#e94560,#ff6b8a);">
-                        <span style="font-weight:700;font-size:.9rem;">{{ strtoupper(substr($est->name,0,1)) }}</span>
+                    <div class="adm-row-icon" style="background: linear-gradient(135deg, var(--tag), #d89a22);">
+                        <span style="font-weight:700;font-size:.9rem;color:#1A1203;">{{ strtoupper(substr($est->name,0,1)) }}</span>
                     </div>
                     <div class="adm-row-info">
                         <div class="adm-row-name">{{ $est->name }}</div>
-                        <div class="adm-row-sub">{{ $est->email }} · {{ $est->municipio ?? 'Sin ubicación' }}</div>
+                        <div class="adm-row-sub">{{ $est->email }}</div>
                     </div>
-                    <span class="adm-row-badge {{ $est->condicion === 'afiliado' ? 'badge-on' : 'badge-off' }}">
-                        {{ $est->condicion === 'afiliado' ? 'Afiliado' : 'Particular' }}
-                    </span>
+                    <span class="adm-row-badge badge-on">Estudiante</span>
                 </div>
             @empty
-                <p style="color:#94a3b8;font-size:.88rem;text-align:center;padding:1rem 0;">No hay estudiantes aún.</p>
+                <p style="color:var(--muted);font-size:.88rem;text-align:center;padding:1rem 0;">No hay estudiantes aún.</p>
             @endforelse
         </div>
     </div>

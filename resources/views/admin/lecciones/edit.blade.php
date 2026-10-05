@@ -4,37 +4,37 @@
 
 @section('content')
 <style>
-    .adm-back { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: #0f3460; font-weight: 600; text-decoration: none; margin-bottom: 1.1rem; }
+    .adm-back { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: var(--uv); font-weight: 600; text-decoration: none; margin-bottom: 1.1rem; }
     .adm-back:hover { text-decoration: underline; }
     .adm-form-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 1.5rem; margin-bottom: 1.25rem; }
-    .adm-form-section { font-family: 'Poppins',sans-serif; font-size: .82rem; font-weight: 700; color: #0f3460; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #f0f4f8; display: flex; align-items: center; gap: .4rem; }
+    .adm-form-section { font-family: var(--font-mono); font-size: .82rem; font-weight: 700; color: var(--uv); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--panel-2); display: flex; align-items: center; gap: .4rem; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .form-full { grid-column: 1/-1; }
     .fg { margin-bottom: .1rem; }
-    .fg label { display: block; font-size: .83rem; font-weight: 600; color: #334155; margin-bottom: .35rem; }
-    .fg label .req { color: #e94560; }
-    .fi { width: 100%; padding: .65rem .9rem; border: 1.5px solid #d1d9e0; border-radius: 8px; font-size: .88rem; color: #334155; background: #fff; transition: border-color .16s, box-shadow .16s; outline: none; font-family: inherit; }
-    .fi:focus { border-color: #0f3460; box-shadow: 0 0 0 3px rgba(15,52,96,.1); }
+    .fg label { display: block; font-size: .83rem; font-weight: 600; color: var(--paper); margin-bottom: .35rem; }
+    .fg label .req { color: var(--alert); }
+    .fi { width: 100%; padding: .65rem .9rem; border: 1.5px solid var(--line); border-radius: 8px; font-size: .88rem; color: var(--paper); background: var(--lab); transition: border-color .16s, box-shadow .16s; outline: none; font-family: inherit; }
+    .fi:focus { border-color: var(--uv); box-shadow: 0 0 0 3px rgba(15,52,96,.1); }
     textarea.fi { resize: vertical; min-height: 200px; }
-    .fe { font-size: .78rem; color: #e94560; margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
+    .fe { font-size: .78rem; color: var(--alert); margin-top: .3rem; display: flex; align-items: center; gap: .3rem; }
     .toggle-row { display: flex; align-items: center; gap: .75rem; }
     .toggle-switch { position: relative; width: 44px; height: 24px; flex-shrink: 0; }
     .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .toggle-slider { position: absolute; inset: 0; background: #d1d9e0; border-radius: 999px; cursor: pointer; transition: background .2s; }
+    .toggle-slider { position: absolute; inset: 0; background: var(--line); border-radius: 999px; cursor: pointer; transition: background .2s; }
     .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: transform .2s; }
-    .toggle-switch input:checked + .toggle-slider { background: #0f3460; }
+    .toggle-switch input:checked + .toggle-slider { background: var(--uv); }
     .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
-    .btn-save { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.5rem; background: #0f3460; color: #fff; border: none; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .16s; }
-    .btn-save:hover { background: #1a1a2e; }
-    .btn-cancel { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.25rem; background: #f0f4f8; color: #64748b; border-radius: 8px; font-size: .9rem; font-weight: 600; text-decoration: none; transition: background .16s; }
-    .btn-cancel:hover { background: #e2e8f0; }
+    .btn-save { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.5rem; background: var(--uv); color: #fff; border: none; border-radius: 8px; font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .16s; }
+    .btn-save:hover { background: #6a58e0; }
+    .btn-cancel { display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.25rem; background: var(--panel-2); color: var(--muted); border-radius: 8px; font-size: .9rem; font-weight: 600; text-decoration: none; transition: background .16s; }
+    .btn-cancel:hover { background: var(--panel-2); }
     .tipo-tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .35rem; }
-    .tipo-tab { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem; border: 1.5px solid #d1d9e0; border-radius: 8px; cursor: pointer; font-size: .82rem; font-weight: 600; color: #64748b; transition: all .16s; user-select: none; }
+    .tipo-tab { flex: 1; min-width: 90px; display: flex; align-items: center; justify-content: center; gap: .4rem; padding: .6rem; border: 1.5px solid var(--line); border-radius: 8px; cursor: pointer; font-size: .82rem; font-weight: 600; color: var(--muted); transition: all .16s; user-select: none; }
     .tipo-tab input { display: none; }
-    .tipo-tab:has(input:checked) { border-color: #0f3460; background: #f0f4f8; color: #0f3460; }
-    .quiz-banner { background: #f3f0ff; border: 1.5px solid #c4b5fd; border-radius: 10px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.25rem; }
-    .btn-quiz { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; background: #7c3aed; color: #fff; border-radius: 8px; font-size: .86rem; font-weight: 700; text-decoration: none; transition: background .16s; }
-    .btn-quiz:hover { background: #5b21b6; color: #fff; }
+    .tipo-tab:has(input:checked) { border-color: var(--uv); background: var(--panel-2); color: var(--uv); }
+    .quiz-banner { background: var(--uv-soft); border: 1.5px solid var(--uv-border); border-radius: 10px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .75rem; margin-bottom: 1.25rem; }
+    .btn-quiz { display: inline-flex; align-items: center; gap: .5rem; padding: .6rem 1.1rem; background: var(--uv); color: #fff; border-radius: 8px; font-size: .86rem; font-weight: 700; text-decoration: none; transition: background .16s; }
+    .btn-quiz:hover { background: #6a58e0; color: #fff; }
     @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
 </style>
 
@@ -46,10 +46,10 @@
 @if($leccion->tipo_contenido === 'quiz')
     <div class="quiz-banner" id="quiz-banner-top">
         <div>
-            <div style="font-weight:700;font-size:.95rem;color:#5b21b6;">
+            <div style="font-weight:700;font-size:.95rem;color:#6a58e0;">
                 <i class="fas fa-question-circle"></i> Esta lección es de tipo Quiz
             </div>
-            <div style="font-size:.82rem;color:#7c3aed;margin-top:.25rem;">
+            <div style="font-size:.82rem;color:var(--uv);margin-top:.25rem;">
                 Configura título, duración y estado aquí. Las preguntas se gestionan desde el Editor de Quiz.
             </div>
         </div>
@@ -99,8 +99,8 @@
                         <span class="toggle-slider"></span>
                     </label>
                     <div>
-                        <div style="font-weight:600;font-size:.88rem;color:#334155;">Lección Activa</div>
-                        <div style="font-size:.75rem;color:#94a3b8;">Visible para estudiantes</div>
+                        <div style="font-weight:600;font-size:.88rem;color:var(--paper);">Lección Activa</div>
+                        <div style="font-size:.75rem;color:var(--muted);">Visible para estudiantes</div>
                     </div>
                 </div>
             </div>
@@ -122,11 +122,11 @@
         <div id="campo-video" style="{{ $tipoActual === 'video' ? '' : 'display:none;' }}">
             <div style="display:flex;gap:.5rem;margin-bottom:1rem;">
                 <button type="button" id="tab-url" onclick="videoTab('url')"
-                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #0f3460;background:#0f3460;color:#fff;">
+                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--uv);background:var(--uv);color:#fff;">
                     <i class="fas fa-link"></i> URL de YouTube / Vimeo
                 </button>
                 <button type="button" id="tab-upload" onclick="videoTab('upload')"
-                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;">
+                    style="flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);">
                     <i class="fas fa-upload"></i> Subir video propio
                 </button>
             </div>
@@ -138,9 +138,9 @@
             </div>
             <div id="video-panel-upload" class="fg" style="display:none;">
                 @if($leccion->video_local)
-                    <div style="margin-bottom:.75rem;padding:.75rem 1rem;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;font-size:.83rem;color:#166534;">
+                    <div style="margin-bottom:.75rem;padding:.75rem 1rem;background:var(--resolved-soft);border:1px solid rgba(63,191,155,.35);border-radius:8px;font-size:.83rem;color:var(--resolved);">
                         <i class="fas fa-check-circle"></i> Video actual guardado.
-                        <a href="{{ $leccion->video_url }}" target="_blank" style="color:#166534;font-weight:600;margin-left:.4rem;">Ver video</a>
+                        <a href="{{ $leccion->video_url }}" target="_blank" style="color:var(--resolved);font-weight:600;margin-left:.4rem;">Ver video</a>
                     </div>
                 @endif
                 <label for="video_archivo">Reemplazar video (MP4, MOV, WEBM &mdash; m&aacute;x. 500 MB)</label>
@@ -154,13 +154,13 @@
         <div id="campo-archivo" style="{{ $tipoActual === 'pdf' ? '' : 'display:none;' }}">
             <label class="fg">Archivo</label>
             @if($leccion->archivo)
-                <div style="margin-bottom:.5rem;font-size:.84rem;color:#475569;">
+                <div style="margin-bottom:.5rem;font-size:.84rem;color:var(--muted);">
                     <i class="fas fa-paperclip"></i> Archivo actual:
-                    <a href="{{ $leccion->archivo }}" target="_blank" style="color:#0f3460;">ver archivo</a>
+                    <a href="{{ $leccion->archivo }}" target="_blank" style="color:var(--uv);">ver archivo</a>
                 </div>
             @endif
             <input type="file" id="archivo" name="archivo" class="fi" accept=".pdf,.doc,.docx,.ppt,.pptx">
-            <small style="color:#94a3b8;font-size:.75rem;">Deja vacío para mantener el archivo actual.</small>
+            <small style="color:var(--muted);font-size:.75rem;">Deja vacío para mantener el archivo actual.</small>
         </div>
     </div>
 
@@ -168,10 +168,10 @@
     <div id="seccion-quiz-banner" style="{{ $tipoActual !== 'quiz' ? 'display:none;' : '' }}">
         <div class="quiz-banner">
             <div>
-                <div style="font-weight:700;font-size:.95rem;color:#5b21b6;">
+                <div style="font-weight:700;font-size:.95rem;color:#6a58e0;">
                     <i class="fas fa-question-circle"></i> Esta lección es de tipo Quiz
                 </div>
-                <div style="font-size:.82rem;color:#7c3aed;margin-top:.25rem;">
+                <div style="font-size:.82rem;color:var(--uv);margin-top:.25rem;">
                     Las preguntas se gestionan desde el Editor de Quiz.
                 </div>
             </div>
@@ -240,7 +240,7 @@ function initTinyMCE() {
                 xhr.send(formData);
             });
         },
-        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; color: #334155; line-height: 1.7; } img { max-width: 100%; height: auto; border-radius: 6px; }',
+        content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 15px; color: var(--paper); line-height: 1.7; } img { max-width: 100%; height: auto; border-radius: 6px; }',
         setup: function(editor) {
             editor.on('change', function() { editor.save(); });
         }
@@ -285,8 +285,8 @@ function videoTab(tab) {
     document.getElementById('video-panel-url').style.display    = tab === 'url'    ? 'block' : 'none';
     document.getElementById('video-panel-upload').style.display = tab === 'upload' ? 'block' : 'none';
     var baseStyle = 'flex:1;padding:.55rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;';
-    document.getElementById('tab-url').style.cssText    = baseStyle + (tab === 'url'    ? 'border:1.5px solid #0f3460;background:#0f3460;color:#fff;' : 'border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;');
-    document.getElementById('tab-upload').style.cssText = baseStyle + (tab === 'upload' ? 'border:1.5px solid #0f3460;background:#0f3460;color:#fff;' : 'border:1.5px solid #d1d9e0;background:#f8fafc;color:#64748b;');
+    document.getElementById('tab-url').style.cssText    = baseStyle + (tab === 'url'    ? 'border:1.5px solid var(--uv);background:var(--uv);color:#fff;' : 'border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);');
+    document.getElementById('tab-upload').style.cssText = baseStyle + (tab === 'upload' ? 'border:1.5px solid var(--uv);background:var(--uv);color:#fff;' : 'border:1.5px solid var(--line);background:var(--lab-deep);color:var(--muted);');
 }
 
 // Inicialización al cargar la página

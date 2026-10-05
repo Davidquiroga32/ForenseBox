@@ -5,23 +5,23 @@
 @section('content')
 <style>
     .adm-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.25rem; }
-    .adm-table-wrap { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); overflow: hidden; }
+    .adm-table-wrap { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
     table { width: 100%; border-collapse: collapse; }
-    thead { background: #f8fafc; }
-    th { padding: .75rem 1rem; text-align: left; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: #64748b; border-bottom: 1px solid #e8eef5; }
-    td { padding: .875rem 1rem; font-size: .86rem; color: #334155; border-bottom: 1px solid #f8fafc; vertical-align: middle; }
+    thead { background: var(--lab-deep); }
+    th { padding: .75rem 1rem; text-align: left; font-family: var(--font-mono); font-size: .66rem; font-weight: 500; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); border-bottom: 1px solid var(--line-soft); }
+    td { padding: .875rem 1rem; font-size: .86rem; color: var(--paper); border-bottom: 1px solid var(--line-soft); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: #fafcff; }
+    tr:hover td { background: var(--panel-2); }
 
-    .curso-thumb { width: 44px; height: 44px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; }
-    .curso-name { font-weight: 600; color: #1a1a2e; }
-    .curso-cat  { font-size: .75rem; color: #94a3b8; margin-top: .1rem; }
+    .curso-thumb { width: 44px; height: 44px; border-radius: 9px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 1.1rem; flex-shrink: 0; background: linear-gradient(135deg, var(--uv), #6a58e0); }
+    .curso-name { font-weight: 600; color: var(--paper); }
+    .curso-cat  { font-size: .75rem; color: var(--muted); margin-top: .1rem; }
 
-    .badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .72rem; font-weight: 700; padding: .2rem .65rem; border-radius: 999px; }
-    .badge-free   { background: rgba(40,167,69,.1); color: #16a34a; }
-    .badge-paid   { background: rgba(217,119,6,.1); color: #d97706; }
-    .badge-active { background: rgba(40,167,69,.1); color: #16a34a; }
-    .badge-inactive{ background: rgba(220,53,69,.1); color: #dc3545; }
+    .badge { display: inline-flex; align-items: center; gap: .25rem; font-family: var(--font-mono); font-size: .66rem; font-weight: 500; padding: .2rem .65rem; border-radius: 999px; }
+    .badge-free   { background: var(--resolved-soft); color: var(--resolved); }
+    .badge-paid   { background: var(--tag-soft); color: var(--tag); }
+    .badge-active { background: var(--resolved-soft); color: var(--resolved); }
+    .badge-inactive{ background: var(--alert-soft); color: var(--alert); }
 
     .adm-actions { display: flex; align-items: center; gap: .4rem; }
     .act-btn {
@@ -29,22 +29,23 @@
         display: flex; align-items: center; justify-content: center;
         font-size: .82rem; text-decoration: none; border: none; cursor: pointer; transition: all .15s;
     }
-    .act-view  { background: #EBF3FF; color: #0A4D8C; }
-    .act-edit  { background: #FFFBEB; color: #d97706; }
-    .act-del   { background: rgba(220,53,69,.1); color: #dc3545; }
-    .act-tog   { background: #f0f4f8; color: #64748b; }
-    .act-btn:hover { filter: brightness(.9); }
+    .act-view  { background: var(--uv-soft); color: var(--uv); }
+    .act-edit  { background: var(--tag-soft); color: var(--tag); }
+    .act-del   { background: var(--alert-soft); color: var(--alert); }
+    .act-tog   { background: var(--lab-deep); color: var(--muted); }
+    .act-btn:hover { filter: brightness(1.2); }
 
     .btn-nuevo {
         display: inline-flex; align-items: center; gap: .5rem;
-        padding: .6rem 1.1rem; background: #e94560; color: #fff;
-        border-radius: 8px; font-size: .86rem; font-weight: 700;
+        padding: .6rem 1.1rem; background: var(--tag); color: #1A1203;
+        border-radius: 8px; font-size: .86rem; font-weight: 600;
         text-decoration: none; transition: background .16s;
+        box-shadow: 0 3px 12px rgba(242,179,61,.2);
     }
-    .btn-nuevo:hover { background: #c73652; color: #fff; }
+    .btn-nuevo:hover { background: #ffc75c; color: #1A1203; }
 
-    .empty-table { text-align: center; padding: 3rem 2rem; color: #94a3b8; }
-    .empty-table i { font-size: 2.5rem; display: block; margin-bottom: .75rem; }
+    .empty-table { text-align: center; padding: 3rem 2rem; color: var(--muted); }
+    .empty-table i { font-size: 2.5rem; display: block; margin-bottom: .75rem; color: var(--uv); }
 
     @media (max-width: 768px) {
         .hide-sm { display: none; }
@@ -53,10 +54,10 @@
 </style>
 
 <div class="adm-toolbar">
-    <div style="font-size:.9rem;color:#64748b;">
-        <strong style="color:#1a1a2e;">{{ $totalCursos }}</strong> cursos en total ·
-        <strong style="color:#16a34a;">{{ $cursosActivos }}</strong> activos ·
-        <strong style="color:#0A4D8C;">{{ $totalEstudiantes }}</strong> estudiantes
+    <div style="font-size:.9rem;color:var(--muted);">
+        <strong style="color:var(--paper);">{{ $totalCursos }}</strong> cursos en total ·
+        <strong style="color:var(--resolved);">{{ $cursosActivos }}</strong> activos ·
+        <strong style="color:var(--uv);">{{ $totalEstudiantes }}</strong> estudiantes
     </div>
     <a href="{{ route('admin.cursos.create') }}" class="btn-nuevo">
         <i class="fas fa-plus"></i> Nuevo Curso
@@ -91,7 +92,7 @@
                         <td>
                             <div style="display:flex;align-items:center;gap:.75rem;">
                                 <div class="curso-thumb"
-                                    style="background: linear-gradient(135deg, {{ $curso->color_gradiente ?? '#0A4D8C,#3B88D4' }});">
+                                    style="background: linear-gradient(135deg, {{ $curso->color_gradiente ?? '#15253a,#0A121B' }});">
                                     <i class="fas {{ $curso->icono_fa ?? 'fa-graduation-cap' }}"></i>
                                 </div>
                                 <div>
