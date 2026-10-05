@@ -6,7 +6,7 @@
 <style>
     .adm-back { display: inline-flex; align-items: center; gap: .4rem; font-size: .84rem; color: var(--uv); font-weight: 600; text-decoration: none; margin-bottom: 1.1rem; }
     .adm-back:hover { text-decoration: underline; }
-    .adm-form-card { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.06); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .adm-form-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; }
     .adm-form-section { font-family: var(--font-mono); font-size: .82rem; font-weight: 700; color: var(--uv); text-transform: uppercase; letter-spacing: .07em; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid var(--panel-2); display: flex; align-items: center; gap: .4rem; }
     .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
     .form-full { grid-column: 1/-1; }
