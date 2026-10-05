@@ -129,39 +129,26 @@
 </div>
 
 <div class="adm-form-card">
-    <div class="adm-form-section"><i class="fas fa-palette"></i> Apariencia</div>
-    <div class="form-grid">
-        <div class="fg">
-            <label for="icono_fa">Ícono Font Awesome</label>
-            <input type="text" id="icono_fa" name="icono_fa" class="fi"
-                value="{{ old('icono_fa', $curso->icono_fa ?? 'fa-graduation-cap') }}"
-                placeholder="fa-graduation-cap" oninput="updateIconPreview()">
-            <div class="icon-preview">
-                <div class="icon-preview-box" id="iconPreviewBox">
-                    <i class="fas {{ old('icono_fa', $curso->icono_fa ?? 'fa-graduation-cap') }}" id="iconPreviewIcon"></i>
-                </div>
-                <small style="color:var(--muted);font-size:.78rem;">Busca íconos en <a href="https://fontawesome.com/icons" target="_blank" style="color:var(--uv);">fontawesome.com/icons</a></small>
+    <div class="adm-form-section"><i class="fas fa-image"></i> Imagen del Curso</div>
+    <div class="fg">
+        <label>Imagen de portada</label>
+        <input type="file" id="imagen" name="imagen" class="fi" accept="image/*" onchange="previewImagen(this)">
+        <small style="color:var(--muted);font-size:.78rem;">JPG, PNG o WEBP. Máximo 3 MB.</small>
+        @error('imagen')<div class="fe"><i class="fas fa-exclamation-circle"></i> {{ $message }}</div>@enderror
+    </div>
+
+    {{-- Previsualización --}}
+    <div id="imagen-preview" style="margin-top:1.25rem;text-align:center;">
+        @if(isset($curso) && $curso->imagen)
+            <img src="{{ $curso->imagen }}" alt="Portada actual"
+                style="max-width:100%;max-height:240px;border-radius:12px;object-fit:cover;border:1px solid var(--line);">
+            <div style="font-size:.78rem;color:var(--muted);margin-top:.5rem;">Imagen actual</div>
+        @else
+            <div style="padding:2.5rem 1rem;border:1.5px dashed var(--line);border-radius:12px;color:var(--muted);font-size:.85rem;">
+                <i class="fas fa-image" style="font-size:2.25rem;display:block;margin-bottom:.6rem;opacity:.4;"></i>
+                <span>Sin imagen seleccionada</span>
             </div>
-        </div>
-
-        <div class="fg">
-            <label for="color_gradiente">Colores del gradiente</label>
-            <input type="text" id="color_gradiente" name="color_gradiente" class="fi"
-                value="{{ old('color_gradiente', $curso->color_gradiente ?? '#15253a,#27404E') }}"
-                placeholder="#15253a,#27404E">
-            <small style="color:var(--muted);font-size:.78rem;">Dos colores hex separados por coma</small>
-        </div>
-
-        <div class="fg">
-            <label>Imagen de portada</label>
-            @if(isset($curso) && $curso->imagen)
-                <div style="margin-bottom:.5rem;">
-                    <img src="{{ $curso->imagen }}" alt="portada"
-                        style="height:80px;border-radius:8px;object-fit:cover;">
-                </div>
-            @endif
-            <input type="file" id="imagen" name="imagen" class="fi" accept="image/*">
-        </div>
+        @endif
     </div>
 </div>
 
@@ -213,10 +200,18 @@ function togglePrecio(show) {
     paidLabel.style.background  = show ? 'var(--uv-soft)' : 'var(--lab)';
 }
 
-function updateIconPreview() {
-    const val = document.getElementById('icono_fa').value.trim();
-    const icon = document.getElementById('iconPreviewIcon');
-    icon.className = 'fas ' + (val || 'fa-graduation-cap');
+function previewImagen(input) {
+    const preview = document.getElementById('imagen-preview');
+    if (!input.files || !input.files[0]) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        preview.innerHTML =
+            '<img src="' + e.target.result + '" alt="Vista previa" ' +
+            'style="max-width:100%;max-height:240px;border-radius:12px;object-fit:cover;border:1px solid var(--line);">' +
+            '<div style="font-size:.78rem;color:var(--resolved);margin-top:.5rem;">' +
+            '<i class="fas fa-check-circle"></i> Imagen seleccionada</div>';
+    };
+    reader.readAsDataURL(input.files[0]);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

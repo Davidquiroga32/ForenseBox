@@ -14,16 +14,13 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('descripcion')->nullable();
             $table->text('descripcion_corta')->nullable();
-            $table->enum('categoria', [
-                'gestion','normatividad','liderazgo',
-                'proyectos','participacion','contabilidad','otro'
-            ])->default('otro');
+            $table->string('categoria', 50)->default('otro');
             $table->enum('tipo', ['free','paid'])->default('free');
             $table->decimal('precio', 10, 2)->default(0);
             $table->integer('duracion_horas')->default(0);
             $table->string('imagen')->nullable();
             $table->string('color_gradiente')->nullable();     // ej: "#0A4D8C,#3B88D4"
-            $table->string('icono_fa')->default('fa-graduation-cap');
+            $table->string('icono_fa')->default('fa-fingerprint');
             $table->boolean('activo')->default(true);
             $table->boolean('destacado')->default(false);
             $table->integer('orden')->default(0);
