@@ -323,7 +323,7 @@
                 <span class="filter-label-sm"><i class="fas fa-tag" style="margin-right:.25rem;"></i>Categoría</span>
                 <select name="categoria" class="filter-select" onchange="this.form.submit()">
                     <option value="all" {{ request('categoria','all') === 'all' ? 'selected' : '' }}>Todas</option>
-                    @foreach(['gestion'=>'Gestión Comunal','normatividad'=>'Normatividad','liderazgo'=>'Liderazgo','proyectos'=>'Formulación de Proyectos','participacion'=>'Participación Ciudadana','contabilidad'=>'Contabilidad'] as $val => $label)
+                    @foreach(['forensia_digital'=>'Forensia Digital','ciberseguridad'=>'Ciberseguridad','seguridad_ofensiva'=>'Seguridad Ofensiva','analisis_malware'=>'Análisis de Malware','respuesta_incidentes'=>'Respuesta a Incidentes','osint'=>'OSINT','legal'=>'Legal y Cumplimiento','otro'=>'Otro'] as $val => $label)
                         <option value="{{ $val }}" {{ request('categoria') === $val ? 'selected' : '' }}>{{ $label }}</option>
                     @endforeach
                 </select>
@@ -344,7 +344,7 @@
             <span>
                 Mostrando <strong>{{ $cursos->count() }}</strong> curso{{ $cursos->count() !== 1 ? 's' : '' }}
                 @if(request('q')) para "<strong>{{ request('q') }}</strong>"@endif
-                @if(request('categoria') && request('categoria') !== 'all') en <strong>{{ ['gestion'=>'Gestión Comunal','normatividad'=>'Normatividad','liderazgo'=>'Liderazgo','proyectos'=>'Formulación de Proyectos','participacion'=>'Participación Ciudadana','contabilidad'=>'Contabilidad'][request('categoria')] ?? request('categoria') }}</strong>@endif
+                @if(request('categoria') && request('categoria') !== 'all') en <strong>{{ ['forensia_digital'=>'Forensia Digital','ciberseguridad'=>'Ciberseguridad','seguridad_ofensiva'=>'Seguridad Ofensiva','analisis_malware'=>'Análisis de Malware','respuesta_incidentes'=>'Respuesta a Incidentes','osint'=>'OSINT','legal'=>'Legal y Cumplimiento','otro'=>'Otro'][request('categoria')] ?? request('categoria') }}</strong>@endif
             </span>
             @if(request()->hasAny(['q','categoria','tipo']))
                 <a href="{{ route('cursos.index') }}" class="clear-link">

@@ -66,13 +66,14 @@ class Curso extends Model
     public function categoriaLabel(): string
     {
         return match($this->categoria) {
-            'gestion'       => 'Gestión Comunal',
-            'normatividad'  => 'Normatividad',
-            'liderazgo'     => 'Liderazgo',
-            'proyectos'     => 'Formulación de Proyectos',
-            'participacion' => 'Participación Ciudadana',
-            'contabilidad'  => 'Contabilidad',
-            default         => 'Otro',
+            'forensia_digital'     => 'Forensia Digital',
+            'ciberseguridad'       => 'Ciberseguridad',
+            'seguridad_ofensiva'   => 'Seguridad Ofensiva',
+            'analisis_malware'     => 'Análisis de Malware',
+            'respuesta_incidentes' => 'Respuesta a Incidentes',
+            'osint'                => 'OSINT',
+            'legal'                => 'Legal y Cumplimiento',
+            default                => 'Otro',
         };
     }
 

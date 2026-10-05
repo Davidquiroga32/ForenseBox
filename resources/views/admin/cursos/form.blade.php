@@ -80,7 +80,7 @@
         <div class="fg">
             <label for="categoria">Categoría <span class="req">*</span></label>
             <select id="categoria" name="categoria" class="fi" required>
-                @foreach(['gestion'=>'Gestión Comunal','normatividad'=>'Normatividad','liderazgo'=>'Liderazgo','proyectos'=>'Formulación de Proyectos','participacion'=>'Participación Ciudadana','contabilidad'=>'Contabilidad','otro'=>'Otro'] as $val => $label)
+                @foreach(['forensia_digital'=>'Forensia Digital','ciberseguridad'=>'Ciberseguridad','seguridad_ofensiva'=>'Seguridad Ofensiva','analisis_malware'=>'Análisis de Malware','respuesta_incidentes'=>'Respuesta a Incidentes','osint'=>'OSINT','legal'=>'Legal y Cumplimiento','otro'=>'Otro'] as $val => $label)
                     <option value="{{ $val }}" {{ old('categoria', $curso->categoria ?? '') == $val ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach
             </select>
