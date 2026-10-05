@@ -1,207 +1,152 @@
 @extends('layouts.app')
-@section('title', 'Cursos - Comunal Aprende')
+@section('title', 'Cursos - ForenseBox')
 
 @section('content')
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
-
 :root {
-    --blue-deep:  #0A2540;
-    --blue-core:  #0A4D8C;
-    --blue-mid:   #1E6DB8;
-    --blue-light: #3B88D4;
-    --blue-pale:  #EBF3FF;
-    --green:      #16a34a;
-    --orange:     #E65100;
-    --text:       #1a2940;
-    --muted:      #64748b;
-    --border:     #dde4ee;
-    --off-white:  #f7f9fc;
+    --lab-deep:  #0A121B;
+    --lab:       #0E1A24;
+    --panel:     #15252F;
+    --panel-2:   #1B2E3A;
+    --line:      #27404E;
+    --line-soft: #1E333F;
+    --paper:     #E8EEF0;
+    --muted:     #9FB0B8;
+    --tag:       #F2B33D;
+    --uv:        #8E7BFF;
+    --resolved:  #3FBF9B;
+    --font-sans: 'Chivo', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* ══════════════════════════════════
-   HERO BANNER
-══════════════════════════════════ */
+/* ══ HERO ══ */
 .cursos-hero {
     position: relative;
-    background: var(--blue-deep);
+    background: var(--lab-deep);
     overflow: hidden;
     padding: 5rem 1.5rem 4rem;
     margin-top: 68px;
 }
 .cursos-hero-bg {
     position: absolute; inset: 0;
-    background:
-        linear-gradient(135deg, #0A2540 0%, #0A4D8C 60%, #1E6DB8 100%);
-    opacity: .95;
+    background: linear-gradient(135deg, #0A121B 0%, #101f2d 60%, #14283a 100%);
 }
 .cursos-hero-dots {
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px);
-    background-size: 30px 30px;
+    background-image:
+        linear-gradient(rgba(142,123,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.06) 1px, transparent 1px);
+    background-size: 44px 44px;
     mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
 }
 .cursos-hero-glow {
     position: absolute;
     width: 500px; height: 500px; border-radius: 50%;
-    background: radial-gradient(rgba(59,136,212,.25), transparent 70%);
+    background: radial-gradient(rgba(142,123,255,.22), transparent 70%);
     top: -150px; right: -100px;
     pointer-events: none;
 }
-.cursos-hero-inner {
-    position: relative; z-index: 2;
-    max-width: 1100px; margin: 0 auto;
-    text-align: center;
-}
+.cursos-hero-inner { position: relative; z-index: 2; max-width: 1100px; margin: 0 auto; text-align: center; }
 .cursos-hero-eyebrow {
     display: inline-flex; align-items: center; gap: .45rem;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.2);
-    color: rgba(255,255,255,.85);
-    font-family: 'Outfit', sans-serif;
-    font-size: .72rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .12em;
+    background: rgba(142,123,255,.12);
+    border: 1px solid rgba(142,123,255,.35);
+    color: #c9bfff;
+    font-family: var(--font-mono);
+    font-size: .7rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: .14em;
     padding: .35rem 1rem; border-radius: 999px;
     margin-bottom: 1.25rem;
 }
 .cursos-hero h1 {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 900; color: #fff;
+    font-weight: 800; color: var(--paper);
     margin: 0 0 1rem; line-height: 1.1;
     letter-spacing: -.02em;
 }
 .cursos-hero h1 span {
-    background: linear-gradient(90deg, #60B0FF, #A0D4FF);
+    background: linear-gradient(90deg, #F2B33D, #ffd98a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 .cursos-hero p {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.05rem; color: rgba(255,255,255,.72);
+    font-family: var(--font-sans);
+    font-size: 1.05rem; color: var(--muted);
     line-height: 1.7; max-width: 560px; margin: 0 auto 2rem;
 }
 
-/* Mini stats en el hero */
-.hero-mini-stats {
-    display: flex; align-items: center; justify-content: center;
-    gap: 2rem; flex-wrap: wrap;
-    margin-top: 1.5rem;
-}
-.hms-item {
-    display: flex; align-items: center; gap: .5rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .85rem; color: rgba(255,255,255,.65);
-}
-.hms-item i { color: #60B0FF; }
-.hms-item strong { color: #fff; font-family: 'Outfit', sans-serif; font-weight: 700; }
+.hero-mini-stats { display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+.hms-item { display: flex; align-items: center; gap: .5rem; font-family: var(--font-sans); font-size: .85rem; color: var(--muted); }
+.hms-item i { color: var(--tag); }
+.hms-item strong { color: var(--paper); font-family: var(--font-mono); font-weight: 600; }
 
-/* Ola inferior */
-.hero-wave-bottom {
-    position: relative; background: var(--off-white);
-    margin-top: -2px; line-height: 0;
-}
-
-/* ══════════════════════════════════
-   FILTROS
-══════════════════════════════════ */
-.filtros-wrap {
-    background: var(--off-white);
-    padding: 0 1.5rem 2rem;
-}
+/* ══ FILTROS ══ */
+.filtros-wrap { background: var(--lab); padding: 0 1.5rem 2rem; }
 .filtros-card {
     max-width: 1100px; margin: 0 auto;
-    background: #fff;
-    border: 1px solid var(--border);
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 16px;
     padding: 1.5rem 1.75rem;
-    box-shadow: 0 4px 20px rgba(10,37,64,.07);
+    box-shadow: 0 4px 20px rgba(0,0,0,.35);
     display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
 }
-.search-wrap {
-    flex: 1; min-width: 220px;
-    position: relative;
-}
-.search-wrap i {
-    position: absolute; left: 1rem; top: 50%;
-    transform: translateY(-50%);
-    color: var(--muted); font-size: .88rem; pointer-events: none;
-}
+.search-wrap { flex: 1; min-width: 220px; position: relative; }
+.search-wrap i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: .88rem; pointer-events: none; }
 .search-input {
     width: 100%; padding: .75rem 1rem .75rem 2.75rem;
-    border: 1.5px solid var(--border); border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text);
+    border: 1.5px solid var(--line); border-radius: 10px;
+    font-family: var(--font-sans); font-size: .9rem; color: var(--paper);
     outline: none; transition: border-color .18s, box-shadow .18s;
-    background: var(--off-white);
+    background: var(--lab);
 }
-.search-input:focus {
-    border-color: var(--blue-core);
-    box-shadow: 0 0 0 3px rgba(10,77,140,.08);
-    background: #fff;
-}
-.filter-divider {
-    width: 1px; height: 36px; background: var(--border);
-    flex-shrink: 0;
-}
-.filter-pill-group {
-    display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
-}
+.search-input:focus { border-color: var(--uv); box-shadow: 0 0 0 3px rgba(142,123,255,.12); background: var(--lab-deep); }
+.search-input::placeholder { color: var(--muted); }
+.filter-divider { width: 1px; height: 36px; background: var(--line-soft); flex-shrink: 0; }
+.filter-pill-group { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
 .filter-label-sm {
-    font-family: 'Outfit', sans-serif;
-    font-size: .72rem; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: .08em;
+    font-family: var(--font-mono);
+    font-size: .66rem; font-weight: 500; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .1em;
     white-space: nowrap;
 }
 .filter-select {
     padding: .6rem 2rem .6rem .9rem;
-    border: 1.5px solid var(--border); border-radius: 10px;
-    font-family: 'DM Sans', sans-serif; font-size: .86rem; color: var(--text);
-    background: var(--off-white);
+    border: 1.5px solid var(--line); border-radius: 10px;
+    font-family: var(--font-sans); font-size: .86rem; color: var(--paper);
+    background: var(--lab);
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239FB0B8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right .75rem center;
     outline: none; cursor: pointer;
     transition: border-color .18s;
 }
-.filter-select:focus { border-color: var(--blue-core); background-color: #fff; }
+.filter-select:focus { border-color: var(--uv); }
+.filter-select option { background: var(--panel); color: var(--paper); }
 
 .results-info {
     max-width: 1100px; margin: 0 auto;
     padding: 1rem 0 .25rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans);
     font-size: .87rem; color: var(--muted);
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: wrap; gap: .5rem;
 }
-.results-info strong { color: var(--text); }
-.clear-link {
-    color: var(--blue-core); font-weight: 600;
-    text-decoration: none; font-size: .83rem;
-    display: inline-flex; align-items: center; gap: .3rem;
-    transition: opacity .18s;
-}
+.results-info strong { color: var(--paper); }
+.clear-link { color: var(--uv); font-weight: 600; text-decoration: none; font-size: .83rem; display: inline-flex; align-items: center; gap: .3rem; transition: opacity .18s; }
 .clear-link:hover { opacity: .75; }
 
-/* ══════════════════════════════════
-   GRID DE CURSOS
-══════════════════════════════════ */
-.cursos-section {
-    background: var(--off-white);
-    padding: 0 1.5rem 4rem;
-}
-.cursos-grid {
-    max-width: 1100px; margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-}
+/* ══ GRID DE CURSOS ══ */
+.cursos-section { background: var(--lab); padding: 0 1.5rem 4rem; }
+.cursos-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 
 .curso-card {
-    background: #fff;
-    border: 1px solid var(--border);
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 18px;
     overflow: hidden;
     text-decoration: none; color: inherit;
@@ -209,85 +154,69 @@
     transition: transform .22s, box-shadow .22s, border-color .22s;
     position: relative;
 }
-.curso-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(10,37,64,.13);
-    border-color: #b8d4f0;
-}
+.curso-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.45); border-color: var(--uv); }
 
-.curso-thumb {
-    position: relative;
-    height: 185px; overflow: hidden;
-    flex-shrink: 0;
-}
-.curso-thumb img {
-    width: 100%; height: 100%; object-fit: cover;
-    transition: transform .4s ease;
-}
+.curso-thumb { position: relative; height: 185px; overflow: hidden; flex-shrink: 0; background: var(--lab-deep); }
+.curso-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
 .curso-card:hover .curso-thumb img { transform: scale(1.04); }
-
 .curso-thumb-placeholder {
     width: 100%; height: 100%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 2.75rem; color: rgba(255,255,255,.75);
+    font-size: 2.75rem; color: rgba(142,123,255,.4);
+    position: relative;
 }
+.curso-thumb-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(142,123,255,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.07) 1px, transparent 1px);
+    background-size: 30px 30px;
+}
+.curso-thumb-placeholder i { position: relative; z-index: 1; }
 
-/* Badges sobre la imagen */
 .badge-tipo {
     position: absolute; top: .875rem; right: .875rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: .68rem; font-weight: 800;
+    font-family: var(--font-mono);
+    font-size: .64rem; font-weight: 500;
     padding: .25rem .65rem; border-radius: 999px;
-    text-transform: uppercase; letter-spacing: .06em;
+    text-transform: uppercase; letter-spacing: .08em;
     backdrop-filter: blur(8px);
 }
-.badge-tipo.free { background: rgba(22,163,74,.9); color: #fff; }
-.badge-tipo.paid { background: rgba(10,77,140,.9); color: #fff; }
+.badge-tipo.free { background: rgba(63,191,155,.9); color: #06231c; }
+.badge-tipo.paid { background: rgba(242,179,61,.9); color: #1A1203; }
 
 .badge-destacado {
     position: absolute; top: .875rem; left: .875rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: .65rem; font-weight: 800;
-    background: rgba(245,158,11,.92);
-    color: #fff; padding: .25rem .6rem;
+    font-family: var(--font-mono);
+    font-size: .62rem; font-weight: 500;
+    background: rgba(242,179,61,.92);
+    color: #1A1203; padding: .25rem .6rem;
     border-radius: 999px;
     display: flex; align-items: center; gap: .25rem;
     backdrop-filter: blur(8px);
 }
 
-/* Overlay gradiente bottom de imagen */
 .curso-thumb-overlay {
     position: absolute; bottom: 0; left: 0; right: 0;
     height: 60px;
-    background: linear-gradient(transparent, rgba(10,37,64,.35));
+    background: linear-gradient(transparent, rgba(10,18,27,.6));
 }
 
-.curso-body {
-    padding: 1.25rem 1.35rem 1.5rem;
-    display: flex; flex-direction: column; flex: 1;
-}
-
+.curso-body { padding: 1.25rem 1.35rem 1.5rem; display: flex; flex-direction: column; flex: 1; }
 .curso-cat {
-    font-family: 'Outfit', sans-serif;
-    font-size: .7rem; font-weight: 700;
-    color: var(--blue-core);
-    text-transform: uppercase; letter-spacing: .08em;
+    font-family: var(--font-mono);
+    font-size: .66rem; font-weight: 500;
+    color: var(--uv);
+    text-transform: uppercase; letter-spacing: .1em;
     margin-bottom: .5rem;
     display: flex; align-items: center; gap: .3rem;
 }
-.curso-cat::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--blue-core); flex-shrink: 0;
-}
+.curso-cat::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--uv); flex-shrink: 0; }
 
-.curso-titulo {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1rem; font-weight: 800; color: var(--text);
-    margin: 0 0 .5rem; line-height: 1.3;
-}
+.curso-titulo { font-family: var(--font-sans); font-size: 1rem; font-weight: 800; color: var(--paper); margin: 0 0 .5rem; line-height: 1.3; }
 .curso-desc {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans);
     font-size: .83rem; color: var(--muted);
     line-height: 1.6; margin: 0 0 1rem;
     flex: 1;
@@ -297,92 +226,57 @@
     overflow: hidden;
 }
 
-.curso-footer {
-    display: flex; align-items: center; justify-content: space-between;
-    padding-top: .875rem;
-    border-top: 1px solid #f0f4f8;
-    margin-top: auto;
-}
-.curso-stats {
-    display: flex; gap: .875rem;
-}
-.curso-stat {
-    display: flex; align-items: center; gap: .3rem;
-    font-family: 'DM Sans', sans-serif;
-    font-size: .78rem; color: var(--muted);
-}
-.curso-stat i { font-size: .72rem; color: var(--blue-light); }
+.curso-footer { display: flex; align-items: center; justify-content: space-between; padding-top: .875rem; border-top: 1px solid var(--line-soft); margin-top: auto; }
+.curso-stats { display: flex; gap: .875rem; }
+.curso-stat { display: flex; align-items: center; gap: .3rem; font-family: var(--font-sans); font-size: .78rem; color: var(--muted); }
+.curso-stat i { font-size: .72rem; color: var(--tag); }
 
-.curso-precio {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1rem; font-weight: 800; color: var(--text);
-}
-.curso-precio.free { color: var(--green); }
+.curso-precio { font-family: var(--font-mono); font-size: .95rem; font-weight: 600; color: var(--paper); }
+.curso-precio.free { color: var(--resolved); }
 
-/* ══════════════════════════════════
-   EMPTY STATE
-══════════════════════════════════ */
+/* ══ EMPTY STATE ══ */
 .empty-state {
     max-width: 1100px; margin: 0 auto;
     text-align: center; padding: 5rem 2rem;
-    background: #fff; border-radius: 20px;
-    border: 1px dashed var(--border);
+    background: var(--panel); border-radius: 20px;
+    border: 1px dashed var(--line);
 }
 .empty-icon {
     width: 72px; height: 72px; border-radius: 18px;
-    background: var(--blue-pale);
+    background: var(--uv-soft);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.75rem; color: var(--blue-core);
+    font-size: 1.75rem; color: var(--uv);
     margin: 0 auto 1.25rem;
 }
-.empty-state h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.25rem; font-weight: 800; color: var(--text); margin: 0 0 .5rem;
-}
-.empty-state p {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .9rem; color: var(--muted); margin: 0;
-}
+.empty-state h3 { font-family: var(--font-sans); font-size: 1.25rem; font-weight: 800; color: var(--paper); margin: 0 0 .5rem; }
+.empty-state p { font-family: var(--font-sans); font-size: .9rem; color: var(--muted); margin: 0; }
 
-/* ══════════════════════════════════
-   CTA FINAL
-══════════════════════════════════ */
+/* ══ CTA FINAL ══ */
 .cursos-cta {
     padding: 4.5rem 1.5rem;
-    background: linear-gradient(135deg, var(--blue-deep), var(--blue-core));
+    background: linear-gradient(135deg, var(--lab-deep), #14253a);
     text-align: center; position: relative; overflow: hidden;
+    border-top: 1px solid var(--line-soft);
 }
 .cursos-cta::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,.05) 1px, transparent 1px);
+    background-image: radial-gradient(rgba(142,123,255,.07) 1px, transparent 1px);
     background-size: 28px 28px;
 }
 .cursos-cta-inner { position: relative; z-index: 1; max-width: 560px; margin: 0 auto; }
-.cursos-cta h2 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 900;
-    color: #fff; margin: 0 0 .875rem; letter-spacing: -.02em;
-}
-.cursos-cta p {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .95rem; color: rgba(255,255,255,.7);
-    margin: 0 0 2rem; line-height: 1.7;
-}
+.cursos-cta h2 { font-family: var(--font-sans); font-size: clamp(1.5rem, 3vw, 2.25rem); font-weight: 800; color: var(--paper); margin: 0 0 .875rem; letter-spacing: -.02em; }
+.cursos-cta p { font-family: var(--font-sans); font-size: .95rem; color: var(--muted); margin: 0 0 2rem; line-height: 1.7; }
 .cursos-cta-btn {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .9rem 2rem;
-    background: #fff; color: var(--blue-core);
-    border-radius: 12px; font-family: 'Outfit', sans-serif;
-    font-size: .95rem; font-weight: 800;
+    background: var(--tag); color: #1A1203;
+    border-radius: 12px; font-family: var(--font-sans);
+    font-size: .95rem; font-weight: 600;
     text-decoration: none; transition: all .2s;
-    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    box-shadow: 0 6px 22px rgba(242,179,61,.3);
 }
-.cursos-cta-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(0,0,0,.3);
-    color: var(--blue-core);
-}
+.cursos-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(242,179,61,.4); color: #1A1203; }
 
 /* Responsive */
 @media (max-width: 960px) { .cursos-grid { grid-template-columns: repeat(2,1fr); } }
@@ -400,21 +294,16 @@
     <div class="cursos-hero-glow"></div>
     <div class="cursos-hero-inner">
         <div class="cursos-hero-eyebrow">
-            <i class="fas fa-graduation-cap"></i> Formación Comunitaria
+            <i class="fas fa-flask"></i> Laboratorio de Aprendizaje
         </div>
         <h1>Catálogo de <span>Cursos</span></h1>
-        <p>Descubre programas de formación especializados, diseñados para fortalecer tu organización y comunidad.</p>
+        <p>Programas de formación en ciberseguridad y forensia digital, diseñados para llevarte de la teoría al laboratorio.</p>
         <div class="hero-mini-stats">
             <div class="hms-item"><i class="fas fa-book-open"></i> <strong>{{ $cursos->count() }}</strong> cursos disponibles</div>
-            <div class="hms-item"><i class="fas fa-users"></i> <strong>+500</strong> líderes formados</div>
+            <div class="hms-item"><i class="fas fa-users"></i> <strong>+350</strong> estudiantes</div>
             <div class="hms-item"><i class="fas fa-certificate"></i> Certificado incluido</div>
             <div class="hms-item"><i class="fas fa-infinity"></i> Acceso de por vida</div>
         </div>
-    </div>
-    <div style="position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:2;">
-        <svg viewBox="0 0 1440 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-            <path d="M0,48 C360,16 1080,0 1440,32 L1440,48 L0,48 Z" fill="#f7f9fc"/>
-        </svg>
     </div>
 </section>
 
@@ -472,15 +361,15 @@
         <div class="empty-state">
             <div class="empty-icon"><i class="fas fa-search"></i></div>
             <h3>No se encontraron cursos</h3>
-            <p>Intenta con otros filtros o <a href="{{ route('cursos.index') }}" style="color:var(--blue-core);font-weight:600;">ver todos los cursos</a>.</p>
+            <p>Intenta con otros filtros o <a href="{{ route('cursos.index') }}" style="color:var(--uv);font-weight:600;">ver todos los cursos</a>.</p>
         </div>
     @else
         <div class="cursos-grid" id="coursesGrid">
             @foreach($cursos as $curso)
                 @php
-                    $colores = $curso->color_gradiente ?? '#0A4D8C,#3B88D4';
-                    [$c1,$c2] = array_pad(explode(',',$colores), 2, '#3B88D4');
-                    $icono = $curso->icono_fa ?? 'fa-graduation-cap';
+                    $colores = $curso->color_gradiente ?? '#0E1A24,#27404E';
+                    [$c1,$c2] = array_pad(explode(',',$colores), 2, '#27404E');
+                    $icono = $curso->icono_fa ?? 'fa-fingerprint';
                 @endphp
                 <a href="{{ route('cursos.show', $curso->slug) }}" class="curso-card">
 
@@ -534,7 +423,7 @@
 <div class="cursos-cta">
     <div class="cursos-cta-inner">
         <h2>¿No encuentras lo que buscas?</h2>
-        <p>Contáctanos para conocer próximos lanzamientos o solicitar un programa de capacitación personalizado para tu organización.</p>
+        <p>Contáctanos para conocer próximos lanzamientos o solicitar un programa de capacitación personalizado para tu equipo.</p>
         <a href="{{ route('contacto') }}" class="cursos-cta-btn">
             <i class="fas fa-envelope"></i> Contáctanos
         </a>

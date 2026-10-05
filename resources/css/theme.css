@@ -1,0 +1,181 @@
+/* ============================================================
+   FORENSEBOX — Design System
+   Laboratorio forense digital
+   ============================================================ */
+
+:root {
+    /* ── Color base ─────────────────────────────────────── */
+    --lab:        #0E1A24;   /* Fondo general */
+    --lab-deep:   #0A121B;   /* Fondo más profundo (hero, footer) */
+    --panel:      #15252F;   /* Tarjetas, paneles */
+    --panel-2:    #1B2E3A;   /* Panel elevado / hover */
+    --line:       #27404E;   /* Bordes, divisores */
+    --line-soft:  #1E333F;   /* Divisor suave */
+
+    --paper:      #E8EEF0;   /* Texto principal */
+    --muted:      #9FB0B8;   /* Texto secundario */
+
+    /* ── Acentos ────────────────────────────────────────── */
+    --tag:        #F2B33D;   /* Etiqueta (botón principal, destacados) */
+    --tag-deep:   #D89A22;
+    --uv:         #8E7BFF;   /* Luz UV (enlaces, foco, activo) */
+    --resolved:   #3FBF9B;   /* Resuelto (correcto, completado) */
+    --alert:      #F0606A;   /* Alerta (incorrecto, crítico) */
+
+    --tag-soft:      rgba(242, 179, 61, 0.12);
+    --tag-border:    rgba(242, 179, 61, 0.35);
+    --uv-soft:       rgba(142, 123, 255, 0.14);
+    --uv-border:     rgba(142, 123, 255, 0.35);
+    --resolved-soft: rgba(63, 191, 155, 0.12);
+    --alert-soft:    rgba(240, 96, 106, 0.12);
+
+    /* ── Tipografía ─────────────────────────────────────── */
+    --font-sans: 'Chivo', system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    /* ── Sombras / radios ───────────────────────────────── */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+}
+
+/* ── Base ─────────────────────────────────────────────── */
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    background: var(--lab);
+    color: var(--paper);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--paper);
+    letter-spacing: -0.01em;
+}
+
+p {
+    color: var(--muted);
+}
+
+a {
+    color: var(--uv);
+    transition: color .18s ease, opacity .18s ease;
+}
+
+a:hover {
+    color: #a99aff;
+}
+
+::selection {
+    background: var(--uv);
+    color: #fff;
+}
+
+/* ── Datos técnicos (hashes, comandos, rutas, logs) ───── */
+.mono, code, kbd, .fb-mono {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    letter-spacing: -0.01em;
+}
+
+/* ── Componentes base reutilizables ───────────────────── */
+.fb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .8rem 1.6rem;
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: .92rem;
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+}
+
+.fb-btn--tag {
+    background: var(--tag);
+    color: #1A1203;
+    border-color: var(--tag);
+    box-shadow: 0 6px 22px rgba(242, 179, 61, 0.25);
+}
+.fb-btn--tag:hover {
+    background: #ffc75c;
+    color: #1A1203;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(242, 179, 61, 0.35);
+}
+
+.fb-btn--uv {
+    background: var(--uv);
+    color: #fff;
+    border-color: var(--uv);
+    box-shadow: 0 6px 22px rgba(142, 123, 255, 0.25);
+}
+.fb-btn--uv:hover {
+    background: #9f90ff;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.fb-btn--ghost {
+    background: transparent;
+    color: var(--paper);
+    border-color: var(--line);
+}
+.fb-btn--ghost:hover {
+    background: var(--panel-2);
+    border-color: var(--uv);
+    color: var(--uv);
+    transform: translateY(-2px);
+}
+
+.fb-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+}
+
+.fb-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    font-family: var(--font-sans);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--tag);
+    background: var(--tag-soft);
+    border: 1px solid var(--tag-border);
+    padding: .35rem .9rem;
+    border-radius: 999px;
+}
+
+/* ── Scrollbar (WebKit) ───────────────────────────────── */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--lab); }
+::-webkit-scrollbar-thumb {
+    background: var(--line);
+    border-radius: 999px;
+    border: 2px solid var(--lab);
+}
+::-webkit-scrollbar-thumb:hover { background: #33505f; }

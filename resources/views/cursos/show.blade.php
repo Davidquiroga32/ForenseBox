@@ -1,25 +1,31 @@
 @extends('layouts.app')
-@section('title', $curso->titulo . ' - Comunal Aprende')
+@section('title', $curso->titulo . ' - ForenseBox')
 
 @section('content')
 @php
-    $colores = $curso->color_gradiente ?? '#0A4D8C,#3B88D4';
-    [$c1,$c2] = array_pad(explode(',',$colores),2,'#3B88D4');
-    $icono = $curso->icono_fa ?? 'fa-graduation-cap';
+    $colores = $curso->color_gradiente ?? '#15252F,#27404E';
+    [$c1,$c2] = array_pad(explode(',',$colores),2,'#27404E');
+    $icono = $curso->icono_fa ?? 'fa-fingerprint';
 @endphp
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600&display=swap');
-
 :root {
     --c1: {{ $c1 }};
     --c2: {{ $c2 }};
-    --dark: #0a0f1e;
-    --card-bg: #ffffff;
-    --text: #1e2a3a;
-    --muted: #64748b;
-    --border: #e2e8f0;
-    --success: #10b981;
+    --lab-deep:  #0A121B;
+    --lab:       #0E1A24;
+    --panel:     #15252F;
+    --panel-2:   #1B2E3A;
+    --line:      #27404E;
+    --line-soft: #1E333F;
+    --paper:     #E8EEF0;
+    --muted:     #9FB0B8;
+    --tag:       #F2B33D;
+    --uv:        #8E7BFF;
+    --resolved:  #3FBF9B;
+    --alert:     #F0606A;
+    --font-sans: 'Chivo', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
 
 * { box-sizing: border-box; }
@@ -27,29 +33,23 @@
 /* ── HERO ─────────────────────────────── */
 .hero {
     position: relative;
-    background: var(--dark);
+    background: var(--lab-deep);
     overflow: hidden;
     padding: 0;
-    padding-top: 70px; /* Compensa el header fijo */
+    padding-top: 70px;
 }
 
 .hero-bg-gradient {
     position: absolute; inset: 0;
-    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 50%, var(--dark) 100%);
-    opacity: .35;
+    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 50%, var(--lab-deep) 100%);
+    opacity: .18;
 }
-
-.hero-bg-mesh {
-    position: absolute; inset: 0;
-    background-image:
-        radial-gradient(ellipse 80% 60% at 20% 50%, rgba(255,255,255,.05) 0%, transparent 60%),
-        radial-gradient(ellipse 50% 80% at 80% 20%, rgba(255,255,255,.04) 0%, transparent 60%);
-}
-
 .hero-bg-dots {
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px);
-    background-size: 28px 28px;
+    background-image:
+        linear-gradient(rgba(142,123,255,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.05) 1px, transparent 1px);
+    background-size: 44px 44px;
     mask-image: radial-gradient(ellipse 70% 70% at 30% 50%, black 30%, transparent 100%);
 }
 
@@ -66,176 +66,134 @@
 /* Breadcrumb */
 .breadcrumb {
     display: flex; align-items: center; gap: .5rem;
-    font-size: .78rem; color: rgba(255,255,255,.5);
+    font-family: var(--font-mono);
+    font-size: .74rem; color: var(--muted);
     margin-bottom: 1.5rem;
-    font-family: 'DM Sans', sans-serif;
 }
-.breadcrumb a { color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
-.breadcrumb a:hover { color: rgba(255,255,255,.9); }
-.breadcrumb span { color: rgba(255,255,255,.25); }
+.breadcrumb a { color: var(--muted); text-decoration: none; transition: color .2s; }
+.breadcrumb a:hover { color: var(--uv); }
+.breadcrumb span { color: var(--line); }
 
-/* Badge categoría */
 .cat-badge {
     display: inline-flex; align-items: center; gap: .4rem;
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(10px);
-    color: #fff; font-size: .75rem; font-weight: 700;
+    background: var(--uv-soft);
+    border: 1px solid var(--uv-border);
+    color: #c9bfff; font-family: var(--font-mono);
+    font-size: .7rem; font-weight: 500;
     padding: .35rem 1rem; border-radius: 999px;
-    text-transform: uppercase; letter-spacing: .06em;
+    text-transform: uppercase; letter-spacing: .12em;
     margin-bottom: 1.1rem;
-    font-family: 'DM Sans', sans-serif;
 }
 
 .hero-title {
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-sans);
     font-size: clamp(1.75rem, 3.5vw, 2.6rem);
-    font-weight: 800; color: #fff;
+    font-weight: 800; color: var(--paper);
     line-height: 1.15; margin: 0 0 1rem;
     letter-spacing: -.02em;
 }
 
 .hero-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.05rem; color: rgba(255,255,255,.75);
+    font-family: var(--font-sans);
+    font-size: 1.05rem; color: var(--muted);
     line-height: 1.7; margin-bottom: 1.75rem;
     max-width: 560px;
 }
 
-/* Pills de meta */
-.meta-pills {
-    display: flex; flex-wrap: wrap; gap: .6rem;
-    margin-bottom: 2rem;
-}
+.meta-pills { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: 2rem; }
 .meta-pill {
     display: flex; align-items: center; gap: .4rem;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.15);
-    color: rgba(255,255,255,.85);
+    background: var(--panel);
+    border: 1px solid var(--line);
+    color: var(--paper);
     padding: .4rem .9rem; border-radius: 999px;
-    font-size: .82rem; font-family: 'DM Sans', sans-serif;
-    font-weight: 500;
+    font-size: .82rem; font-family: var(--font-sans);
+    font-weight: 600;
 }
-.meta-pill i { font-size: .78rem; opacity: .7; }
+.meta-pill i { font-size: .78rem; color: var(--tag); }
 
-/* Rating bar */
-.hero-rating {
-    display: flex; align-items: center; gap: .5rem;
-    margin-bottom: 2.5rem;
-}
-.stars { color: #fbbf24; font-size: .85rem; letter-spacing: .05em; }
-.rating-text { font-size: .82rem; color: rgba(255,255,255,.6); font-family: 'DM Sans', sans-serif; }
-
-/* Línea decorativa bottom del hero */
-.hero-bottom-wave {
-    position: relative; z-index: 2;
-    height: 48px; margin-top: -1px;
-    background: #f8fafc;
-    clip-path: ellipse(55% 100% at 50% 100%);
-}
+.hero-rating { display: flex; align-items: center; gap: .5rem; margin-bottom: 2.5rem; }
+.stars { color: var(--tag); font-size: .85rem; letter-spacing: .05em; }
+.rating-text { font-size: .82rem; color: var(--muted); font-family: var(--font-sans); }
 
 /* ── CARD INSCRIPCIÓN ─────────────────── */
 .inscripcion-card {
-    background: #fff;
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 20px;
-    box-shadow: 0 24px 80px rgba(0,0,0,.35), 0 4px 20px rgba(0,0,0,.15);
+    box-shadow: 0 24px 80px rgba(0,0,0,.5), 0 4px 20px rgba(0,0,0,.3);
     overflow: hidden;
     position: sticky; top: 88px;
     margin-bottom: -80px;
 }
 
-.card-thumb {
-    width: 100%; height: 175px;
-    object-fit: cover; display: block;
-}
+.card-thumb { width: 100%; height: 175px; object-fit: cover; display: block; }
 .card-thumb-placeholder {
     width: 100%; height: 175px;
     display: flex; align-items: center; justify-content: center;
     background: linear-gradient(135deg, var(--c1), var(--c2));
     font-size: 3rem; color: #fff;
+    position: relative;
 }
+.card-thumb-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+    background-size: 26px 26px;
+}
+.card-thumb-placeholder i { position: relative; z-index: 1; }
 
 .card-body { padding: 1.5rem; }
 
 .precio-tag {
-    font-family: 'Poppins', sans-serif;
-    font-size: 2.25rem; font-weight: 800;
-    color: var(--text); line-height: 1;
+    font-family: var(--font-mono);
+    font-size: 2.1rem; font-weight: 700;
+    color: var(--paper); line-height: 1;
     margin-bottom: 1.25rem;
 }
-.precio-tag.free { color: var(--success); }
+.precio-tag.free { color: var(--resolved); }
 
-/* Barra de progreso */
 .progress-wrap { margin-bottom: 1rem; }
-.progress-label {
-    display: flex; justify-content: space-between;
-    font-size: .78rem; color: var(--muted);
-    margin-bottom: .4rem; font-family: 'DM Sans', sans-serif;
-}
-.progress-bar {
-    height: 7px; background: #e2e8f0; border-radius: 999px; overflow: hidden;
-}
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--c1), var(--c2));
-    border-radius: 999px;
-    transition: width .6s ease;
-}
+.progress-label { display: flex; justify-content: space-between; font-size: .78rem; color: var(--muted); margin-bottom: .4rem; font-family: var(--font-sans); }
+.progress-bar { height: 7px; background: var(--lab); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--resolved), #2e9f83); border-radius: 999px; transition: width .6s ease; }
 
-/* Botón inscribir */
 .btn-primary {
     display: flex; align-items: center; justify-content: center; gap: .5rem;
     width: 100%; padding: 1rem;
-    background: linear-gradient(135deg, var(--c1) 0%, var(--c2) 100%);
-    color: #fff; border: none; border-radius: 12px;
-    font-family: 'Poppins', sans-serif;
-    font-size: .95rem; font-weight: 700;
+    background: var(--tag); color: #1A1203;
+    border: none; border-radius: 12px;
+    font-family: var(--font-sans);
+    font-size: .95rem; font-weight: 600;
     cursor: pointer; text-decoration: none;
     transition: transform .18s, box-shadow .18s, opacity .18s;
-    box-shadow: 0 4px 20px rgba(10,77,140,.4);
+    box-shadow: 0 6px 22px rgba(242,179,61,.28);
     margin-bottom: .75rem;
 }
-.btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(10,77,140,.5);
-    color: #fff; opacity: .95;
-}
-.btn-primary.enrolled { background: linear-gradient(135deg, #059669, #10b981); box-shadow: 0 4px 20px rgba(16,185,129,.3); }
-.btn-primary.login { background: linear-gradient(135deg, #1e2a3a, #334155); box-shadow: 0 4px 20px rgba(30,42,58,.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(242,179,61,.4); color: #1A1203; opacity: .95; }
+.btn-primary.enrolled { background: var(--resolved); color: #06231c; box-shadow: 0 4px 20px rgba(63,191,155,.3); }
+.btn-primary.login { background: var(--uv); color: #fff; box-shadow: 0 4px 20px rgba(142,123,255,.3); }
 
 .btn-secondary {
     display: flex; align-items: center; justify-content: center; gap: .5rem;
     width: 100%; padding: .75rem;
     background: transparent;
-    color: var(--c1); border: 1.5px solid var(--c1); border-radius: 12px;
-    font-family: 'DM Sans', sans-serif; font-size: .88rem; font-weight: 600;
+    color: var(--uv); border: 1.5px solid var(--uv); border-radius: 12px;
+    font-family: var(--font-sans); font-size: .88rem; font-weight: 600;
     cursor: pointer; text-decoration: none;
     transition: all .18s;
 }
-.btn-secondary:hover { background: var(--c1); color: #fff; }
+.btn-secondary:hover { background: var(--uv-soft); color: #fff; }
 
-.garantia-note {
-    display: flex; align-items: center; justify-content: center; gap: .4rem;
-    font-size: .76rem; color: var(--muted);
-    font-family: 'DM Sans', sans-serif; margin-top: .6rem; text-align: center;
-}
+.garantia-note { display: flex; align-items: center; justify-content: center; gap: .4rem; font-size: .76rem; color: var(--muted); font-family: var(--font-sans); margin-top: .6rem; text-align: center; }
 
-/* Incluye */
-.incluye-list { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
-.incluye-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: .78rem; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: .08em;
-    margin-bottom: .75rem;
-}
-.incluye-item {
-    display: flex; align-items: center; gap: .65rem;
-    padding: .4rem 0; font-size: .84rem;
-    color: var(--text); font-family: 'DM Sans', sans-serif;
-    border-bottom: 1px solid #f8fafc;
-}
+.incluye-list { margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--line-soft); }
+.incluye-title { font-family: var(--font-mono); font-size: .7rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-bottom: .75rem; }
+.incluye-item { display: flex; align-items: center; gap: .65rem; padding: .4rem 0; font-size: .84rem; color: var(--paper); font-family: var(--font-sans); border-bottom: 1px solid var(--line-soft); }
 .incluye-item:last-child { border-bottom: none; }
-.incluye-item i { width: 18px; color: var(--c1); text-align: center; font-size: .85rem; }
+.incluye-item i { width: 18px; color: var(--tag); text-align: center; font-size: .85rem; }
 
 /* ── BODY ─────────────────────────────── */
 .page-body {
@@ -246,155 +204,98 @@
     gap: 3rem;
 }
 
-/* ── LO QUE APRENDERÁS ───────────────── */
 .aprende-section {
-    background: linear-gradient(135deg, #f0f7ff, #e8f2ff);
-    border: 1px solid #c7dfff;
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 16px;
     padding: 2rem;
     margin-bottom: 2rem;
 }
-.section-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.2rem; font-weight: 700; color: var(--text);
-    margin: 0 0 1.25rem; display: flex; align-items: center; gap: .6rem;
-}
-.section-title i { color: var(--c1); }
-.aprende-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: .65rem;
-}
-.aprende-item {
-    display: flex; align-items: flex-start; gap: .65rem;
-    font-size: .87rem; color: var(--text); line-height: 1.5;
-    font-family: 'DM Sans', sans-serif;
-}
+.section-title { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 800; color: var(--paper); margin: 0 0 1.25rem; display: flex; align-items: center; gap: .6rem; }
+.section-title i { color: var(--tag); }
+.aprende-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+.aprende-item { display: flex; align-items: flex-start; gap: .65rem; font-size: .87rem; color: var(--paper); line-height: 1.5; font-family: var(--font-sans); }
 .aprende-check {
     width: 20px; height: 20px; border-radius: 50%;
-    background: var(--c1); color: #fff;
+    background: var(--uv); color: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: .65rem; flex-shrink: 0; margin-top: .1rem;
 }
 
 /* ── TABS ─────────────────────────────── */
-.tab-nav {
-    display: flex; gap: 0;
-    border-bottom: 2px solid var(--border);
-    margin-bottom: 1.75rem;
-}
+.tab-nav { display: flex; gap: 0; border-bottom: 2px solid var(--line); margin-bottom: 1.75rem; }
 .tab-btn {
     padding: .75rem 1.35rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-sans);
     font-size: .9rem; font-weight: 600; color: var(--muted);
     border: none; background: none; cursor: pointer;
     border-bottom: 2.5px solid transparent; margin-bottom: -2px;
     transition: all .18s;
 }
-.tab-btn.active { color: var(--c1); border-bottom-color: var(--c1); }
-.tab-btn:hover:not(.active) { color: var(--text); }
+.tab-btn.active { color: var(--uv); border-bottom-color: var(--uv); }
+.tab-btn:hover:not(.active) { color: var(--paper); }
 
-/* ── MÓDULOS ──────────────────────────── */
-.modulos-header {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .88rem; color: var(--muted);
-    margin-bottom: 1rem;
-}
-.modulos-header strong { color: var(--text); }
+.modulos-header { font-family: var(--font-sans); font-size: .88rem; color: var(--muted); margin-bottom: 1rem; }
+.modulos-header strong { color: var(--paper); }
 
-.modulo-wrap {
-    border: 1px solid var(--border);
-    border-radius: 12px; margin-bottom: .75rem;
-    overflow: hidden; transition: box-shadow .2s;
-}
-.modulo-wrap:hover { box-shadow: 0 4px 16px rgba(0,0,0,.06); }
+.modulo-wrap { border: 1px solid var(--line); border-radius: 12px; margin-bottom: .75rem; overflow: hidden; transition: box-shadow .2s; background: var(--panel); }
+.modulo-wrap:hover { box-shadow: 0 4px 16px rgba(0,0,0,.35); }
 
 .modulo-hd {
     padding: 1rem 1.25rem;
-    background: #f8fafc;
+    background: var(--panel);
     display: flex; align-items: center; justify-content: space-between;
     cursor: pointer; user-select: none;
     transition: background .16s;
 }
-.modulo-hd:hover { background: #f1f5f9; }
+.modulo-hd:hover { background: var(--panel-2); }
 
 .modulo-hd-left { display: flex; align-items: center; gap: .75rem; flex: 1; }
-
 .modulo-num {
     width: 28px; height: 28px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--c1), var(--c2));
-    color: #fff; display: flex; align-items: center; justify-content: center;
-    font-size: .72rem; font-weight: 800; flex-shrink: 0;
-    font-family: 'Poppins', sans-serif;
+    background: var(--uv); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .72rem; font-weight: 700; flex-shrink: 0;
+    font-family: var(--font-mono);
 }
-.modulo-titulo {
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 700; font-size: .92rem; color: var(--text);
-}
-.modulo-count {
-    font-size: .75rem; color: var(--muted);
-    font-family: 'DM Sans', sans-serif;
-}
-.modulo-chevron {
-    color: var(--muted); font-size: .82rem;
-    transition: transform .25s cubic-bezier(.4,0,.2,1);
-    flex-shrink: 0;
-}
+.modulo-titulo { font-family: var(--font-sans); font-weight: 700; font-size: .92rem; color: var(--paper); }
+.modulo-count { font-size: .75rem; color: var(--muted); font-family: var(--font-sans); }
+.modulo-chevron { color: var(--muted); font-size: .82rem; transition: transform .25s cubic-bezier(.4,0,.2,1); flex-shrink: 0; }
 .modulo-chevron.open { transform: rotate(180deg); }
 
-.modulo-body { display: none; border-top: 1px solid var(--border); }
+.modulo-body { display: none; border-top: 1px solid var(--line-soft); }
 .modulo-body.open { display: block; }
 
 .leccion-row {
     display: flex; align-items: center; gap: .75rem;
     padding: .75rem 1.25rem;
-    border-bottom: 1px solid #f8fafc;
+    border-bottom: 1px solid var(--line-soft);
     transition: background .15s;
 }
 .leccion-row:last-child { border-bottom: none; }
-.leccion-row:hover { background: #f8fafc; }
+.leccion-row:hover { background: var(--panel-2); }
 
 .lec-ico {
     width: 32px; height: 32px; border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     font-size: .8rem; flex-shrink: 0;
 }
-.tipo-texto  { background: #EBF3FF; color: #0A4D8C; }
-.tipo-video  { background: #FEE2E2; color: #dc2626; }
-.tipo-pdf    { background: #FEF3C7; color: #d97706; }
-.tipo-quiz   { background: #EDE9FE; color: #7c3aed; }
-.tipo-tarea  { background: #D1FAE5; color: #059669; }
+.tipo-texto  { background: var(--uv-soft); color: var(--uv); }
+.tipo-video  { background: var(--tag-soft); color: var(--tag); }
+.tipo-pdf    { background: var(--alert-soft); color: var(--alert); }
+.tipo-quiz   { background: var(--resolved-soft); color: var(--resolved); }
+.tipo-tarea  { background: rgba(142,123,255,.1); color: #c9bfff; }
 
-.lec-titulo {
-    flex: 1; font-size: .87rem; color: #475569;
-    font-family: 'DM Sans', sans-serif;
-}
-.lec-dur {
-    font-size: .75rem; color: var(--muted);
-    font-family: 'DM Sans', sans-serif; white-space: nowrap;
-}
-.lec-lock { color: #cbd5e1; font-size: .82rem; }
-.lec-free-badge {
-    font-size: .68rem; font-weight: 700; color: var(--success);
-    background: #d1fae5; padding: .15rem .5rem; border-radius: 999px;
-    font-family: 'DM Sans', sans-serif;
-}
+.lec-titulo { flex: 1; font-size: .87rem; color: var(--muted); font-family: var(--font-sans); }
+.lec-dur { font-size: .75rem; color: var(--muted); font-family: var(--font-mono); white-space: nowrap; }
+.lec-lock { color: var(--line); font-size: .82rem; }
+.lec-free-badge { font-size: .68rem; font-weight: 600; color: var(--resolved); background: var(--resolved-soft); padding: .15rem .5rem; border-radius: 999px; font-family: var(--font-sans); }
 
 /* ── SIDEBAR ──────────────────────────── */
-.sidebar-card {
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem;
-}
-.sidebar-title {
-    font-family: 'Poppins', sans-serif;
-    font-size: .85rem; font-weight: 700; color: var(--text);
-    margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .06em;
-}
+.sidebar-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 1.5rem; margin-bottom: 1rem; }
+.sidebar-title { font-family: var(--font-mono); font-size: .7rem; font-weight: 500; color: var(--muted); margin-bottom: 1rem; text-transform: uppercase; letter-spacing: .12em; }
 
-/* Cursos relacionados */
-.relac-item {
-    display: flex; gap: .875rem; padding: .75rem 0;
-    border-bottom: 1px solid #f8fafc; text-decoration: none;
-    transition: transform .16s;
-}
+.relac-item { display: flex; gap: .875rem; padding: .75rem 0; border-bottom: 1px solid var(--line-soft); text-decoration: none; transition: transform .16s; }
 .relac-item:last-child { border-bottom: none; }
 .relac-item:hover { transform: translateX(4px); }
 .relac-thumb {
@@ -402,21 +303,8 @@
     display: flex; align-items: center; justify-content: center;
     color: #fff; font-size: 1.1rem;
 }
-.relac-info h4 {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .85rem; font-weight: 700; color: var(--text);
-    margin: 0 0 .2rem; line-height: 1.3;
-}
-.relac-info p {
-    font-size: .75rem; color: var(--muted); margin: 0;
-    font-family: 'DM Sans', sans-serif;
-}
-
-/* ── DIVIDER ──────────────────────────── */
-.body-divider {
-    height: 80px; background: #f8fafc;
-    margin-bottom: 0;
-}
+.relac-info h4 { font-family: var(--font-sans); font-size: .85rem; font-weight: 700; color: var(--paper); margin: 0 0 .2rem; line-height: 1.3; }
+.relac-info p { font-size: .75rem; color: var(--muted); margin: 0; font-family: var(--font-sans); }
 
 /* ── RESPONSIVE ───────────────────────── */
 @media (max-width: 960px) {
@@ -427,29 +315,22 @@
     .hero-title { font-size: 1.9rem; }
 }
 
-/* Animaciones entrada */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(24px); }
     to   { opacity: 1; transform: translateY(0); }
 }
-.hero-content > * {
-    animation: fadeUp .55s cubic-bezier(.22,1,.36,1) both;
-}
+.hero-content > * { animation: fadeUp .55s cubic-bezier(.22,1,.36,1) both; }
 .hero-content > *:nth-child(1) { animation-delay: .05s; }
 .hero-content > *:nth-child(2) { animation-delay: .12s; }
 .hero-content > *:nth-child(3) { animation-delay: .18s; }
 .hero-content > *:nth-child(4) { animation-delay: .24s; }
 .hero-content > *:nth-child(5) { animation-delay: .30s; }
-
-.inscripcion-card {
-    animation: fadeUp .55s .15s cubic-bezier(.22,1,.36,1) both;
-}
+.inscripcion-card { animation: fadeUp .55s .15s cubic-bezier(.22,1,.36,1) both; }
 </style>
 
 {{-- ═══════════════ HERO ═══════════════ --}}
 <section class="hero">
     <div class="hero-bg-gradient"></div>
-    <div class="hero-bg-mesh"></div>
     <div class="hero-bg-dots"></div>
 
     <div class="hero-inner">
@@ -460,7 +341,7 @@
                 <span>›</span>
                 <a href="{{ route('cursos.index') }}?categoria={{ $curso->categoria }}">{{ $curso->categoriaLabel() }}</a>
                 <span>›</span>
-                <span style="color:rgba(255,255,255,.7);">{{ Str::limit($curso->titulo, 40) }}</span>
+                <span style="color:var(--paper);">{{ Str::limit($curso->titulo, 40) }}</span>
             </nav>
 
             <div class="cat-badge">
@@ -510,7 +391,7 @@
                         <div class="progress-wrap">
                             <div class="progress-label">
                                 <span>Tu progreso</span>
-                                <strong style="color:var(--c1)">{{ $progreso }}%</strong>
+                                <strong style="color:var(--resolved)">{{ $progreso }}%</strong>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width:{{ $progreso }}%"></div>
@@ -523,14 +404,14 @@
                             <i class="fas fa-play-circle"></i> Continuar Curso
                         </a>
                         <div class="garantia-note">
-                            <i class="fas fa-check-circle" style="color:var(--success)"></i>
+                            <i class="fas fa-check-circle" style="color:var(--resolved)"></i>
                             Ya estás inscrito en este curso
                         </div>
                     @elseif(auth()->check())
                         <form method="POST" action="{{ route('cursos.inscribir', $curso->slug) }}">
                             @csrf
                             <button type="submit" class="btn-primary">
-                                <i class="fas fa-graduation-cap"></i>
+                                <i class="fas fa-fingerprint"></i>
                                 {{ $curso->tipo === 'free' ? 'Inscribirme Gratis' : 'Inscribirme Ahora' }}
                             </button>
                         </form>
@@ -561,17 +442,10 @@
             </div>
         </div>
     </div>
-
-    {{-- Ola inferior --}}
-    <div style="height:56px;position:relative;z-index:2;margin-top:2rem;">
-        <svg viewBox="0 0 1440 56" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;">
-            <path d="M0,56 C360,0 1080,0 1440,56 L1440,56 L0,56 Z" fill="#f8fafc"/>
-        </svg>
-    </div>
 </section>
 
 {{-- ═══════════════ CUERPO ═══════════════ --}}
-<div style="background:#f8fafc; padding-top: 1rem;">
+<div style="background:var(--lab); padding-top: 1rem;">
 <div class="page-body">
 
     {{-- Columna principal --}}
@@ -584,7 +458,6 @@
             </h2>
             <div class="aprende-grid">
                 @php
-                    // Genera ítems desde los módulos y lecciones del curso
                     $items = $curso->modulos->flatMap(fn($m) => $m->lecciones)->take(8)->map(fn($l) => $l->titulo);
                     if($items->isEmpty()) {
                         $items = collect([
@@ -628,7 +501,7 @@
                 <div class="modulo-wrap">
                     <div class="modulo-hd" onclick="toggleModulo(this)">
                         <div class="modulo-hd-left">
-                            <div class="modulo-num">{{ $loop->iteration }}</div>
+                            <div class="modulo-num">{{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}</div>
                             <div>
                                 <div class="modulo-titulo">{{ $modulo->titulo }}</div>
                                 <div class="modulo-count">{{ $modulo->lecciones->count() }} lecciones</div>
@@ -665,7 +538,7 @@
             @endforeach
 
             @if($curso->modulos->isEmpty())
-                <div style="text-align:center;padding:3rem;color:var(--muted);font-family:'DM Sans',sans-serif;">
+                <div style="text-align:center;padding:3rem;color:var(--muted);font-family:var(--font-sans);">
                     <i class="fas fa-layer-group" style="font-size:2rem;display:block;margin-bottom:.75rem;opacity:.3;"></i>
                     Contenido próximamente disponible.
                 </div>
@@ -675,7 +548,7 @@
         {{-- Tab: Descripción --}}
         @if($curso->descripcion)
             <div id="tab-descripcion" style="display:none;">
-                <div style="font-size:.95rem;color:#475569;line-height:1.85;font-family:'DM Sans',sans-serif;">
+                <div style="font-size:.95rem;color:var(--muted);line-height:1.85;font-family:var(--font-sans);">
                     {!! nl2br(e($curso->descripcion)) !!}
                 </div>
             </div>
@@ -691,10 +564,10 @@
             <div class="sidebar-card">
                 <div class="sidebar-title">También te puede interesar</div>
                 @foreach($cursosRelacionados as $rel)
-                    @php $rc = explode(',', $rel->color_gradiente ?? '#0A4D8C,#3B88D4'); @endphp
+                    @php $rc = explode(',', $rel->color_gradiente ?? '#15252F,#27404E'); @endphp
                     <a href="{{ route('cursos.show', $rel->slug) }}" class="relac-item">
-                        <div class="relac-thumb" style="background:linear-gradient(135deg,{{ $rc[0] }},{{ $rc[1] ?? '#3B88D4' }});">
-                            <i class="fas {{ $rel->icono_fa ?? 'fa-graduation-cap' }}"></i>
+                        <div class="relac-thumb" style="background:linear-gradient(135deg,{{ $rc[0] }},{{ $rc[1] ?? '#27404E' }});">
+                            <i class="fas {{ $rel->icono_fa ?? 'fa-fingerprint' }}"></i>
                         </div>
                         <div class="relac-info">
                             <h4>{{ Str::limit($rel->titulo, 45) }}</h4>
@@ -722,21 +595,21 @@
 
         {{-- CTA si no inscrito --}}
         @if(!$yaInscrito)
-            <div style="background:linear-gradient(135deg,var(--c1),var(--c2));border-radius:16px;padding:1.5rem;text-align:center;">
-                <i class="fas {{ $icono }}" style="font-size:2rem;color:rgba(255,255,255,.6);display:block;margin-bottom:.75rem;"></i>
-                <p style="color:#fff;font-family:'DM Sans',sans-serif;font-size:.9rem;margin:0 0 1rem;line-height:1.5;">
+            <div style="background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:1.5rem;text-align:center;">
+                <i class="fas {{ $icono }}" style="font-size:2rem;color:var(--tag);display:block;margin-bottom:.75rem;"></i>
+                <p style="color:var(--paper);font-family:var(--font-sans);font-size:.9rem;margin:0 0 1rem;line-height:1.5;">
                     ¿Listo para empezar? Inscríbete ahora y accede a todo el contenido.
                 </p>
                 @if(auth()->check())
                     <form method="POST" action="{{ route('cursos.inscribir', $curso->slug) }}">
                         @csrf
-                        <button type="submit" style="width:100%;padding:.8rem;background:#fff;color:var(--c1);border:none;border-radius:10px;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:opacity .2s;">
-                            <i class="fas fa-graduation-cap"></i>
+                        <button type="submit" style="width:100%;padding:.8rem;background:var(--tag);color:#1A1203;border:none;border-radius:10px;font-family:var(--font-sans);font-size:.88rem;font-weight:600;cursor:pointer;transition:opacity .2s;">
+                            <i class="fas fa-fingerprint"></i>
                             {{ $curso->tipo === 'free' ? 'Inscribirme Gratis' : 'Inscribirme' }}
                         </button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" style="display:block;width:100%;padding:.8rem;background:#fff;color:var(--c1);border-radius:10px;font-family:'Poppins',sans-serif;font-size:.88rem;font-weight:700;text-decoration:none;transition:opacity .2s;">
+                    <a href="{{ route('login') }}" style="display:block;width:100%;padding:.8rem;background:var(--uv);color:#fff;border-radius:10px;font-family:var(--font-sans);font-size:.88rem;font-weight:600;text-decoration:none;transition:opacity .2s;">
                         <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
                     </a>
                 @endif
@@ -765,7 +638,6 @@ function toggleModulo(el) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Abrir primer módulo
     const firstChevron = document.querySelector('.modulo-chevron');
     if (firstChevron) firstChevron.classList.add('open');
 });

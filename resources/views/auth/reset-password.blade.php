@@ -1,37 +1,56 @@
 <x-guest-layout>
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Chivo:wght@400;600;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+        --lab-deep: #0A121B; --lab: #0E1A24; --panel: #15252F; --panel-2: #1B2E3A;
+        --line: #27404E; --line-soft: #1E333F; --paper: #E8EEF0; --muted: #9FB0B8;
+        --tag: #F2B33D; --uv: #8E7BFF; --resolved: #3FBF9B; --alert: #F0606A;
+    }
 
     .ca-page {
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: linear-gradient(135deg, #071D36 0%, #0A4D8C 60%, #1E6DB8 100%);
+        background: var(--lab);
         padding: 20px 16px;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Chivo', sans-serif;
+    }
+    .ca-page::before {
+        content: '';
+        position: fixed; inset: 0;
+        background-image:
+            linear-gradient(rgba(142,123,255,.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(142,123,255,.04) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%);
+        pointer-events: none;
     }
 
     .ca-card {
         width: 100%;
         max-width: 400px;
-        background: #ffffff;
+        background: var(--panel);
+        border: 1px solid var(--line);
         border-radius: 18px;
         overflow: hidden;
-        box-shadow: 0 20px 60px rgba(7, 29, 54, 0.45);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+        position: relative;
+        z-index: 1;
     }
 
     .ca-header {
-        background: linear-gradient(135deg, #071D36 0%, #0A4D8C 100%);
+        background: linear-gradient(135deg, #0A121B 0%, #15253a 100%);
         padding: 24px 32px 20px;
         text-align: center;
-        border-bottom: 3px solid #C9A84C;
+        border-bottom: 2px solid var(--tag);
     }
 
     .ca-logo {
-        height: 110px;
+        height: 80px;
         width: auto;
         object-fit: contain;
         margin-bottom: 10px;
@@ -40,109 +59,57 @@
         margin-right: auto;
     }
 
-    .ca-brand {
-        font-family: 'Poppins', sans-serif;
-        font-size: 18px;
-        font-weight: 700;
-        color: #ffffff;
-    }
-
-    .ca-tagline {
-        font-size: 10px;
-        color: rgba(255,255,255,0.45);
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-top: 3px;
-    }
+    .ca-brand { font-family: 'Chivo', sans-serif; font-size: 18px; font-weight: 800; color: var(--paper); }
+    .ca-tagline { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-top: 3px; }
 
     .ca-body { padding: 28px 32px 24px; }
 
     .ca-icon {
-        width: 54px;
-        height: 54px;
-        background: #EBF3FF;
-        border: 2px solid #c5d9f0;
+        width: 54px; height: 54px;
+        background: var(--uv-soft);
+        border: 2px solid var(--uv-border);
         border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: flex; align-items: center; justify-content: center;
         margin: 0 auto 16px;
-        color: #0A4D8C;
+        color: var(--uv);
     }
 
-    .ca-title {
-        font-family: 'Poppins', sans-serif;
-        font-size: 20px;
-        font-weight: 700;
-        color: #071D36;
-        text-align: center;
-        margin-bottom: 6px;
-    }
-
-    .ca-desc {
-        font-size: 13px;
-        color: #64748b;
-        text-align: center;
-        line-height: 1.6;
-        margin-bottom: 22px;
-    }
+    .ca-title { font-family: 'Chivo', sans-serif; font-size: 20px; font-weight: 800; color: var(--paper); text-align: center; margin-bottom: 6px; }
+    .ca-desc { font-size: 13px; color: var(--muted); text-align: center; line-height: 1.6; margin-bottom: 22px; }
 
     .ca-field { margin-bottom: 16px; }
-
-    .ca-label {
-        display: block;
-        font-size: 12px;
-        font-weight: 600;
-        color: #334155;
-        margin-bottom: 5px;
-    }
-
+    .ca-label { display: block; font-size: 12px; font-weight: 600; color: var(--paper); margin-bottom: 5px; }
     .ca-input-wrap { position: relative; }
-
-    .ca-input-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #94a3b8;
-        pointer-events: none;
-        display: flex;
-        align-items: center;
-    }
+    .ca-input-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; display: flex; align-items: center; }
 
     .ca-input {
         width: 100%;
         padding: 11px 40px 11px 38px;
-        border: 1.5px solid #e2e8f0;
+        border: 1.5px solid var(--line);
         border-radius: 9px;
         font-size: 14px;
-        color: #1e293b;
-        background: #f8fafc;
+        color: var(--paper);
+        background: var(--lab);
         transition: all 0.2s ease;
         outline: none;
+        font-family: 'Chivo', sans-serif;
     }
-
     .ca-input-noicon {
         width: 100%;
         padding: 11px 12px;
-        border: 1.5px solid #e2e8f0;
+        border: 1.5px solid var(--line);
         border-radius: 9px;
         font-size: 14px;
-        color: #1e293b;
-        background: #f8fafc;
+        color: var(--paper);
+        background: var(--lab);
         transition: all 0.2s ease;
         outline: none;
+        font-family: 'Chivo', sans-serif;
     }
-
     .ca-input:focus,
-    .ca-input-noicon:focus {
-        border-color: #0A4D8C;
-        background: #ffffff;
-        box-shadow: 0 0 0 3px rgba(10, 77, 140, 0.1);
-    }
-
+    .ca-input-noicon:focus { border-color: var(--uv); background: var(--lab-deep); box-shadow: 0 0 0 3px rgba(142,123,255,.14); }
     .ca-input::placeholder,
-    .ca-input-noicon::placeholder { color: #94a3b8; }
+    .ca-input-noicon::placeholder { color: var(--muted); }
 
     .ca-eye {
         position: absolute;
@@ -150,7 +117,7 @@
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
-        color: #94a3b8;
+        color: var(--muted);
         background: none;
         border: none;
         padding: 4px;
@@ -160,29 +127,19 @@
         border-radius: 4px;
         transition: color 0.2s;
     }
+    .ca-eye:hover { color: var(--uv); }
 
-    .ca-eye:hover { color: #0A4D8C; }
-
-    .ca-hint {
-        font-size: 11px;
-        color: #94a3b8;
-        margin-top: 4px;
-    }
-
-    .ca-error {
-        font-size: 11px;
-        color: #dc2626;
-        margin-top: 4px;
-    }
+    .ca-hint { font-size: 11px; color: var(--muted); margin-top: 4px; }
+    .ca-error { font-size: 11px; color: var(--alert); margin-top: 4px; }
 
     .ca-btn {
         width: 100%;
         padding: 12px;
-        background: linear-gradient(135deg, #0A4D8C, #1E6DB8);
-        color: #ffffff;
+        background: var(--tag);
+        color: #1A1203;
         border: none;
         border-radius: 9px;
-        font-family: 'Poppins', sans-serif;
+        font-family: 'Chivo', sans-serif;
         font-size: 14px;
         font-weight: 600;
         cursor: pointer;
@@ -193,32 +150,21 @@
         align-items: center;
         justify-content: center;
         gap: 8px;
+        box-shadow: 0 6px 20px rgba(242,179,61,.25);
     }
+    .ca-btn:hover { background: #ffc75c; box-shadow: 0 10px 28px rgba(242,179,61,.35); transform: translateY(-1px); }
 
-    .ca-btn:hover {
-        background: linear-gradient(135deg, #073A6B, #0A4D8C);
-        box-shadow: 0 6px 18px rgba(10, 77, 140, 0.35);
-        transform: translateY(-1px);
-    }
-
-    .ca-footer {
-        background: #f8fafc;
-        border-top: 1px solid #e2e8f0;
-        padding: 12px 32px;
-        text-align: center;
-        font-size: 11px;
-        color: #94a3b8;
-    }
+    .ca-footer { background: var(--lab-deep); border-top: 1px solid var(--line-soft); padding: 12px 32px; text-align: center; font-size: 11px; color: var(--muted); }
 </style>
 
 <div class="ca-page">
     <div class="ca-card">
 
         <div class="ca-header">
-            <img src="{{ asset('images/logo.png') }}" alt="Comunal Aprende" class="ca-logo"
+            <img src="{{ asset('images/logo.png') }}" alt="ForenseBox" class="ca-logo"
                  onerror="this.style.display='none'">
-            <div class="ca-brand">Comunal Aprende</div>
-            <div class="ca-tagline">Colombia · Formación Comunitaria</div>
+            <div class="ca-brand">ForenseBox</div>
+            <div class="ca-tagline">Digital Forensics</div>
         </div>
 
         <div class="ca-body">
@@ -343,7 +289,7 @@
             </form>
         </div>
 
-        <div class="ca-footer">© {{ date('Y') }} Comunal Aprende · Colombia</div>
+        <div class="ca-footer">© {{ date('Y') }} ForenseBox · Colombia</div>
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 @extends('layouts.auth')
 
-@section('title', 'Iniciar Sesión - Comunal Aprende')
+@section('title', 'Iniciar Sesión - ForenseBox')
 
 @section('content')
 
@@ -10,10 +10,10 @@
             <div class="auth-header">
                 <a href="{{ route('inicio') }}" style="display:inline-block;margin-bottom:.25rem;">
                     <img src="{{ asset('images/logo.png') }}"
-                        alt="Comunal Aprende"
-                        style="height:120px;width:auto;object-fit:contain;"
+                        alt="ForenseBox"
+                        style="height:96px;width:auto;object-fit:contain;"
                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="auth-logo" style="display:none;">CA</div>
+                    <div class="auth-logo" style="display:none;">FB</div>
                 </a>
                 <h1 class="auth-title">Bienvenido de nuevo</h1>
                 <p class="auth-subtitle">Ingresa a tu cuenta para continuar aprendiendo</p>
@@ -89,7 +89,7 @@
                             class="form-checkbox"
                             {{ old('remember') ? 'checked' : '' }}
                         >
-                        <span class="text-sm text-gray-700">
+                        <span class="text-sm" style="color: var(--paper);">
                             Recordarme
                         </span>
                     </label>
@@ -97,7 +97,8 @@
                     @if (Route::has('password.request'))
                         <a
                             href="{{ route('password.request') }}"
-                            class="text-sm text-blue-600 hover:underline"
+                            class="text-sm hover:underline"
+                            style="color: var(--uv);"
                         >
                             ¿Olvidaste tu contraseña?
                         </a>

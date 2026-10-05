@@ -1,26 +1,26 @@
 @extends('layouts.app')
 
-@section('title', 'Comunal Aprende - Formación y Capacitación Comunitaria')
-@section('description', 'Somos una iniciativa de servicios integrales en asesoría, consultoría y formación para organizaciones comunitarias en Colombia.')
+@section('title', 'ForenseBox — Aprendizaje en Ciberseguridad y Forensia Digital')
+@section('description', 'Plataforma de formación en ciberseguridad, forensia digital y análisis de evidencia digital.')
 
 @section('content')
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap');
-
 :root {
-    --blue-deep:  #0A2540;
-    --blue-core:  #0A4D8C;
-    --blue-mid:   #1E6DB8;
-    --blue-light: #3B88D4;
-    --blue-pale:  #EBF3FF;
-    --green:      #2E7D32;
-    --orange:     #E65100;
-    --white:      #ffffff;
-    --off-white:  #f7f9fc;
-    --text:       #1a2940;
-    --muted:      #64748b;
-    --border:     #dde4ee;
+    --lab-deep:  #0A121B;
+    --lab:       #0E1A24;
+    --panel:     #15252F;
+    --panel-2:   #1B2E3A;
+    --line:      #27404E;
+    --line-soft: #1E333F;
+    --paper:     #E8EEF0;
+    --muted:     #9FB0B8;
+    --tag:       #F2B33D;
+    --uv:        #8E7BFF;
+    --resolved:  #3FBF9B;
+    --alert:     #F0606A;
+    --font-sans: 'Chivo', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
 }
 
 /* ══════════════════════════════════
@@ -32,10 +32,10 @@
     min-height: 680px;
     max-height: 920px;
     overflow: hidden;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
+    background: var(--lab-deep);
 }
 
-/* Slides */
 .slide {
     position: absolute; inset: 0;
     background-size: cover;
@@ -46,79 +46,73 @@
 }
 .slide.active { opacity: 1; z-index: 1; }
 
-/* Overlay dinámico con blur sutil en bordes */
+/* Fondo tipo grid de laboratorio */
+.slide-grid {
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(142,123,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.06) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 40%, transparent 100%);
+}
+.slide-glow {
+    position: absolute; width: 620px; height: 620px; border-radius: 50%;
+    background: radial-gradient(rgba(142,123,255,.22), transparent 70%);
+    top: -180px; right: -120px; pointer-events: none;
+}
+.slide-glow.amber {
+    background: radial-gradient(rgba(242,179,61,.14), transparent 70%);
+    bottom: -220px; left: -140px; top: auto; right: auto;
+}
 .slide-overlay {
     position: absolute; inset: 0;
     background:
-        linear-gradient(90deg, rgba(10,37,64,.72) 0%, rgba(10,37,64,.38) 45%, rgba(10,37,64,.08) 100%),
-        linear-gradient(0deg, rgba(10,37,64,.35) 0%, transparent 35%);
+        linear-gradient(90deg, rgba(10,18,27,.9) 0%, rgba(10,18,27,.55) 50%, rgba(10,18,27,.15) 100%),
+        linear-gradient(0deg, rgba(10,18,27,.6) 0%, transparent 40%);
 }
 
-/* Partículas decorativas */
-.slide-particles {
-    position: absolute; inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-}
-.particle {
-    position: absolute;
-    border-radius: 50%;
-    background: rgba(255,255,255,.06);
-    animation: floatParticle 8s infinite ease-in-out;
-}
-.particle:nth-child(1) { width:300px;height:300px; top:-80px; right:8%; animation-delay:0s; }
-.particle:nth-child(2) { width:180px;height:180px; top:30%; right:25%; animation-delay:2s; }
-.particle:nth-child(3) { width:120px;height:120px; bottom:10%; right:15%; animation-delay:4s; }
-.particle:nth-child(4) { width:60px;height:60px; top:20%; right:40%; animation-delay:1s; }
-
-@keyframes floatParticle {
-    0%,100% { transform: translateY(0) scale(1); }
-    50%      { transform: translateY(-20px) scale(1.05); }
-}
-
-/* Contenido del slide */
 .slide-inner {
     position: relative; z-index: 2;
     max-width: 1200px; margin: 0 auto;
     padding: 0 2rem;
     width: 100%;
-    padding-bottom: 140px; 
+    padding-bottom: 140px;
 }
 
 .slide-tag {
     display: inline-flex; align-items: center; gap: .5rem;
-    background: rgba(255,255,255,.12);
-    border: 1px solid rgba(255,255,255,.25);
-    backdrop-filter: blur(8px);
-    color: rgba(255,255,255,.9);
-    font-size: .75rem; font-weight: 700;
+    background: rgba(142,123,255,.12);
+    border: 1px solid rgba(142,123,255,.35);
+    color: #c9bfff;
+    font-family: var(--font-mono);
+    font-size: .72rem; font-weight: 500;
     padding: .4rem 1rem; border-radius: 999px;
-    text-transform: uppercase; letter-spacing: .1em;
+    text-transform: uppercase; letter-spacing: .14em;
     margin-bottom: 1.25rem;
     opacity: 0; transform: translateY(15px);
     transition: all .6s .1s ease;
 }
+.slide-tag .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--resolved); }
 
 .slide-title {
     font-size: clamp(2rem, 4.5vw, 3.5rem);
-    font-weight: 900; color: #fff;
-    line-height: 1.1; letter-spacing: -.02em;
+    font-weight: 800; color: var(--paper);
+    line-height: 1.08; letter-spacing: -.02em;
     margin: 0 0 1.25rem;
     max-width: 640px;
     opacity: 0; transform: translateY(20px);
     transition: all .65s .2s ease;
 }
-
 .slide-title span {
-    background: linear-gradient(90deg, #60B0FF, #A0D4FF);
+    background: linear-gradient(90deg, #F2B33D, #ffd98a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
 .slide-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem; color: rgba(255,255,255,.78);
+    font-family: var(--font-sans);
+    font-size: 1.1rem; color: var(--muted);
     line-height: 1.7; max-width: 520px;
     margin-bottom: 2rem;
     opacity: 0; transform: translateY(15px);
@@ -141,36 +135,25 @@
 .hero-btn-primary {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .9rem 1.85rem;
-    background: linear-gradient(135deg, var(--blue-core), var(--blue-light));
-    color: #fff; border: none; border-radius: 10px;
-    font-family: 'Outfit', sans-serif; font-size: .95rem; font-weight: 700;
+    background: var(--tag); color: #1A1203;
+    border: none; border-radius: 10px;
+    font-family: var(--font-sans); font-size: .95rem; font-weight: 600;
     text-decoration: none; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(10,77,140,.5);
+    box-shadow: 0 6px 24px rgba(242,179,61,.3);
     transition: transform .2s, box-shadow .2s;
 }
-.hero-btn-primary:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(10,77,140,.6);
-    color: #fff;
-}
+.hero-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 34px rgba(242,179,61,.45); color: #1A1203; }
 
 .hero-btn-ghost {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: .9rem 1.85rem;
-    background: rgba(255,255,255,.1);
-    border: 1.5px solid rgba(255,255,255,.35);
-    backdrop-filter: blur(8px);
-    color: #fff; border-radius: 10px;
-    font-family: 'Outfit', sans-serif; font-size: .95rem; font-weight: 600;
-    text-decoration: none;
-    transition: all .2s;
+    background: rgba(142,123,255,.08);
+    border: 1.5px solid rgba(142,123,255,.4);
+    color: #c9bfff; border-radius: 10px;
+    font-family: var(--font-sans); font-size: .95rem; font-weight: 600;
+    text-decoration: none; transition: all .2s;
 }
-.hero-btn-ghost:hover {
-    background: rgba(255,255,255,.2);
-    border-color: rgba(255,255,255,.6);
-    color: #fff;
-    transform: translateY(-2px);
-}
+.hero-btn-ghost:hover { background: rgba(142,123,255,.16); border-color: var(--uv); color: #fff; transform: translateY(-2px); }
 
 /* Stats flotantes */
 .hero-stats {
@@ -178,28 +161,28 @@
     transform: translateX(-50%);
     z-index: 5;
     display: flex; gap: 1px;
-    background: rgba(255,255,255,.1);
+    background: rgba(21,37,47,.7);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,.2);
+    border: 1px solid var(--line);
     border-radius: 16px;
     overflow: hidden;
     max-width: 680px; width: 90%;
-}   
+}
 .hero-stat {
     flex: 1; padding: 1rem 1.25rem;
     text-align: center;
-    border-right: 1px solid rgba(255,255,255,.15);
+    border-right: 1px solid var(--line-soft);
 }
 .hero-stat:last-child { border-right: none; }
 .hero-stat-num {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.5rem; font-weight: 800; color: #fff;
+    font-family: var(--font-mono);
+    font-size: 1.4rem; font-weight: 700; color: var(--paper);
     line-height: 1;
 }
-.hero-stat-num span { color: #60B0FF; }
+.hero-stat-num span { color: var(--tag); }
 .hero-stat-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .72rem; color: rgba(255,255,255,.6);
+    font-family: var(--font-sans);
+    font-size: .72rem; color: var(--muted);
     margin-top: .25rem;
     text-transform: uppercase; letter-spacing: .05em;
 }
@@ -211,170 +194,114 @@
 }
 .slider-dot {
     width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,.35); border: none; cursor: pointer;
+    background: rgba(255,255,255,.2); border: none; cursor: pointer;
     transition: all .3s; padding: 0;
 }
-.slider-dot.active {
-    width: 28px; border-radius: 4px;
-    background: #fff;
-}
-
-/* Flecha scroll */
-.scroll-hint {
-    position: absolute; bottom: 1.5rem; right: 2rem;
-    z-index: 5; color: rgba(255,255,255,.4);
-    font-size: .72rem; font-family: 'DM Sans', sans-serif;
-    display: flex; flex-direction: column; align-items: center; gap: .3rem;
-    animation: scrollBounce 2s infinite;
-}
-@keyframes scrollBounce {
-    0%,100% { transform: translateY(0); }
-    50%      { transform: translateY(6px); }
-}
-
-/* Ola de transición */
-.hero-wave {
-    position: relative; z-index: 2;
-    background: #fff; margin-top: -2px;
-}
+.slider-dot.active { width: 28px; border-radius: 4px; background: var(--tag); }
 
 /* ══════════════════════════════════
    SECCIÓN STATS / NÚMEROS
 ══════════════════════════════════ */
-.stats-bar {
-    background: #fff;
-    padding: 2.5rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-}
+.stats-bar { background: var(--lab); padding: 2.5rem 1.5rem; border-bottom: 1px solid var(--line-soft); }
 .stats-bar-inner {
     max-width: 1100px; margin: 0 auto;
     display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 1px; background: var(--border);
-    border: 1px solid var(--border); border-radius: 16px;
+    gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: 16px;
     overflow: hidden;
 }
-.stat-item {
-    background: #fff; padding: 1.75rem 1.5rem;
-    text-align: center;
-    transition: background .2s;
-}
-.stat-item:hover { background: var(--blue-pale); }
-.stat-number {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2.25rem; font-weight: 900;
-    color: var(--blue-core); line-height: 1;
-}
-.stat-number em { font-style: normal; color: var(--orange); }
-.stat-label {
-    font-family: 'DM Sans', sans-serif;
-    font-size: .82rem; color: var(--muted);
-    margin-top: .4rem;
-}
+.stat-item { background: var(--panel); padding: 1.75rem 1.5rem; text-align: center; transition: background .2s; }
+.stat-item:hover { background: var(--panel-2); }
+.stat-number { font-family: var(--font-mono); font-size: 2rem; font-weight: 700; color: var(--paper); line-height: 1; }
+.stat-number em { font-style: normal; color: var(--tag); }
+.stat-label { font-family: var(--font-sans); font-size: .82rem; color: var(--muted); margin-top: .4rem; }
 
 /* ══════════════════════════════════
    SECCIONES GENERALES
 ══════════════════════════════════ */
-.ca-section {
-    padding: 5rem 1.5rem;
-    font-family: 'DM Sans', sans-serif;
-}
-.ca-section.alt { background: var(--off-white); }
+.ca-section { padding: 5rem 1.5rem; font-family: var(--font-sans); }
+.ca-section.alt { background: var(--lab-deep); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
 .ca-container { max-width: 1100px; margin: 0 auto; }
 
 .sec-eyebrow {
     display: inline-flex; align-items: center; gap: .4rem;
-    font-family: 'Outfit', sans-serif;
-    font-size: .72rem; font-weight: 800;
-    color: var(--blue-core);
-    text-transform: uppercase; letter-spacing: .12em;
-    background: var(--blue-pale);
+    font-family: var(--font-mono);
+    font-size: .68rem; font-weight: 500;
+    color: var(--tag);
+    text-transform: uppercase; letter-spacing: .16em;
+    background: var(--tag-soft);
+    border: 1px solid var(--tag-border);
     padding: .35rem .875rem; border-radius: 999px;
     margin-bottom: 1rem;
 }
 .sec-title {
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
     font-size: clamp(1.75rem, 3vw, 2.5rem);
-    font-weight: 800; color: var(--text);
+    font-weight: 800; color: var(--paper);
     margin: 0 0 1rem; line-height: 1.2;
     letter-spacing: -.02em;
 }
-.sec-title span { color: var(--blue-core); }
-.sec-desc {
-    font-size: 1rem; color: var(--muted);
-    line-height: 1.75; max-width: 600px;
-}
+.sec-title span { color: var(--tag); }
+.sec-desc { font-size: 1rem; color: var(--muted); line-height: 1.75; max-width: 600px; }
 
 /* ══════════════════════════════════
-   QUIÉNES SOMOS — layout asimétrico
+   QUIÉNES SOMOS
 ══════════════════════════════════ */
-.about-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem; align-items: center;
-}
-.about-visual {
-    position: relative;
-}
+.about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.about-visual { position: relative; }
 .about-img-wrap {
     border-radius: 20px; overflow: hidden;
-    box-shadow: 0 20px 60px rgba(10,37,64,.15);
+    box-shadow: 0 20px 60px rgba(0,0,0,.45);
     aspect-ratio: 4/3;
-    background: linear-gradient(135deg, var(--blue-core), var(--blue-light));
+    background: var(--panel);
+    border: 1px solid var(--line);
     display: flex; align-items: center; justify-content: center;
-    font-size: 5rem; color: rgba(255,255,255,.4);
+    font-size: 5rem; color: rgba(142,123,255,.35);
+    position: relative;
 }
-.about-img-wrap img {
-    width: 100%; height: 100%; object-fit: cover;
+.about-img-wrap::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(142,123,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.08) 1px, transparent 1px);
+    background-size: 32px 32px;
 }
+.about-img-wrap i { position: relative; z-index: 1; }
 .about-badge {
     position: absolute; bottom: -1.5rem; right: -1.5rem;
-    background: var(--blue-core);
-    color: #fff; border-radius: 16px; padding: 1.25rem 1.5rem;
-    box-shadow: 0 8px 32px rgba(10,77,140,.35);
+    background: var(--panel-2); border: 1px solid var(--line);
+    color: var(--paper); border-radius: 16px; padding: 1.25rem 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,.45);
     text-align: center;
 }
-.about-badge-num {
-    font-family: 'Outfit', sans-serif;
-    font-size: 2rem; font-weight: 900; line-height: 1;
-}
-.about-badge-txt {
-    font-size: .75rem; opacity: .8; margin-top: .2rem;
-    font-family: 'DM Sans', sans-serif;
-}
+.about-badge-num { font-family: var(--font-mono); font-size: 1.9rem; font-weight: 700; color: var(--tag); line-height: 1; }
+.about-badge-txt { font-size: .72rem; color: var(--muted); margin-top: .25rem; }
 
-.about-cards {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
-    margin-top: 2rem;
-}
+.about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
 .about-card-mini {
-    background: var(--blue-pale);
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 14px; padding: 1.25rem;
-    border-left: 3px solid var(--blue-core);
+    border-left: 3px solid var(--uv);
     transition: transform .2s, box-shadow .2s;
 }
-.about-card-mini:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(10,77,140,.12);
-}
+.about-card-mini:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.35); }
 .about-card-mini h4 {
-    font-family: 'Outfit', sans-serif;
-    font-size: .9rem; font-weight: 700; color: var(--text);
+    font-family: var(--font-sans);
+    font-size: .9rem; font-weight: 800; color: var(--paper);
     margin: 0 0 .4rem; display: flex; align-items: center; gap: .4rem;
 }
-.about-card-mini h4 i { color: var(--blue-core); font-size: .85rem; }
-.about-card-mini p {
-    font-size: .83rem; color: var(--muted); margin: 0; line-height: 1.55;
-}
+.about-card-mini h4 i { color: var(--uv); font-size: .85rem; }
+.about-card-mini p { font-size: .83rem; color: var(--muted); margin: 0; line-height: 1.55; }
 
 /* ══════════════════════════════════
-   VALORES — grid con iconos grandes
+   VALORES
 ══════════════════════════════════ */
-.valores-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem; margin-top: 3rem;
-}
+.valores-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-top: 3rem; }
 .valor-card {
-    background: #fff; border: 1px solid var(--border);
+    background: var(--panel);
+    border: 1px solid var(--line);
     border-radius: 18px; padding: 2rem 1.5rem;
     text-align: center;
     transition: all .25s;
@@ -384,216 +311,166 @@
     content: '';
     position: absolute; top: 0; left: 0; right: 0;
     height: 3px;
-    background: linear-gradient(90deg, var(--blue-core), var(--blue-light));
+    background: linear-gradient(90deg, var(--uv), var(--tag));
     transform: scaleX(0); transform-origin: left;
     transition: transform .3s;
 }
 .valor-card:hover::before { transform: scaleX(1); }
-.valor-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(10,77,140,.12);
-    border-color: #c5d9f0;
-}
+.valor-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,.4); border-color: var(--uv); }
 .valor-ico {
     width: 64px; height: 64px; margin: 0 auto 1.25rem;
     border-radius: 18px;
-    background: linear-gradient(135deg, var(--blue-core), var(--blue-light));
+    background: linear-gradient(135deg, var(--uv), #6a58e0);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; color: #fff;
-    box-shadow: 0 6px 20px rgba(10,77,140,.25);
+    box-shadow: 0 6px 20px rgba(142,123,255,.3);
 }
-.valor-card h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1rem; font-weight: 700; color: var(--text);
-    margin: 0 0 .6rem;
-}
-.valor-card p {
-    font-size: .83rem; color: var(--muted);
-    margin: 0; line-height: 1.6;
-}
+.valor-card h3 { font-family: var(--font-sans); font-size: 1rem; font-weight: 800; color: var(--paper); margin: 0 0 .6rem; }
+.valor-card p { font-size: .83rem; color: var(--muted); margin: 0; line-height: 1.6; }
 
 /* ══════════════════════════════════
-   SERVICIOS — cards grandes
+   SERVICIOS / ÁREAS
 ══════════════════════════════════ */
-.servicios-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; margin-top: 3rem;
-}
+.servicios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
 .servicio-card {
     border-radius: 20px; overflow: hidden;
-    background: #fff; border: 1px solid var(--border);
+    background: var(--panel); border: 1px solid var(--line);
     transition: all .25s;
     display: flex; flex-direction: column;
 }
-.servicio-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 48px rgba(10,77,140,.14);
-    border-color: #b8d4f0;
-}
+.servicio-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,.45); border-color: var(--uv); }
 .servicio-img {
-    height: 200px;
+    height: 170px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 3.5rem; color: rgba(255,255,255,.85);
+    font-size: 3rem; color: #c9bfff;
     position: relative; overflow: hidden;
+    background: var(--lab-deep);
 }
-.servicio-img-inner {
+.servicio-img::before {
+    content: '';
     position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 3.5rem; color: rgba(255,255,255,.9);
-    background: linear-gradient(135deg, rgba(10,77,140,.3), transparent);
+    background-image:
+        linear-gradient(rgba(142,123,255,.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.1) 1px, transparent 1px);
+    background-size: 28px 28px;
 }
-.servicio-img-bg {
-    position: absolute; inset: 0;
-    background-size: cover; background-position: center;
-}
+.servicio-img i { position: relative; z-index: 1; }
 .servicio-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
 .servicio-badge {
     display: inline-flex; align-items: center; gap: .3rem;
-    font-size: .7rem; font-weight: 700; color: var(--blue-core);
-    background: var(--blue-pale); padding: .25rem .6rem;
+    font-family: var(--font-mono);
+    font-size: .66rem; font-weight: 500; color: var(--uv);
+    background: var(--uv-soft); padding: .25rem .6rem;
     border-radius: 999px; margin-bottom: .875rem;
-    font-family: 'Outfit', sans-serif; text-transform: uppercase; letter-spacing: .08em;
+    text-transform: uppercase; letter-spacing: .1em;
 }
-.servicio-body h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.2rem; font-weight: 800; color: var(--text);
-    margin: 0 0 .75rem; line-height: 1.2;
-}
-.servicio-body p {
-    font-size: .88rem; color: var(--muted);
-    line-height: 1.7; margin: 0 0 1.5rem; flex: 1;
-}
+.servicio-body h3 { font-family: var(--font-sans); font-size: 1.15rem; font-weight: 800; color: var(--paper); margin: 0 0 .75rem; line-height: 1.2; }
+.servicio-body p { font-size: .88rem; color: var(--muted); line-height: 1.7; margin: 0 0 1.5rem; flex: 1; }
 .servicio-btn {
     display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
     padding: .75rem 1.25rem;
-    background: linear-gradient(135deg, var(--blue-core), var(--blue-mid));
-    color: #fff; border: none; border-radius: 10px;
-    font-family: 'Outfit', sans-serif; font-size: .88rem; font-weight: 700;
+    background: var(--tag); color: #1A1203;
+    border: none; border-radius: 10px;
+    font-family: var(--font-sans); font-size: .88rem; font-weight: 600;
     text-decoration: none; transition: all .2s;
-    box-shadow: 0 3px 12px rgba(10,77,140,.3);
+    box-shadow: 0 3px 12px rgba(242,179,61,.2);
 }
-.servicio-btn:hover { opacity: .9; transform: translateY(-1px); color: #fff; }
+.servicio-btn:hover { opacity: .92; transform: translateY(-1px); color: #1A1203; }
 
 /* ══════════════════════════════════
    CURSOS DESTACADOS
 ══════════════════════════════════ */
-.cursos-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem; margin-top: 2.5rem;
-}
+.cursos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
 .curso-mini-card {
-    background: #fff; border: 1px solid var(--border);
+    background: var(--panel); border: 1px solid var(--line);
     border-radius: 16px; overflow: hidden;
     transition: all .22s; text-decoration: none;
     display: flex; flex-direction: column;
 }
-.curso-mini-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 36px rgba(10,77,140,.12);
-    border-color: #b8d4f0;
-}
+.curso-mini-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.4); border-color: var(--uv); }
 .curso-thumb {
     height: 130px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 2.25rem; color: rgba(255,255,255,.8);
+    font-size: 2.25rem; color: rgba(232,238,240,.7);
     position: relative;
+    background: var(--lab-deep);
 }
-.curso-thumb img {
-    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+.curso-thumb::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(142,123,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(142,123,255,.08) 1px, transparent 1px);
+    background-size: 26px 26px;
 }
-.curso-thumb-ico {
-    position: relative; z-index: 1;
-}
+.curso-thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.curso-thumb-ico { position: relative; z-index: 1; }
 .curso-mini-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
 .curso-cat-badge {
     display: inline-block;
-    font-size: .68rem; font-weight: 700; color: var(--blue-core);
-    background: var(--blue-pale); padding: .2rem .55rem;
+    font-family: var(--font-mono);
+    font-size: .64rem; font-weight: 500; color: var(--uv);
+    background: var(--uv-soft); padding: .2rem .55rem;
     border-radius: 999px; margin-bottom: .6rem;
-    font-family: 'Outfit', sans-serif; text-transform: uppercase;
+    text-transform: uppercase;
 }
-.curso-mini-body h4 {
-    font-family: 'Outfit', sans-serif;
-    font-size: .95rem; font-weight: 700; color: var(--text);
-    margin: 0 0 .4rem; line-height: 1.3;
-}
+.curso-mini-body h4 { font-family: var(--font-sans); font-size: .95rem; font-weight: 800; color: var(--paper); margin: 0 0 .4rem; line-height: 1.3; }
 .curso-mini-meta {
     font-size: .78rem; color: var(--muted); margin-top: auto; padding-top: .75rem;
     display: flex; justify-content: space-between; align-items: center;
-    border-top: 1px solid #f0f4f8;
+    border-top: 1px solid var(--line-soft);
 }
-.curso-free { color: #16a34a; font-weight: 700; font-family: 'Outfit', sans-serif; }
+.curso-free { color: var(--resolved); font-weight: 700; }
 
 /* ══════════════════════════════════
    CTA FINAL
 ══════════════════════════════════ */
 .cta-section {
     position: relative; overflow: hidden;
-    background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-core) 60%, var(--blue-mid) 100%);
+    background: linear-gradient(135deg, var(--lab-deep) 0%, #14253a 100%);
     padding: 5rem 1.5rem; text-align: center;
-    font-family: 'Outfit', sans-serif;
+    font-family: var(--font-sans);
+    border-top: 1px solid var(--line-soft);
 }
 .cta-section::before {
     content: '';
     position: absolute; inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,.05) 1.5px, transparent 1.5px);
+    background-image: radial-gradient(rgba(142,123,255,.08) 1.5px, transparent 1.5px);
     background-size: 32px 32px;
-}
-.cta-section::after {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(rgba(255,255,255,.04), transparent 70%);
-    top: -200px; right: -100px;
 }
 .cta-inner { position: relative; z-index: 2; max-width: 680px; margin: 0 auto; }
 .cta-eyebrow {
     display: inline-block;
-    font-size: .72rem; font-weight: 800; letter-spacing: .15em;
-    text-transform: uppercase; color: #60B0FF;
-    background: rgba(96,176,255,.12); border: 1px solid rgba(96,176,255,.25);
+    font-family: var(--font-mono);
+    font-size: .7rem; font-weight: 500; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--tag);
+    background: var(--tag-soft); border: 1px solid var(--tag-border);
     padding: .35rem 1rem; border-radius: 999px; margin-bottom: 1.25rem;
 }
-.cta-title {
-    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
-    font-weight: 900; color: #fff; line-height: 1.15;
-    margin: 0 0 1rem; letter-spacing: -.02em;
-}
-.cta-desc {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.05rem; color: rgba(255,255,255,.7);
-    line-height: 1.7; margin-bottom: 2.5rem;
-}
+.cta-title { font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 800; color: var(--paper); line-height: 1.15; margin: 0 0 1rem; letter-spacing: -.02em; }
+.cta-desc { font-size: 1.05rem; color: var(--muted); line-height: 1.7; margin-bottom: 2.5rem; }
 .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 .cta-btn-main {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: 1rem 2.25rem;
-    background: #fff; color: var(--blue-core);
+    background: var(--tag); color: #1A1203;
     border: none; border-radius: 12px;
-    font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 800;
+    font-family: var(--font-sans); font-size: 1rem; font-weight: 600;
     text-decoration: none; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0,0,0,.2);
+    box-shadow: 0 6px 22px rgba(242,179,61,.3);
     transition: all .2s;
 }
-.cta-btn-main:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 32px rgba(0,0,0,.3);
-    color: var(--blue-core);
-}
+.cta-btn-main:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(242,179,61,.4); color: #1A1203; }
 .cta-btn-ghost {
     display: inline-flex; align-items: center; gap: .5rem;
     padding: 1rem 2.25rem;
-    background: rgba(255,255,255,.1);
-    border: 1.5px solid rgba(255,255,255,.3);
-    color: #fff; border-radius: 12px;
-    font-family: 'Outfit', sans-serif; font-size: 1rem; font-weight: 700;
+    background: rgba(142,123,255,.08);
+    border: 1.5px solid rgba(142,123,255,.4);
+    color: #c9bfff; border-radius: 12px;
+    font-family: var(--font-sans); font-size: 1rem; font-weight: 600;
     text-decoration: none; transition: all .2s;
 }
-.cta-btn-ghost:hover {
-    background: rgba(255,255,255,.2);
-    color: #fff; transform: translateY(-2px);
-}
+.cta-btn-ghost:hover { background: rgba(142,123,255,.16); color: #fff; transform: translateY(-2px); }
 
 /* Responsive */
 @media (max-width: 960px) {
@@ -618,55 +495,52 @@
 <section class="hero-section" id="heroSlider">
 
     {{-- Slide 1 --}}
-    <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=1600&q=80');">
+    <div class="slide active">
+        <div class="slide-grid"></div>
+        <div class="slide-glow"></div>
+        <div class="slide-glow amber"></div>
         <div class="slide-overlay"></div>
-        <div class="slide-particles">
-            <div class="particle"></div><div class="particle"></div>
-            <div class="particle"></div><div class="particle"></div>
-        </div>
         <div class="slide-inner">
-            <div class="slide-tag"><i class="fas fa-graduation-cap"></i> Formación Comunitaria</div>
-            <h1 class="slide-title">Fortalecemos Comunidades a Través del <span>Conocimiento</span></h1>
-            <p class="slide-desc">Descubre programas de formación diseñados para líderes sociales y organizaciones comunitarias que transforman territorios.</p>
+            <div class="slide-tag"><span class="dot"></span> Forensia Digital · Ciberseguridad</div>
+            <h1 class="slide-title">Aprende a Investigar la <span>Evidencia Digital</span></h1>
+            <p class="slide-desc">Cursos prácticos en análisis forense, respuesta a incidentes y seguridad ofensiva. Convierte los datos en evidencia y la evidencia en conocimiento.</p>
             <div class="slide-btns">
-                <a href="{{ route('cursos.index') }}" class="hero-btn-primary"><i class="fas fa-book-open"></i> Explorar Cursos</a>
+                <a href="{{ route('cursos.index') }}" class="hero-btn-primary"><i class="fas fa-flask"></i> Explorar Cursos</a>
                 <a href="#acerca" class="hero-btn-ghost"><i class="fas fa-info-circle"></i> Conocer Más</a>
             </div>
         </div>
     </div>
 
     {{-- Slide 2 --}}
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1600&q=80');">
+    <div class="slide">
+        <div class="slide-grid"></div>
+        <div class="slide-glow"></div>
+        <div class="slide-glow amber"></div>
         <div class="slide-overlay"></div>
-        <div class="slide-particles">
-            <div class="particle"></div><div class="particle"></div>
-            <div class="particle"></div><div class="particle"></div>
-        </div>
         <div class="slide-inner">
-            <div class="slide-tag"><i class="fas fa-users"></i> Organismos de Acción Comunal</div>
-            <h1 class="slide-title">Capacitación Especializada para <span>JAC y OAC</span></h1>
-            <p class="slide-desc">Herramientas técnicas y administrativas para mejorar la gestión, el cumplimiento normativo y la sostenibilidad de tu organización.</p>
+            <div class="slide-tag"><span class="dot"></span> Laboratorio Práctico</div>
+            <h1 class="slide-title">Entrena con <span>Casos Reales</span> y Escenarios</h1>
+            <p class="slide-desc">Simulaciones, retos CTF y laboratorios guiados para dominar herramientas de análisis, memoria, red y disco.</p>
             <div class="slide-btns">
-                <a href="{{ route('cursos.index') }}" class="hero-btn-primary"><i class="fas fa-play-circle"></i> Ver Programas</a>
-                <a href="{{ route('contacto') }}" class="hero-btn-ghost"><i class="fas fa-headset"></i> Asesoría Personalizada</a>
+                <a href="{{ route('cursos.index') }}" class="hero-btn-primary"><i class="fas fa-terminal"></i> Ver Programas</a>
+                <a href="{{ route('contacto') }}" class="hero-btn-ghost"><i class="fas fa-headset"></i> Hablar con Nosotros</a>
             </div>
         </div>
     </div>
 
     {{-- Slide 3 --}}
-    <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=1600&q=80');">
+    <div class="slide">
+        <div class="slide-grid"></div>
+        <div class="slide-glow"></div>
+        <div class="slide-glow amber"></div>
         <div class="slide-overlay"></div>
-        <div class="slide-particles">
-            <div class="particle"></div><div class="particle"></div>
-            <div class="particle"></div><div class="particle"></div>
-        </div>
         <div class="slide-inner">
-            <div class="slide-tag"><i class="fas fa-certificate"></i> Aprende a tu ritmo</div>
-            <h1 class="slide-title">Educación de Calidad, <span>Accesible para Todos</span></h1>
-            <p class="slide-desc">Cursos gratuitos y de pago adaptados a las necesidades reales de tu organización. Aprende desde cualquier lugar, a tu propio ritmo.</p>
+            <div class="slide-tag"><span class="dot"></span> Certificación Verificable</div>
+            <h1 class="slide-title">Formación que se <span>Valida y Certifica</span></h1>
+            <p class="slide-desc">Aprende a tu ritmo, completa evaluaciones y obtén certificados con código de verificación pública.</p>
             <div class="slide-btns">
                 <a href="{{ route('register') }}" class="hero-btn-primary"><i class="fas fa-user-plus"></i> Comenzar Gratis</a>
-                <a href="#vision" class="hero-btn-ghost"><i class="fas fa-eye"></i> Nuestra Visión</a>
+                <a href="#valores" class="hero-btn-ghost"><i class="fas fa-eye"></i> Nuestro Enfoque</a>
             </div>
         </div>
     </div>
@@ -681,28 +555,21 @@
     {{-- Stats flotantes --}}
     <div class="hero-stats">
         <div class="hero-stat">
-            <div class="hero-stat-num">+<span>500</span></div>
-            <div class="hero-stat-label">Líderes formados</div>
+            <div class="hero-stat-num">+<span>350</span></div>
+            <div class="hero-stat-label">Estudiantes</div>
         </div>
         <div class="hero-stat">
             <div class="hero-stat-num"><span>12</span></div>
-            <div class="hero-stat-label">Cursos disponibles</div>
+            <div class="hero-stat-label">Cursos</div>
         </div>
         <div class="hero-stat">
-            <div class="hero-stat-num">+<span>50</span></div>
-            <div class="hero-stat-label">Municipios atendidos</div>
+            <div class="hero-stat-num"><span>40</span>+</div>
+            <div class="hero-stat-label">Laboratorios</div>
         </div>
         <div class="hero-stat">
             <div class="hero-stat-num"><span>98</span>%</div>
             <div class="hero-stat-label">Satisfacción</div>
         </div>
-    </div>
-
-    {{-- Ola SVG --}}
-    <div style="position:absolute;bottom:-1px;left:0;right:0;z-index:3;line-height:0;">
-        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;">
-            <path d="M0,60 C240,20 480,0 720,20 C960,40 1200,50 1440,30 L1440,60 L0,60 Z" fill="#f7f9fc"/>
-        </svg>
     </div>
 </section>
 
@@ -710,16 +577,16 @@
 <div class="stats-bar">
     <div class="stats-bar-inner">
         <div class="stat-item">
-            <div class="stat-number">+<em>500</em></div>
-            <div class="stat-label">Líderes comunitarios formados</div>
+            <div class="stat-number">+<em>350</em></div>
+            <div class="stat-label">Profesionales formados</div>
         </div>
         <div class="stat-item">
             <div class="stat-number"><em>15</em>+</div>
-            <div class="stat-label">Programas de capacitación</div>
+            <div class="stat-label">Programas especializados</div>
         </div>
         <div class="stat-item">
-            <div class="stat-number">+<em>50</em></div>
-            <div class="stat-label">Municipios en Colombia</div>
+            <div class="stat-number"><em>40</em>+</div>
+            <div class="stat-label">Laboratorios prácticos</div>
         </div>
         <div class="stat-item">
             <div class="stat-number"><em>98</em>%</div>
@@ -734,37 +601,36 @@
         <div class="about-layout">
             <div class="about-visual">
                 <div class="about-img-wrap">
-                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80" alt="Comunidad">
+                    <i class="fas fa-fingerprint"></i>
                 </div>
                 <div class="about-badge">
                     <div class="about-badge-num">+5</div>
-                    <div class="about-badge-txt">Años de experiencia</div>
+                    <div class="about-badge-txt">Áreas de especialización</div>
                 </div>
             </div>
             <div>
                 <div class="sec-eyebrow"><i class="fas fa-info-circle"></i> Quiénes Somos</div>
-                <h2 class="sec-title">Somos <span>Comunal Aprende</span></h2>
+                <h2 class="sec-title">Somos <span>ForenseBox</span></h2>
                 <p class="sec-desc">
-                    Una iniciativa de servicios integrales en asesoría, consultoría y formación,
-                    orientada al fortalecimiento institucional y organizacional de comunidades,
-                    líderes sociales y entidades sin ánimo de lucro en Colombia.
+                    Una plataforma de formación en ciberseguridad y forensia digital, diseñada para
+                    quienes quieren aprender a investigar, proteger y analizar evidencia en el mundo digital.
                 </p>
                 <div class="about-cards">
                     <div class="about-card-mini">
                         <h4><i class="fas fa-bullseye"></i> Nuestra Misión</h4>
-                        <p>Brindar acompañamiento profesional y herramientas prácticas que fortalezcan la capacidad de gestión y sostenibilidad de las organizaciones comunitarias.</p>
+                        <p>Formar profesionales capaces de identificar, preservar y analizar evidencia digital con rigor técnico y ético.</p>
                     </div>
                     <div class="about-card-mini" id="vision">
                         <h4><i class="fas fa-eye"></i> Nuestra Visión</h4>
-                        <p>Ser referentes en formación y consultoría comunitaria, generando impacto positivo en los territorios a través de soluciones adaptadas y sostenibles.</p>
+                        <p>Ser referentes en educación en ciberseguridad y forensia digital en la región, generando talento confiable y capacitado.</p>
                     </div>
                     <div class="about-card-mini">
                         <h4><i class="fas fa-handshake"></i> Nuestra Propuesta</h4>
-                        <p>Un modelo cercano, responsable y estratégico que combina capacitación técnica con acompañamiento personalizado y herramientas digitales.</p>
+                        <p>Un modelo práctico: laboratorios, casos y herramientas reales, combinados con acompañamiento de expertos.</p>
                     </div>
                     <div class="about-card-mini">
-                        <h4><i class="fas fa-map-marker-alt"></i> Nuestro Alcance</h4>
-                        <p>Presencia en más de 50 municipios de Colombia, con enfoque en comunidades rurales y urbanas que buscan fortalecer su organización.</p>
+                        <h4><i class="fas fa-microscope"></i> Nuestro Método</h4>
+                        <p>Aprender haciendo. Cada curso combina teoría con práctica guiada en entornos controlados.</p>
                     </div>
                 </div>
             </div>
@@ -781,71 +647,62 @@
         <h2 class="sec-title" style="text-align:center;">Valores que nos <span>Guían</span></h2>
         <div class="valores-grid">
             <div class="valor-card">
-                <div class="valor-ico"><i class="fas fa-users"></i></div>
-                <h3>Participación</h3>
-                <p>Promovemos la inclusión y el protagonismo activo de las comunidades en sus procesos de desarrollo.</p>
+                <div class="valor-ico"><i class="fas fa-shield-halved"></i></div>
+                <h3>Integridad</h3>
+                <p>Manejamos el conocimiento con ética, cadena de custodia y responsabilidad profesional.</p>
             </div>
             <div class="valor-card">
                 <div class="valor-ico"><i class="fas fa-star"></i></div>
-                <h3>Excelencia</h3>
-                <p>Nos comprometemos con la calidad, el rigor técnico y la mejora continua en todos nuestros servicios.</p>
+                <h3>Rigor Técnico</h3>
+                <p>Metodología forense, precisión en el detalle y validación constante de resultados.</p>
             </div>
             <div class="valor-card">
-                <div class="valor-ico"><i class="fas fa-shield-alt"></i></div>
+                <div class="valor-ico"><i class="fas fa-user-secret"></i></div>
                 <h3>Transparencia</h3>
-                <p>Actuamos con honestidad, ética y rendición de cuentas en todos nuestros procesos.</p>
+                <p>Actuamos con honestidad y trazabilidad en todos nuestros procesos y contenidos.</p>
             </div>
             <div class="valor-card">
                 <div class="valor-ico"><i class="fas fa-seedling"></i></div>
-                <h3>Sostenibilidad</h3>
-                <p>Buscamos generar impacto duradero a través de capacidades instaladas en las comunidades.</p>
+                <h3>Actualización</h3>
+                <p>Contenido al día con las amenazas, herramientas y estándares del sector.</p>
             </div>
         </div>
     </div>
 </section>
 
-{{-- ══════════════ SERVICIOS ══════════════ --}}
+{{-- ══════════════ ÁREAS / SERVICIOS ══════════════ --}}
 <section class="ca-section" id="servicios">
     <div class="ca-container">
         <div style="text-align:center; margin-bottom: .5rem;">
-            <div class="sec-eyebrow"><i class="fas fa-cogs"></i> Qué Ofrecemos</div>
+            <div class="sec-eyebrow"><i class="fas fa-cogs"></i> Áreas de Estudio</div>
         </div>
-        <h2 class="sec-title" style="text-align:center;">Nuestros <span>Servicios</span></h2>
-        <p class="sec-desc" style="text-align:center; margin: 0 auto 0;">Soluciones integrales para el fortalecimiento organizacional y comunitario</p>
+        <h2 class="sec-title" style="text-align:center;">Nuestras <span>Especialidades</span></h2>
+        <p class="sec-desc" style="text-align:center; margin: 0 auto 0;">Rutas de aprendizaje alineadas con la práctica profesional</p>
         <div class="servicios-grid">
             <div class="servicio-card">
-                <div class="servicio-img" style="background: linear-gradient(135deg, #0A4D8C, #1E6DB8);">
-                    <div class="servicio-img-bg" style="background-image:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&q=70'); opacity:.25;"></div>
-                    <div class="servicio-img-inner"><i class="fas fa-graduation-cap"></i></div>
-                </div>
+                <div class="servicio-img"><i class="fas fa-fingerprint"></i></div>
                 <div class="servicio-body">
-                    <div class="servicio-badge"><i class="fas fa-book"></i> Educación</div>
-                    <h3>Formación y Capacitación</h3>
-                    <p>Cursos especializados en gestión comunal, normatividad, participación ciudadana, formulación de proyectos y desarrollo organizacional.</p>
+                    <div class="servicio-badge"><i class="fas fa-search"></i> Forensia</div>
+                    <h3>Análisis Forense Digital</h3>
+                    <p>Adquisición y análisis de evidencia en disco, memoria y red. Cadena de custodia y reportes periciales.</p>
                     <a href="{{ route('cursos.index') }}" class="servicio-btn"><i class="fas fa-arrow-right"></i> Ver Cursos</a>
                 </div>
             </div>
             <div class="servicio-card">
-                <div class="servicio-img" style="background: linear-gradient(135deg, #1E6DB8, #3B88D4);">
-                    <div class="servicio-img-bg" style="background-image:url('https://images.unsplash.com/photo-1531482615713-2afd69097998?w=600&q=70'); opacity:.25;"></div>
-                    <div class="servicio-img-inner"><i class="fas fa-clipboard-list"></i></div>
-                </div>
+                <div class="servicio-img"><i class="fas fa-shield-halved"></i></div>
                 <div class="servicio-body">
-                    <div class="servicio-badge"><i class="fas fa-handshake"></i> Consultoría</div>
-                    <h3>Asesoría y Consultoría</h3>
-                    <p>Acompañamiento personalizado en procesos administrativos, legales y técnicos para Organismos de Acción Comunal y organizaciones sociales.</p>
-                    <a href="{{ route('contacto') }}" class="servicio-btn"><i class="fas fa-arrow-right"></i> Solicitar Asesoría</a>
+                    <div class="servicio-badge"><i class="fas fa-lock"></i> Seguridad</div>
+                    <h3>Ciberseguridad Ofensiva</h3>
+                    <p>Ethical hacking, pruebas de penetración, explotación controlada y hardening de sistemas.</p>
+                    <a href="{{ route('cursos.index') }}" class="servicio-btn"><i class="fas fa-arrow-right"></i> Ver Cursos</a>
                 </div>
             </div>
             <div class="servicio-card">
-                <div class="servicio-img" style="background: linear-gradient(135deg, #3B88D4, #5CA3E6);">
-                    <div class="servicio-img-bg" style="background-image:url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&q=70'); opacity:.25;"></div>
-                    <div class="servicio-img-inner"><i class="fas fa-tools"></i></div>
-                </div>
+                <div class="servicio-img"><i class="fas fa-bug"></i></div>
                 <div class="servicio-body">
-                    <div class="servicio-badge"><i class="fas fa-file-alt"></i> Recursos</div>
-                    <h3>Herramientas y Recursos</h3>
-                    <p>Material didáctico, plantillas, formatos y recursos digitales para facilitar la gestión y cumplimiento normativo de las organizaciones.</p>
+                    <div class="servicio-badge"><i class="fas fa-terminal"></i> IR & Malware</div>
+                    <h3>Respuesta a Incidentes</h3>
+                    <p>Detección, contención y análisis de malware. Gestión de incidentes y recuperación segura.</p>
                     <a href="{{ route('normatividad') }}" class="servicio-btn"><i class="fas fa-arrow-right"></i> Conocer Más</a>
                 </div>
             </div>
@@ -866,19 +723,19 @@
                 <div class="sec-eyebrow"><i class="fas fa-fire"></i> Cursos Populares</div>
                 <h2 class="sec-title" style="margin-bottom:0;">Aprende con Nuestros <span>Mejores Cursos</span></h2>
             </div>
-            <a href="{{ route('cursos.index') }}" style="display:inline-flex;align-items:center;gap:.4rem;color:var(--blue-core);font-family:'Outfit',sans-serif;font-weight:700;font-size:.9rem;text-decoration:none;">
+            <a href="{{ route('cursos.index') }}" style="display:inline-flex;align-items:center;gap:.4rem;color:var(--uv);font-family:var(--font-sans);font-weight:600;font-size:.9rem;text-decoration:none;">
                 Ver todos <i class="fas fa-arrow-right"></i>
             </a>
         </div>
         <div class="cursos-grid">
             @foreach($cursosDestacados as $c)
-                @php $rc = explode(',', $c->color_gradiente ?? '#0A4D8C,#3B88D4'); @endphp
+                @php $rc = explode(',', $c->color_gradiente ?? '#0E1A24,#27404E'); @endphp
                 <a href="{{ route('cursos.show', $c->slug) }}" class="curso-mini-card">
-                    <div class="curso-thumb" style="background:linear-gradient(135deg,{{ $rc[0] }},{{ $rc[1] ?? '#3B88D4' }});">
+                    <div class="curso-thumb" style="background:linear-gradient(135deg,{{ $rc[0] }},{{ $rc[1] ?? '#27404E' }});">
                         @if($c->imagen)
                             <img src="{{ $c->imagen }}" alt="{{ $c->titulo }}">
                         @endif
-                        <div class="curso-thumb-ico"><i class="fas {{ $c->icono_fa ?? 'fa-graduation-cap' }}"></i></div>
+                        <div class="curso-thumb-ico"><i class="fas {{ $c->icono_fa ?? 'fa-fingerprint' }}"></i></div>
                     </div>
                     <div class="curso-mini-body">
                         <span class="curso-cat-badge">{{ $c->categoriaLabel() }}</span>
@@ -900,8 +757,8 @@
 <section class="cta-section">
     <div class="cta-inner">
         <div class="cta-eyebrow">Únete hoy</div>
-        <h2 class="cta-title">¿Listo para Fortalecer tu Organización?</h2>
-        <p class="cta-desc">Únete a cientos de líderes y organizaciones que ya están transformando sus comunidades a través de la formación y el conocimiento.</p>
+        <h2 class="cta-title">¿Listo para Investigar el Mundo Digital?</h2>
+        <p class="cta-desc">Únete a una comunidad de estudiantes y profesionales que ya están dominando la ciberseguridad y la forensia digital.</p>
         <div class="cta-btns">
             @guest
                 <a href="{{ route('register') }}" class="cta-btn-main">

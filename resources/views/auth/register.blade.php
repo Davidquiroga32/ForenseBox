@@ -1,6 +1,6 @@
     @extends('layouts.auth')
 
-    @section('title', 'Registro - Comunal Aprende')
+    @section('title', 'Registro - ForenseBox')
 
     @section('content')
     <div class="auth-container">
@@ -9,10 +9,10 @@
             <div class="auth-header">
                 <a href="{{ route('inicio') }}" style="display:inline-block;margin-bottom:.25rem;">
                     <img src="{{ asset('images/logo.png') }}"
-                        alt="Comunal Aprende"
-                        style="height:120px;width:auto;object-fit:contain;"
+                        alt="ForenseBox"
+                        style="height:96px;width:auto;object-fit:contain;"
                         onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-                    <div class="auth-logo" style="display:none;">CA</div>
+                    <div class="auth-logo" style="display:none;">FB</div>
                 </a>
                 <h1 class="auth-title">Crea tu cuenta</h1>
                 <p class="auth-subtitle">Únete a nuestra comunidad de aprendizaje</p>
@@ -328,7 +328,7 @@
                         {{ old('newsletter', true) ? 'checked' : '' }}
                     >
 
-                    <label for="newsletter" class="text-sm text-gray-700 cursor-pointer">
+                    <label for="newsletter" class="text-sm cursor-pointer" style="color: var(--muted);">
                         Deseo recibir información sobre nuevos cursos y actualizaciones
                     </label>
                 </div>
@@ -349,15 +349,15 @@
     @section('extra-js')
     <style>
         .register-section-title {
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--azul-principal);
+            font-family: var(--font-mono);
+            font-size: 0.72rem;
+            font-weight: 500;
+            color: var(--tag);
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.12em;
             margin: 1.5rem 0 1rem;
             padding-bottom: 0.5rem;
-            border-bottom: 2px solid var(--azul-suave);
+            border-bottom: 1px solid var(--line-soft);
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -369,13 +369,14 @@
             align-items: center;
             gap: 0.5rem;
             padding: 0.75rem 1rem;
-            border: 2px solid var(--gris-medio);
+            border: 1.5px solid var(--line);
             border-radius: var(--radius-md);
             cursor: pointer;
-            font-weight: 500;
-            color: var(--gris-texto);
+            font-weight: 600;
+            color: var(--muted);
             transition: all 0.2s ease;
             user-select: none;
+            background: var(--lab);
         }
 
         .oac-option input[type="radio"] {
@@ -383,15 +384,15 @@
         }
 
         .oac-option:has(input:checked) {
-            border-color: var(--azul-principal);
-            background: var(--azul-suave);
-            color: var(--azul-principal);
+            border-color: var(--uv);
+            background: var(--uv-soft);
+            color: #c9bfff;
         }
 
         .oac-option i { font-size: 1rem; }
 
         @media (max-width: 500px) {
-            .auth-card { padding: var(--spacing-lg) var(--spacing-md) !important; }
+            .auth-card { padding: 1.75rem 1.25rem !important; }
         }
     </style>
 

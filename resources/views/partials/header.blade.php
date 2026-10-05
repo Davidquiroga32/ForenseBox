@@ -2,10 +2,11 @@
 /* ── HEADER ── */
 .header {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-    background: rgba(255,255,255,.97);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(0,0,0,.07);
-    box-shadow: 0 2px 20px rgba(10,37,64,.06);
+    background: rgba(10, 18, 27, .92);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line-soft);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, .35);
     transition: all .25s;
 }
 
@@ -23,18 +24,20 @@
     text-decoration: none; flex-shrink: 0;
 }
 .logo-img {
-    height: 56px; width: auto;
+    height: 40px; width: auto;
     object-fit: contain; display: block;
 }
-.logo-text { display: flex; flex-direction: column; line-height: 1.1; }
+.logo-text { display: flex; flex-direction: column; line-height: 1.05; }
 .logo-text-top {
-    font-family: 'Outfit', 'Poppins', sans-serif;
-    font-size: 1.05rem; font-weight: 800; color: #0A4D8C;
+    font-family: var(--font-sans);
+    font-size: 1.12rem; font-weight: 800; color: var(--paper);
+    letter-spacing: -.01em;
 }
+.logo-text-top b { color: var(--tag); font-weight: 800; }
 .logo-text-bottom {
-    font-family: 'Outfit', 'Poppins', sans-serif;
-    font-size: .72rem; font-weight: 700; color: #3B88D4;
-    text-transform: uppercase; letter-spacing: .1em;
+    font-family: var(--font-mono);
+    font-size: .62rem; font-weight: 500; color: var(--muted);
+    letter-spacing: .22em; text-transform: uppercase;
 }
 
 /* ── MENÚ DESKTOP ── */
@@ -46,17 +49,17 @@
 .nav-menu li a {
     display: inline-flex; align-items: center;
     padding: .45rem .85rem; border-radius: 8px;
-    font-family: 'Outfit', 'Poppins', sans-serif;
-    font-size: .9rem; font-weight: 600; color: #334155;
+    font-family: var(--font-sans);
+    font-size: .9rem; font-weight: 600; color: var(--muted);
     text-decoration: none; transition: all .18s; position: relative;
 }
 .nav-menu li a::after {
     content: ''; position: absolute; bottom: 4px;
     left: 50%; right: 50%; height: 2px; border-radius: 999px;
-    background: #0A4D8C; transition: all .22s;
+    background: var(--uv); transition: all .22s;
 }
-.nav-menu li a:hover { color: #0A4D8C; background: #EBF3FF; }
-.nav-menu li a.active { color: #0A4D8C; }
+.nav-menu li a:hover { color: var(--paper); background: rgba(142,123,255,.08); }
+.nav-menu li a.active { color: var(--uv); }
 .nav-menu li a.active::after { left: .85rem; right: .85rem; }
 
 /* ── ACCIONES DESKTOP ── */
@@ -65,47 +68,46 @@
 .btn-nav-ghost {
     display: inline-flex; align-items: center; gap: .4rem;
     padding: .48rem 1rem; border-radius: 8px;
-    border: 1.5px solid #dde4ee; background: transparent;
-    color: #334155; font-size: .87rem; font-weight: 600;
+    border: 1.5px solid var(--line); background: transparent;
+    color: var(--paper); font-size: .87rem; font-weight: 600;
     text-decoration: none; transition: all .18s;
-    font-family: 'Outfit', 'Poppins', sans-serif;
+    font-family: var(--font-sans);
 }
-.btn-nav-ghost:hover { border-color: #0A4D8C; color: #0A4D8C; background: #EBF3FF; }
+.btn-nav-ghost:hover { border-color: var(--uv); color: var(--uv); background: rgba(142,123,255,.08); }
 
 .btn-nav-primary {
     display: inline-flex; align-items: center; gap: .4rem;
     padding: .48rem 1.15rem; border-radius: 8px;
-    background: linear-gradient(135deg, #0A4D8C, #1E6DB8);
-    color: #fff; font-size: .87rem; font-weight: 700;
+    background: var(--tag); color: #1A1203; font-size: .87rem; font-weight: 700;
     text-decoration: none; transition: all .18s;
-    box-shadow: 0 2px 10px rgba(10,77,140,.3);
-    font-family: 'Outfit', 'Poppins', sans-serif;
+    box-shadow: 0 2px 14px rgba(242,179,61,.25);
+    font-family: var(--font-sans);
 }
-.btn-nav-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(10,77,140,.4); color: #fff; }
+.btn-nav-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 22px rgba(242,179,61,.4); color: #1A1203; }
 
 /* ── USER DROPDOWN ── */
 .user-dropdown { position: relative; }
 .user-dropdown-btn {
     display: flex; align-items: center; gap: .5rem;
-    background: #f0f7ff; border: 1.5px solid #c5d9f0;
+    background: var(--panel); border: 1.5px solid var(--line);
     border-radius: 10px; padding: .42rem .9rem;
-    color: #073A6B; font-size: .88rem; font-weight: 700;
+    color: var(--paper); font-size: .88rem; font-weight: 600;
     cursor: pointer; transition: all .18s;
-    font-family: 'Outfit', 'Poppins', sans-serif;
+    font-family: var(--font-sans);
 }
-.user-dropdown-btn:hover { background: #dbeafe; border-color: #93c5fd; }
+.user-dropdown-btn:hover { background: var(--panel-2); border-color: var(--uv); }
 .user-avatar {
     width: 28px; height: 28px; border-radius: 50%;
-    background: linear-gradient(135deg, #0A4D8C, #3B88D4);
+    background: linear-gradient(135deg, var(--uv), #6a58e0);
     display: flex; align-items: center; justify-content: center;
     font-weight: 800; font-size: .76rem; color: #fff;
 }
 .user-menu {
     display: none; position: absolute; top: calc(100% + 8px); right: 0;
-    background: white; border-radius: 14px;
-    box-shadow: 0 12px 40px rgba(10,37,64,.15), 0 2px 8px rgba(0,0,0,.06);
+    background: var(--panel); border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.5), 0 2px 8px rgba(0,0,0,.4);
     min-width: 220px; z-index: 999;
-    overflow: hidden; border: 1px solid #dde4ee;
+    overflow: hidden; border: 1px solid var(--line);
 }
 .user-menu.open { display: block; animation: menuFadeIn .18s ease; }
 @keyframes menuFadeIn {
@@ -113,97 +115,99 @@
     to   { opacity:1; transform:translateY(0); }
 }
 .user-menu-header {
-    padding: .85rem 1.1rem; border-bottom: 1px solid #f1f5f9;
-    background: linear-gradient(135deg, #f0f7ff, #e8f2ff);
+    padding: .85rem 1.1rem; border-bottom: 1px solid var(--line-soft);
+    background: var(--panel-2);
 }
-.user-menu-name { font-weight: 800; font-size: .9rem; color: #073A6B; }
-.user-menu-email { font-size: .73rem; color: #94a3b8; margin-top: .1rem; }
+.user-menu-name { font-weight: 800; font-size: .9rem; color: var(--paper); }
+.user-menu-email { font-size: .73rem; color: var(--muted); margin-top: .1rem; }
 .user-menu a, .user-menu button {
     display: flex; align-items: center; gap: .6rem;
     width: 100%; padding: .68rem 1.1rem;
-    font-family: 'Outfit', 'Poppins', sans-serif;
-    font-size: .86rem; font-weight: 600; color: #334155;
+    font-family: var(--font-sans);
+    font-size: .86rem; font-weight: 600; color: var(--muted);
     text-decoration: none; background: none; border: none;
-    cursor: pointer; text-align: left; transition: background .15s;
+    cursor: pointer; text-align: left; transition: background .15s, color .15s;
 }
-.user-menu a:hover, .user-menu button:hover { background: #f7f9fc; }
-.user-menu a i, .user-menu button i { width: 18px; color: #0A4D8C; text-align: center; font-size: .82rem; }
-.user-menu .logout-btn { color: #dc2626; border-top: 1px solid #f1f5f9; }
-.user-menu .logout-btn i { color: #dc2626; }
+.user-menu a:hover, .user-menu button:hover { background: var(--panel-2); color: var(--paper); }
+.user-menu a i, .user-menu button i { width: 18px; color: var(--uv); text-align: center; font-size: .82rem; }
+.user-menu .logout-btn { color: var(--alert); border-top: 1px solid var(--line-soft); }
+.user-menu .logout-btn i { color: var(--alert); }
 
 /* ── BOTÓN HAMBURGER ── */
 .mobile-menu-toggle {
     display: none;
     background: none;
-    border: 1.5px solid #dde4ee;
+    border: 1.5px solid var(--line);
     border-radius: 8px;
     width: 42px; height: 42px;
     align-items: center; justify-content: center;
-    color: #334155; cursor: pointer;
+    color: var(--paper); cursor: pointer;
     transition: all .18s; flex-shrink: 0;
     font-size: 1.1rem;
 }
-.mobile-menu-toggle:hover { background: #EBF3FF; border-color: #0A4D8C; color: #0A4D8C; }
+.mobile-menu-toggle:hover { background: var(--panel-2); border-color: var(--uv); color: var(--uv); }
 
 /* ── PANEL LATERAL MÓVIL ── */
 .mobile-nav-overlay {
     display: none; position: fixed; inset: 0; z-index: 1098;
-    background: rgba(0,0,0,.45);
+    background: rgba(0,0,0,.6);
 }
 .mobile-nav-overlay.open { display: block; }
 
 .mobile-nav-panel {
     position: fixed; top: 0; right: -100%; z-index: 1099;
     width: min(300px, 85vw); height: 100vh;
-    background: #fff;
-    box-shadow: -6px 0 40px rgba(10,37,64,.18);
+    background: var(--lab);
+    box-shadow: -6px 0 40px rgba(0,0,0,.5);
     transition: right .28s cubic-bezier(.4,0,.2,1);
     display: flex; flex-direction: column; overflow-y: auto;
+    border-left: 1px solid var(--line);
 }
 .mobile-nav-panel.open { right: 0; }
 
 .mnp-header {
     display: flex; align-items: center; justify-content: space-between;
     padding: 1rem 1.1rem; flex-shrink: 0;
-    background: linear-gradient(135deg, #071D36, #0A4D8C);
+    background: var(--lab-deep);
+    border-bottom: 1px solid var(--line-soft);
 }
 .mnp-logo { display: flex; align-items: center; gap: .55rem; text-decoration: none; }
-.mnp-logo img { height: 40px; width: auto; }
-.mnp-logo-text { display: flex; flex-direction: column; line-height: 1.1; }
-.mnp-logo-text span:first-child { font-family: 'Outfit','Poppins',sans-serif; font-size: .9rem; font-weight: 800; color: #fff; }
-.mnp-logo-text span:last-child { font-family: 'Outfit','Poppins',sans-serif; font-size: .6rem; font-weight: 700; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .1em; }
+.mnp-logo img { height: 34px; width: auto; }
+.mnp-logo-text { display: flex; flex-direction: column; line-height: 1.05; }
+.mnp-logo-text span:first-child { font-family: var(--font-sans); font-size: .9rem; font-weight: 800; color: var(--paper); }
+.mnp-logo-text span:last-child { font-family: var(--font-mono); font-size: .58rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .18em; }
 .mnp-close {
-    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+    background: var(--panel); border: 1px solid var(--line);
     border-radius: 8px; width: 34px; height: 34px;
     display: flex; align-items: center; justify-content: center;
-    color: #fff; cursor: pointer; font-size: .95rem; transition: background .18s;
+    color: var(--paper); cursor: pointer; font-size: .95rem; transition: background .18s;
 }
-.mnp-close:hover { background: rgba(255,255,255,.25); }
+.mnp-close:hover { background: var(--panel-2); }
 
 .mnp-section-label {
     padding: .85rem 1.1rem .3rem;
-    font-family: 'Outfit','Poppins',sans-serif;
-    font-size: .65rem; font-weight: 700; color: #94a3b8;
-    text-transform: uppercase; letter-spacing: .1em;
+    font-family: var(--font-mono);
+    font-size: .62rem; font-weight: 500; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .18em;
 }
 .mnp-links { list-style: none; padding: 0 .5rem; margin: 0; }
 .mnp-links li a {
     display: flex; align-items: center; gap: .7rem;
     padding: .8rem .75rem; border-radius: 8px;
-    font-family: 'Outfit','Poppins',sans-serif;
-    font-size: .93rem; font-weight: 600; color: #334155;
+    font-family: var(--font-sans);
+    font-size: .93rem; font-weight: 600; color: var(--muted);
     text-decoration: none; transition: all .15s;
 }
-.mnp-links li a:hover, .mnp-links li a.active { background: #EBF3FF; color: #0A4D8C; }
-.mnp-links li a i { width: 20px; text-align: center; color: #0A4D8C; opacity: .75; font-size: .85rem; }
-.mnp-divider { height: 1px; background: #f1f5f9; margin: .4rem 1.1rem; }
+.mnp-links li a:hover, .mnp-links li a.active { background: rgba(142,123,255,.1); color: var(--uv); }
+.mnp-links li a i { width: 20px; text-align: center; color: var(--uv); opacity: .8; font-size: .85rem; }
+.mnp-divider { height: 1px; background: var(--line-soft); margin: .4rem 1.1rem; }
 .mnp-user-info {
     margin: .5rem; padding: .8rem 1rem;
-    background: linear-gradient(135deg, #f0f7ff, #e8f2ff);
-    border-radius: 10px; border: 1px solid #c5d9f0;
+    background: var(--panel-2);
+    border-radius: 10px; border: 1px solid var(--line);
 }
-.mnp-user-name { font-family: 'Outfit','Poppins',sans-serif; font-weight: 800; font-size: .88rem; color: #073A6B; }
-.mnp-user-email { font-size: .71rem; color: #94a3b8; margin-top: .1rem; }
+.mnp-user-name { font-family: var(--font-sans); font-weight: 800; font-size: .88rem; color: var(--paper); }
+.mnp-user-email { font-size: .71rem; color: var(--muted); margin-top: .1rem; }
 
 .mnp-auth-btns { display: flex; flex-direction: column; gap: .5rem; padding: .75rem .5rem 1rem; }
 .mnp-auth-btns .btn-nav-ghost,
@@ -219,8 +223,7 @@
 }
 @media (max-width: 480px) {
     .nav-container { padding: 0 .9rem; height: 66px; }
-    .logo-img      { height: 58px; }
-    .logo-text     { display: flex; }
+    .logo-img      { height: 36px; }
 }
 
 /* Compensar header fijo */
@@ -234,11 +237,11 @@ body > main > div:first-child { padding-top: 70px; }
 
         {{-- LOGO --}}
         <a href="{{ route('inicio') }}" class="logo">
-            <img src="{{ asset('images/logo.png') }}" alt="Comunal Aprende" class="logo-img"
+            <img src="{{ asset('images/logo.png') }}" alt="ForenseBox" class="logo-img"
                  onerror="this.style.display='none'">
             <div class="logo-text">
-                <span class="logo-text-top">Comunal</span>
-                <span class="logo-text-bottom">Aprende</span>
+                <span class="logo-text-top">Forense<b>Box</b></span>
+                <span class="logo-text-bottom">Digital Forensics</span>
             </div>
         </a>
 
@@ -302,8 +305,8 @@ body > main > div:first-child { padding-top: 70px; }
         <a href="{{ route('inicio') }}" class="mnp-logo" onclick="closeMobileMenu()">
             <img src="{{ asset('images/logo.png') }}" alt="Logo" onerror="this.style.display='none'">
             <div class="mnp-logo-text">
-                <span>Comunal</span>
-                <span>Aprende</span>
+                <span>ForenseBox</span>
+                <span>Digital Forensics</span>
             </div>
         </a>
         <button class="mnp-close" onclick="closeMobileMenu()" aria-label="Cerrar">
@@ -342,7 +345,7 @@ body > main > div:first-child { padding-top: 70px; }
         <div style="padding:.5rem">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem;background:none;border:1.5px solid #fee2e2;border-radius:8px;color:#dc2626;font-family:'Outfit','Poppins',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;">
+                <button type="submit" style="width:100%;display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem;background:none;border:1.5px solid var(--alert);border-radius:8px;color:var(--alert);font-family:var(--font-sans);font-size:.9rem;font-weight:600;cursor:pointer;">
                     <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
                 </button>
             </form>
